@@ -93,7 +93,7 @@ a {
 }
 
 .nav_logo {
-    margin-bottom: 2rem
+    padding: 0;
 }
 
 .nav_logo-icon {
@@ -189,5 +189,9 @@ a {
 
     .body-pd {
         padding-left: calc(var(--nav-width) + 188px)
+    }
+
+    img.logo {
+        object-fit: contain;
     }
 }

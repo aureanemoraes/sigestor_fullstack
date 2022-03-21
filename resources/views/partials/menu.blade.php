@@ -10,8 +10,7 @@
   <nav class="nav">
     <div>
       <a href="#" class="nav_logo">
-        <i class='bx bx-layer nav_logo-icon'></i>
-        <span class="nav_logo-name">Sigestor</span>
+        <img src="{{  asset("storage/img/logo_branca.png") }}" alt="Logo" class="rounded logo" height="80px">
       </a>
       <div class="nav_list">
         <a class="nav_link active" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
