@@ -43,7 +43,7 @@
             <i class="bi bi-align-end"></i>
             <span class="nav_name">Fontes</span>
           </a>
-          <a href="#" class="nav_link nav_link_secondary">
+          <a href="{{ route('acao_tipo.index') }}" class="nav_link nav_link_secondary">
             <i class="bi bi-align-end"></i>
             <span class="nav_name">Ações</span>
           </a>

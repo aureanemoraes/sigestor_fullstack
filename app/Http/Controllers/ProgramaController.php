@@ -23,7 +23,7 @@ class ProgramaController extends Controller
 	public function index()
 	{
 		return view('programa.index')->with([
-			'programas' => Programa::orderBy('fav', 'desc')->paginate()
+			'programas' => Programa::orderBy('fav', 'desc')->get()
 		]);
 	}
 

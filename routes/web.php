@@ -7,6 +7,11 @@ use App\Http\Controllers\UnidadeGestoraController;
 use App\Http\Controllers\UnidadeAdministrativaController;
 use App\Http\Controllers\ProgramaController;
 use App\Http\Controllers\FonteTipoController;
+use App\Http\Controllers\AcaoTipoController;
+use App\Http\Controllers\NaturezaDespesaController;
+use App\Http\Controllers\SubnaturezaDespesaController;
+use App\Http\Controllers\CentroCustoController;
+
 
 
 /*
@@ -31,6 +36,12 @@ Route::resource('unidade_administrativa', UnidadeAdministrativaController::class
 Route::patch('programa/favoritar/{id}', [ProgramaController::class, 'favoritar'])->name('programa.fav');
 Route::resource('programa', ProgramaController::class);
 Route::resource('fonte_tipo', FonteTipoController::class);
+Route::resource('acao_tipo', AcaoTipoController::class);
+Route::resource('natureza_despesa', NaturezaDespesaController::class);
+Route::resource('subnatureza_despesa', SubnaturezaDespesaController::class);
+Route::resource('centro_custo', CentroCustoController::class);
+
+
 
 
 

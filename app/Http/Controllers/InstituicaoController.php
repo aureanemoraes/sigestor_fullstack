@@ -13,7 +13,7 @@ class InstituicaoController extends Controller
 	public function index()
 	{
 		return view('instituicao.index')->with([
-			'instituicoes' => Instituicao::paginate()
+			'instituicoes' => Instituicao::get()
 		]);
 	}
 

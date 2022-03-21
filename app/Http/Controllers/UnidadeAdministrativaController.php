@@ -15,7 +15,7 @@ class UnidadeAdministrativaController extends Controller
 	public function index()
 	{
 		return view('unidade_administrativa.index')->with([
-			'unidades_administrativas' => UnidadeAdministrativa::paginate()
+			'unidades_administrativas' => UnidadeAdministrativa::get()
 		]);
 	}
 

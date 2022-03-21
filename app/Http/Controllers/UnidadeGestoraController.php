@@ -14,7 +14,7 @@ class UnidadeGestoraController extends Controller
 	public function index()
 	{
 		return view('unidade_gestora.index')->with([
-			'unidades_gestoras' => UnidadeGestora::paginate()
+			'unidades_gestoras' => UnidadeGestora::get()
 		]);
 	}
 

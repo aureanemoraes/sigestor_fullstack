@@ -14,7 +14,7 @@ class ExercicioController extends Controller
 	public function index()
 	{
 		return view('exercicio.index')->with([
-			'instituicoes' => Exercicio::paginate()
+			'instituicoes' => Exercicio::get()
 		]);
 	}
 

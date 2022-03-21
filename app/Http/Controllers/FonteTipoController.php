@@ -15,7 +15,7 @@ class FonteTipoController extends Controller
 	public function index()
 	{
 		return view('fonte_tipo.index')->with([
-			'fontes_tipos' => FonteTipo::paginate()
+			'fontes_tipos' => FonteTipo::get()
 		]);
 	}
 
