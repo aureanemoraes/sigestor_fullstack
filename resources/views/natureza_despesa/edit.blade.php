@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 @section('content')
-  @include('acao_tipo.form', [
-    'acao_tipo' => $acao_tipo
+  @include('natureza_despesa.form', [
+    'natureza_despesa' => $natureza_despesa
   ])
 @endsection

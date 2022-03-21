@@ -22,14 +22,16 @@
           <td>{{ $natureza_despesa->codigo }}</td>
           <td>{{ $natureza_despesa->nome }}</td>
           <td>
-              @if($natureza_despesa->custeio)
-              <span class="badge bg-secondary">Custeio</span>
-              @endif
-              @if($natureza_despesa->investimento)
-              <span class="badge bg-secondary">Investimento</span>
+              @if($natureza_despesa->tipo)
+              <span class="badge bg-secondary">{{ $natureza_despesa->tipo }}</span>
               @endif
           </td>
-          <td>
+          <td class="action-buttons">
+            <form action="{{ route('natureza_despesa.fav', $natureza_despesa->id) }}" method="post" id="form-fav">
+              @csrf
+              @method('patch')
+              <button class="btn btn-sm btn-{{ $natureza_despesa->fav ? 'info' : 'secondary' }}" type="submit"><i class="bi bi-star-fill"></i></button>
+            </form>
             <form action="{{ route('natureza_despesa.destroy', $natureza_despesa->id) }}" method="post" id="form-delete">
               @csrf
               @method('delete')

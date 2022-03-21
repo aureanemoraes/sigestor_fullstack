@@ -1,20 +1,20 @@
 
-<h3>Ações</h3>
+<h3>Naturezas de Despesas</h3>
 @php
-    if(isset($acao_tipo)) {
-      $route = route('acao_tipo.update', $acao_tipo->id);
+    if(isset($natureza_despesa)) {
+      $route = route('natureza_despesa.update', $natureza_despesa->id);
     } else {
-      $route = route('acao_tipo.store');
+      $route = route('natureza_despesa.store');
     }
 @endphp
 <form action="{{ $route }}" method="POST" id="form">
   @csrf
-  @if(isset($acao_tipo))
+  @if(isset($natureza_despesa))
     @method('PUT')
   @endif
 
   <div class="form-floating mb-3">
-    <input type="text" class="form-control @error('codigo') is-invalid @enderror" id="codigo" name="codigo" value="{{ isset($acao_tipo->codigo) ? $acao_tipo->codigo : ''}}" placeholder="Nome...">
+    <input type="text" class="form-control @error('codigo') is-invalid @enderror" id="codigo" name="codigo" value="{{ isset($natureza_despesa->codigo) ? $natureza_despesa->codigo : ''}}" placeholder="Nome...">
     <label for="codigo">Código</label>
     @error('codigo')
       <div class="invalid-feedback">
@@ -24,7 +24,7 @@
   </div>
 
   <div class="form-floating mb-3">
-    <input type="text" class="form-control @error('nome') is-invalid @enderror" id="nome" name="nome" value="{{ isset($acao_tipo->nome) ? $acao_tipo->nome : ''}}" placeholder="Nome...">
+    <input type="text" class="form-control @error('nome') is-invalid @enderror" id="nome" name="nome" value="{{ isset($natureza_despesa->nome) ? $natureza_despesa->nome : ''}}" placeholder="Nome...">
     <label for="nome">Nome</label>
     @error('nome')
       <div class="invalid-feedback">
@@ -34,20 +34,12 @@
   </div>
 
   <div class="form-group mb-3">
-    <label>Tipos de despesas</label>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="1" id="custeio" name="custeio" {{ isset($acao_tipo->custeio) && $acao_tipo->custeio ? 'checked' : '' }}>
-      <label class="form-check-label" for="custeio">
-        Custeio
-      </label>
-    </div>
-  
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="1" id="investimento" name="investimento" {{ isset($acao_tipo->investimento) && $acao_tipo->investimento ? 'checked' : '' }}>
-      <label class="form-check-label" for="investimento">
-        Investimento
-      </label>
-    </div>
+    <label for="tipo">Tipos</label>
+    <select class="form-select" aria-label="Tipo" id="tipo" name="tipo">
+      <option selected value="">-- selecione --</option>
+      <option value="custeio">Custeio</option>
+      <option value="investimento">Investimento</option>
+    </select>
   </div>
 
   <button type="submit" class="btn btn-primary">Salvar</button>

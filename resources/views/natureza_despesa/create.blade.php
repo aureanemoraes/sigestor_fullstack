@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-  @include('acao_tipo.form')
+  @include('natureza_despesa.form')
 @endsection

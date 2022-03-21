@@ -38,6 +38,7 @@ Route::resource('programa', ProgramaController::class);
 Route::resource('fonte_tipo', FonteTipoController::class);
 Route::patch('acao_tipo/favoritar/{id}', [AcaoTipoController::class, 'favoritar'])->name('acao_tipo.fav');
 Route::resource('acao_tipo', AcaoTipoController::class);
+Route::patch('natureza_despesa/favoritar/{id}', [NaturezaDespesaController::class, 'favoritar'])->name('natureza_despesa.fav');
 Route::resource('natureza_despesa', NaturezaDespesaController::class);
 Route::resource('subnatureza_despesa', SubnaturezaDespesaController::class);
 Route::resource('centro_custo', CentroCustoController::class);

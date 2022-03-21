@@ -3,83 +3,116 @@
 namespace App\Http\Controllers;
 
 use App\Models\NaturezaDespesa;
+use App\Models\GrupoFonte;
+use App\Models\Especificacao;
 use Illuminate\Http\Request;
+use App\Http\Transformers\NaturezaDespesaTransformer;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class NaturezaDespesaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+	public function favoritar($id)
+	{
+		$natureza_despesa = NaturezaDespesa::findOrFail($id);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+		$natureza_despesa->fav = !$natureza_despesa->fav;
+		$natureza_despesa->save();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+		return redirect()->route('natureza_despesa.index');
+	}
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\NaturezaDespesa  $naturezaDespesa
-     * @return \Illuminate\Http\Response
-     */
-    public function show(NaturezaDespesa $naturezaDespesa)
-    {
-        //
-    }
+	public function index()
+	{
+		return view('natureza_despesa.index')->with([
+			'naturezas_despesas' => NaturezaDespesa::orderBy('fav', 'desc')->orderBy('nome')->get()
+		]);
+	}
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\NaturezaDespesa  $naturezaDespesa
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(NaturezaDespesa $naturezaDespesa)
-    {
-        //
-    }
+	public function create() {
+		return view('natureza_despesa.create');
+	}
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\NaturezaDespesa  $naturezaDespesa
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, NaturezaDespesa $naturezaDespesa)
-    {
-        //
-    }
+	public function store(Request $request)
+	{
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\NaturezaDespesa  $naturezaDespesa
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(NaturezaDespesa $naturezaDespesa)
-    {
-        //
-    }
+		$invalido = $this->validation($request);
+
+		if($invalido) return $invalido;
+
+		try {
+			DB::beginTransaction();
+			$natureza_despesa = NaturezaDespesaTransformer::toInstance($request->all());
+			$natureza_despesa->save();
+			DB::commit();
+		} catch (Exception $ex) {
+			DB::rollBack();
+		}
+
+		return redirect()->route('natureza_despesa.index');
+	}
+
+	public function show($id)
+	{
+	}
+
+	public function edit($id) {
+		$natureza_despesa = NaturezaDespesa::findOrFail($id);
+		return view('natureza_despesa.edit')->with([
+			'natureza_despesa' => $natureza_despesa
+		]);
+	}
+
+
+	public function update(Request $request, $id)
+	{
+		$invalido = $this->validation($request);
+
+		if($invalido) return $invalido;
+		
+		$natureza_despesa = NaturezaDespesa::find($id);
+
+		if(isset($natureza_despesa)) {
+			try {
+				DB::beginTransaction();
+				$natureza_despesa = NaturezaDespesaTransformer::toInstance($request->all(), $natureza_despesa);
+				$natureza_despesa->save();
+				DB::commit();
+
+			} catch (Exception $ex) {
+				DB::rollBack();
+			}
+		}
+
+		return redirect()->route('natureza_despesa.index');
+
+	}
+
+	public function destroy($id)
+	{
+		$natureza_despesa = NaturezaDespesa::find($id);
+		try {
+			if(isset($natureza_despesa)) {
+				$natureza_despesa->delete();
+			} 
+		} catch(Exception $ex) {
+		}
+
+		return redirect()->route('natureza_despesa.index');
+
+	}
+
+	protected function validation($request) 
+	{
+		$validator = Validator::make($request->all(), [
+			'codigo' => ['required'],
+			'nome' => ['required']
+		]);
+
+		if ($validator->fails()) {
+			return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput();
+		}
+	}
 }
