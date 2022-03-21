@@ -100,7 +100,8 @@ class SubnaturezaDespesaController extends Controller
 	{
 		$validator = Validator::make($request->all(), [
 			'codigo' => ['required'],
-			'nome' => ['required']
+			'nome' => ['required'],
+			'natureza_despesa_id' => ['required', 'exists:naturezas_despesas,id']
 		]);
 
 		if ($validator->fails()) {
