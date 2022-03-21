@@ -47,11 +47,11 @@
             <i class="bi bi-align-end"></i>
             <span class="nav_name">Ações</span>
           </a>
-          <a href="#" class="nav_link nav_link_secondary">
+          <a href="{{ route('natureza_despesa.index') }}" class="nav_link nav_link_secondary">
             <i class="bi bi-align-end"></i>
             <span class="nav_name">Naturezas de Despesas</span>
           </a>
-          <a href="#" class="nav_link nav_link_secondary">
+          <a href="{{ route('centro_custo.index') }}" class="nav_link nav_link_secondary">
             <i class="bi bi-align-end"></i>
             <span class="nav_name">Centros de Custo</span>
           </a>

@@ -12,6 +12,16 @@ use Illuminate\Support\Facades\Validator;
 
 class AcaoTipoController extends Controller
 {
+	public function favoritar($id)
+	{
+		$acao_tipo = AcaoTipo::findOrFail($id);
+
+		$acao_tipo->fav = !$acao_tipo->fav;
+		$acao_tipo->save();
+
+		return redirect()->route('acao_tipo.index');
+	}
+
 	public function index()
 	{
 		return view('acao_tipo.index')->with([

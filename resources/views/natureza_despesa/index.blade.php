@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-<h3>Ações</h3>
+<h3>Naturezas de Despesas</h3>
 <section class="d-flex justify-content-end mb-2">
-  <a href="{{ route('acao_tipo.create') }}" type="button" class="btn btn-success">
+  <a href="{{ route('natureza_despesa.create') }}" type="button" class="btn btn-success">
     Novo
   </a>
 </section>
 <section>
   <div class="table-responsive">
-    <table class="table" id="acoes_tipos">
+    <table class="table" id="naturezas_despesas">
       <thead>
         <th>CÓDIGO</th>
         <th>NOME</th>
@@ -17,29 +17,24 @@
         <th></th>
       </thead>
       <tbody>
-        @foreach($acoes_tipos as $acao_tipo)
+        @foreach($naturezas_despesas as $natureza_despesa)
         <tr>
-          <td>{{ $acao_tipo->codigo }}</td>
-          <td>{{ $acao_tipo->nome }}</td>
+          <td>{{ $natureza_despesa->codigo }}</td>
+          <td>{{ $natureza_despesa->nome }}</td>
           <td>
-              @if($acao_tipo->custeio)
+              @if($natureza_despesa->custeio)
               <span class="badge bg-secondary">Custeio</span>
               @endif
-              @if($acao_tipo->investimento)
+              @if($natureza_despesa->investimento)
               <span class="badge bg-secondary">Investimento</span>
               @endif
           </td>
-          <td class="action-buttons">
-            <form action="{{ route('acao_tipo.fav', $acao_tipo->id) }}" method="post" id="form-fav">
-              @csrf
-              @method('patch')
-              <button class="btn btn-sm btn-{{ $acao_tipo->fav ? 'info' : 'secondary' }}" type="submit"><i class="bi bi-star-fill"></i></button>
-            </form>
-            <form action="{{ route('acao_tipo.destroy', $acao_tipo->id) }}" method="post" id="form-delete">
+          <td>
+            <form action="{{ route('natureza_despesa.destroy', $natureza_despesa->id) }}" method="post" id="form-delete">
               @csrf
               @method('delete')
               <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
-                <a type="button" href="{{ route('acao_tipo.edit', $acao_tipo->id) }}" class="btn btn-outline-warning" ><i class="bi bi-pen-fill"></i></a>
+                <a type="button" href="{{ route('natureza_despesa.edit', $natureza_despesa->id) }}" class="btn btn-outline-warning" ><i class="bi bi-pen-fill"></i></a>
                 <button type="submit" class="btn btn-outline-danger"><i class="bi bi-trash3-fill"></i></button>
               </div>
             </form>
@@ -58,7 +53,7 @@
 @section('js')
   <script>
     $(document).ready( function () {
-      $('#acoes_tipos').DataTable();
+      $('#naturezas_despesas').DataTable();
     });
   </script>
 @endsection
