@@ -51,6 +51,10 @@
             <i class="bi bi-align-end"></i>
             <span class="nav_name">Naturezas de Despesas</span>
           </a>
+          <a href="{{ route('subnatureza_despesa.index') }}" class="nav_link nav_link_secondary">
+            <i class="bi bi-align-end"></i>
+            <span class="nav_name">Subnaturezas de Despesas</span>
+          </a>
           <a href="{{ route('centro_custo.index') }}" class="nav_link nav_link_secondary">
             <i class="bi bi-align-end"></i>
             <span class="nav_name">Centros de Custo</span>
