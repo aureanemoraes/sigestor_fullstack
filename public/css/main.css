@@ -15,7 +15,7 @@
 *,
 ::before,
 ::after {
-    box-sizing: border-box
+    box-sizing: border-box;
 }
 
 body {
@@ -185,6 +185,10 @@ a {
     background: #86305b;
     border-color: #86305b;
     color: white;
+}
+
+.form-control {
+    font-size: var(--normal-font-size);
 }
 
 
