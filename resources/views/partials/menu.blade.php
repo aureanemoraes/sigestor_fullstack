@@ -102,6 +102,20 @@
             </a>
           </div>
         </div>
+        <a class="nav_link" data-bs-toggle="collapse" href="#matriz_estratégica" role="button" aria-expanded="true" aria-controls="matriz_estratégica">
+          <i class="bi bi-gear-fill nav_icon"></i>
+          Matriz Estratégica
+        </a>
+        <div class="collapse show" id="matriz_estratégica">
+          <a href="{{ route('meta.index') }}" class="nav_link nav_link_secondary">
+            <i class="bi bi-align-end"></i>
+            <span class="nav_name">Metas</span>
+          </a>
+          <a href="{{ route('objetivo.index') }}" class="nav_link nav_link_secondary">
+            <i class="bi bi-align-end"></i>
+            <span class="nav_name">Relatórios</span>
+          </a>
+        </div>
       </div>
     </div>
     <a href="#" class="nav_link">

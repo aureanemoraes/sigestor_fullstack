@@ -82,6 +82,7 @@
       </div>
     @enderror
   </div>
+  
   <div class="mb-3">
     <div class="form-check">
       <input class="form-check-input" type="radio" name="ativo" id="ativo" {{ isset($objetivo->ativo) && $objetivo->ativo ? 'checked' : '' }} value="1">
