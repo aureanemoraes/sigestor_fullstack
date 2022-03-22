@@ -23,4 +23,9 @@ class PlanoAcao extends Model
         'data_inicio' => 'datetime:Y-m-d',
         'data_fim' => 'datetime:Y-m-d',
     ];
+
+    public function plano_estrategico()
+    {
+        return $this->belongsTo(PlanoEstrategico::class);
+    }
 }
