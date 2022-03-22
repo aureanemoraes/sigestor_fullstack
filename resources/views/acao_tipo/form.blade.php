@@ -33,6 +33,16 @@
     @enderror
   </div>
 
+  <div class="form-floating mb-3">
+    <input type="text" class="form-control @error('nome_simplificado') is-invalid @enderror" id="nome_simplificado" name="nome_simplificado" value="{{ isset($acao_tipo->nome_simplificado) ? $acao_tipo->nome_simplificado : ''}}" placeholder="Nome...">
+    <label for="nome_simplificado">Nome simplificado</label>
+    @error('nome_simplificado')
+      <div class="invalid-feedback">
+        {{ $message }}
+      </div>
+    @enderror
+  </div>
+
   <div class="form-group mb-3">
     <label>Tipos de despesas</label>
     <div class="form-check">

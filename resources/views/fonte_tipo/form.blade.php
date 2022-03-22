@@ -28,9 +28,9 @@
       <option selected value="">-- selecione --</option>
       @foreach($grupos_fontes as $grupo_fonte)
         @if(isset($fonte_tipo) && $grupo_fonte->id == $fonte_tipo->grupo_fonte_id)
-          <option selected value="{{ $grupo_fonte->id }}">{{ $grupo_fonte->nome }}</option>
+          <option selected value="{{ $grupo_fonte->id }}">{{ $grupo_fonte->id . ' - ' . $grupo_fonte->nome }}</option>
         @else
-          <option value="{{ $grupo_fonte->id }}">{{ $grupo_fonte->nome }}</option>
+          <option value="{{ $grupo_fonte->id }}">{{ $grupo_fonte->id . ' - ' . $grupo_fonte->nome }}</option>
         @endif
       @endforeach
     </select>
@@ -47,9 +47,9 @@
       <option selected value="">-- selecione --</option>
       @foreach($especificacoes as $especificacao)
         @if(isset($fonte_tipo) && $especificacao->id == $fonte_tipo->especificacao_id)
-          <option selected value="{{ $especificacao->id }}">{{ $especificacao->nome }}</option>
+          <option selected value="{{ $especificacao->id }}">{{ $especificacao->id_formatado . ' - ' . $especificacao->nome }}</option>
         @else
-          <option value="{{ $especificacao->id }}">{{ $especificacao->nome }}</option>
+          <option value="{{ $especificacao->id }}">{{ $especificacao->id_formatado . ' - ' . $especificacao->nome }}</option>
         @endif
       @endforeach
     </select>

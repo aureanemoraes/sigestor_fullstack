@@ -199,6 +199,7 @@ class Versao1 extends Migration
             $table->id();
             $table->string('nome');
             $table->string('codigo');
+            $table->string('nome_simplificado')->nullable();
             $table->tinyInteger('custeio')->default(0);
             $table->tinyInteger('investimento')->default(0);
             $table->tinyInteger('fav')->default(0);

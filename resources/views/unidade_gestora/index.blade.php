@@ -3,7 +3,7 @@
 @section('content')
 <h3>Unidades Gestoras</h3>
 <section class="d-flex justify-content-end mb-2">
-  <a href="{{ route('unidade_gestora.create') }}" type="button" class="btn btn-success">
+  <a href="{{ route('unidade_gestora.create') }}" type="button" class="btn btn-primary">
     Novo
   </a>
 </section>
@@ -11,7 +11,6 @@
   <div class="table-responsive">
     <table class="table" id="unidades_gestoras">
       <thead>
-        <th>ID</th>
         <th>NOME</th>
         <th>SIGLA</th>
         <th>CNPJ</th>
@@ -22,7 +21,6 @@
       <tbody>
         @foreach($unidades_gestoras as $unidade_gestora)
         <tr>
-          <td>{{ $unidade_gestora->id }}</td>
           <td>{{ $unidade_gestora->nome }}</td>
           <td>{{ $unidade_gestora->sigla }}</td>
           <td>{{ $unidade_gestora->cnpj }}</td>
@@ -33,8 +31,8 @@
               @csrf
               @method('delete')
               <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
-                <a type="button" href="{{ route('unidade_gestora.edit', $unidade_gestora->id) }}" class="btn btn-outline-warning" ><i class="bi bi-pen-fill"></i></a>
-                <button type="submit" class="btn btn-outline-danger"><i class="bi bi-trash3-fill"></i></button>
+                <a type="button" href="{{ route('unidade_gestora.edit', $unidade_gestora->id) }}" class="btn btn-primary" ><i class="bi bi-pen-fill"></i></a>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-trash3-fill"></i></button>
               </div>
             </form>
           </td>

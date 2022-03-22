@@ -3,7 +3,7 @@
 @section('content')
 <h3>Ações</h3>
 <section class="d-flex justify-content-end mb-2">
-  <a href="{{ route('acao_tipo.create') }}" type="button" class="btn btn-success">
+  <a href="{{ route('acao_tipo.create') }}" type="button" class="btn btn-primary">
     Novo
   </a>
 </section>
@@ -13,6 +13,7 @@
       <thead>
         <th>CÓDIGO</th>
         <th>NOME</th>
+        <th>NOME SIMPLIFICADO</th>
         <th>TIPOS DE DESPESAS</th>
         <th></th>
       </thead>
@@ -21,6 +22,7 @@
         <tr>
           <td>{{ $acao_tipo->codigo }}</td>
           <td>{{ $acao_tipo->nome }}</td>
+          <td>{{ $acao_tipo->nome_simplificado }}</td>
           <td>
               @if($acao_tipo->custeio)
               <span class="badge bg-secondary">Custeio</span>
@@ -39,8 +41,8 @@
               @csrf
               @method('delete')
               <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
-                <a type="button" href="{{ route('acao_tipo.edit', $acao_tipo->id) }}" class="btn btn-outline-warning" ><i class="bi bi-pen-fill"></i></a>
-                <button type="submit" class="btn btn-outline-danger"><i class="bi bi-trash3-fill"></i></button>
+                <a type="button" href="{{ route('acao_tipo.edit', $acao_tipo->id) }}" class="btn btn-primary" ><i class="bi bi-pen-fill"></i></a>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-trash3-fill"></i></button>
               </div>
             </form>
           </td>

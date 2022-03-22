@@ -21,6 +21,9 @@ class AcaoTipoTransformer
           case 'nome':
             $acao_tipo->nome = $value;
             break;
+          case 'nome_simplificado':
+            $acao_tipo->nome_simplificado = $value;
+            break;
           case 'custeio':
             $acao_tipo->custeio = $value;
             break;

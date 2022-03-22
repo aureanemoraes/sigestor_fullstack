@@ -10,7 +10,7 @@
   <nav class="nav">
     <div>
       <a href="#" class="nav_logo">
-        <img src="{{  asset("storage/img/logo_branca.png") }}" alt="Logo" class="rounded logo" height="80px">
+        <img src="{{  asset("storage/img/logo_branca.png") }}" alt="Logo" class="rounded logo" height="100px">
       </a>
       <div class="nav_list">
         <a class="nav_link active" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
