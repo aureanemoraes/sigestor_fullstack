@@ -21,9 +21,6 @@ class ObjetivoTransformer
           case 'ativo':
             $objetivo->ativo = $value;
             break;
-          case 'inativo':
-            $objetivo->ativo = $value;
-            break;
           case 'dimensao_id':
             $objetivo->dimensao_id = $value;
             break;

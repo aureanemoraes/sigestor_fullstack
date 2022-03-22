@@ -82,6 +82,20 @@
       </div>
     @enderror
   </div>
+  <div class="mb-3">
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="ativo" id="ativo" {{ isset($objetivo->ativo) && $objetivo->ativo ? 'checked' : '' }} value="1">
+      <label class="form-check-label" for="ativo">
+        Ativo
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="ativo" id="inativo" {{ isset($objetivo->ativo) && !$objetivo->ativo ? 'checked' : '' }} value="0">
+      <label class="form-check-label" for="inativo">
+        Inativo
+      </label>
+    </div>
+  </div>
   
   <button type="submit" class="btn btn-primary">Salvar</button>
 </form>

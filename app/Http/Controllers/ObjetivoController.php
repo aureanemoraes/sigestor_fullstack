@@ -29,7 +29,6 @@ class ObjetivoController extends Controller
 
 	public function store(Request $request)
 	{
-
 		$invalido = $this->validation($request);
 
 		if($invalido) return $invalido;
@@ -63,6 +62,8 @@ class ObjetivoController extends Controller
 
 	public function update(Request $request, $id)
 	{
+		// dd($request->all());
+
 		$invalido = $this->validation($request);
 
 		if($invalido) return $invalido;

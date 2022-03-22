@@ -192,6 +192,7 @@ a {
 }
 
 .btn-primary, .page-item.active .page-link {
+    background-color: #77274F;
     background: #77274F;
     border-color: #77274F;
 }

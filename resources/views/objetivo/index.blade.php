@@ -17,6 +17,7 @@
         <th>PLANO ESTRATÉGICO</th>
         <th>EXERCÍCIO DO PLANO DE AÇÃO</th>
         <th>ÍNDICE DE PROGRESSO</th>
+        <th>SITUAÇÃO</th>
         <th></th>
       </thead>
       <tbody>
@@ -28,6 +29,7 @@
           <td>{{ $objetivo->dimensao->eixo_estrategico->plano_estrategico->nome }}</td>
           <td>{{ formatDate($objetivo->dimensao->eixo_estrategico->plano_estrategico->data_fim, true) }}</td>
           <td><span class="badge bg-secondary">{{ $objetivo->porcentagem_atual }}</span></td>
+          <td><span class="badge btn-primary">{{ $objetivo->ativo ? 'ativo' : 'inativo' }}</span></td>
           <td>
             <form action="{{ route('objetivo.destroy', $objetivo->id) }}" method="post" id="form-delete">
               @csrf
@@ -56,9 +58,6 @@
   </div>
 </section>
 @endsection
-
-
-{{-- {{ dd($errors->any()) }} --}}
 
 @section('js')
   <script>
