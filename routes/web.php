@@ -33,6 +33,10 @@ Route::get('/', function () {
     return view('public.home');
 });
 
+Route::get('/inicio', function () {
+    return view('blank');
+});
+
 Route::resource('instituicao', InstituicaoController::class);
 Route::resource('exercicio', ExercicioController::class);
 Route::resource('unidade_gestora', UnidadeGestoraController::class);

@@ -23,7 +23,7 @@
         <tr>
           <td>{{ $instituicao->nome }}</td>
           <td>{{ $instituicao->sigla }}</td>
-          <td>{{ $instituicao->cnpj }}</td>
+          <td>{{ cnpj($instituicao->cnpj) }}</td>
           <td>{{ $instituicao->uasg }}</td>
           <td>{{ "$instituicao->logradouro, $instituicao->numero, $instituicao->bairro - $instituicao->complemento" }}</td>
           <td>

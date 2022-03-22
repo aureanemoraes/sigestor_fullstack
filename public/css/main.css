@@ -132,7 +132,7 @@ a {
 
 .nav_link_tertiary {
     font-weight: normal;
-    padding-left: 2rem;
+    margin-left: 2.5rem;
 }
 
 .nav_link:hover {

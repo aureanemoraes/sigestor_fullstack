@@ -13,7 +13,7 @@
   <header class="header" id="header">
     <div class="header_toggle"></div>
     <div class="header_text">
-      <a type="button" href="{{ route('instituicao.index') }}" class="btn btn-primary">Login</a>
+      <a type="button" href="/inicio" class="btn btn-primary">Login</a>
     </div>
   </header>
   <div class="container">
