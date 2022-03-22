@@ -88,9 +88,9 @@
               <i class="bi bi-align-end"></i>
               <span class="nav_name">Planos de Ações</span>
             </a>
-            <a href="#" class="nav_link nav_link_tertiary active">
+            <a href="{{ route('eixo_estrategico.index') }}" class="nav_link nav_link_tertiary active">
               <i class="bi bi-align-end"></i>
-              <span class="nav_name">Eixos</span>
+              <span class="nav_name">Eixos Estratégicos</span>
             </a>
             <a href="#" class="nav_link nav_link_tertiary active">
               <i class="bi bi-align-end"></i>

@@ -13,6 +13,7 @@ use App\Http\Controllers\SubnaturezaDespesaController;
 use App\Http\Controllers\CentroCustoController;
 use App\Http\Controllers\PlanoEstrategicoController;
 use App\Http\Controllers\PlanoAcaoController;
+use App\Http\Controllers\EixoEstrategicoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,7 @@ Route::resource('centro_custo', CentroCustoController::class);
 
 Route::resource('plano_estrategico', PlanoEstrategicoController::class);
 Route::resource('plano_acao', PlanoAcaoController::class);
+Route::resource('eixo_estrategico', EixoEstrategicoController::class);
 
 
 

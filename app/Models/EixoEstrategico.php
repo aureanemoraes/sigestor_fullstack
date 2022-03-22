@@ -13,8 +13,11 @@ class EixoEstrategico extends Model
 
     protected $fillable = [
         'nome',
-        'data_fim',
         'plano_estrategico_id',
-        'instituicao_id'
     ];
+
+    public function plano_estrategico()
+    {
+        return $this->belongsTo(PlanoEstrategico::class);
+    }
 }

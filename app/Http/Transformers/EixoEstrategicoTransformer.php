@@ -21,9 +21,6 @@ class EixoEstrategicoTransformer
           case 'plano_estrategico_id':
             $eixo_estrategico->plano_estrategico_id = $value;
             break;
-          case 'instituicao_id':
-            $eixo_estrategico->instituicao_id = $value;
-            break;
         }
       }
 
