@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EixoEstrategicoController;
+use App\Http\Controllers\DimensaoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('eixo_estrategico/opcoes/{plano_estrategico_id}', [EixoEstrategicoController::class, 'opcoes']);
+Route::get('dimensao/opcoes/{eixo_estrategico_id}', [DimensaoController::class, 'opcoes']);

@@ -13,6 +13,7 @@
       <thead>
         <th>NOME</th>
         <th>EIXO ESTRATÉGICO</th>
+        <th>PLANO ESTRATÉGICO</th>
         <th></th>
       </thead>
       <tbody>
@@ -20,6 +21,7 @@
         <tr>
           <td>{{ $dimensao->nome }}</td>
           <td>{{ $dimensao->eixo_estrategico->nome }}</td>
+          <td>{{ $dimensao->eixo_estrategico->plano_estrategico->nome }}</td>
           <td>
             <form action="{{ route('dimensao.destroy', $dimensao->id) }}" method="post" id="form-delete">
               @csrf

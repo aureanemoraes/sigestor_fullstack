@@ -96,6 +96,10 @@
               <i class="bi bi-align-end"></i>
               <span class="nav_name">Dimensões</span>
             </a>
+            <a href="{{ route('objetivo.index') }}" class="nav_link nav_link_tertiary active">
+              <i class="bi bi-align-end"></i>
+              <span class="nav_name">Objetivos</span>
+            </a>
           </div>
         </div>
       </div>

@@ -23,9 +23,9 @@ class Objetivo extends Model
     {
         if(count($this->metas) > 0) {
             $porcentagem_atual = ($this->metas->sum('porcentagem_atual') * 100)/(100 * count($this->metas));
-            return $porcentagem_atual;
+            return $porcentagem_atual . '%';
         } else
-            return null;
+            return 0 . '%';
     }
 
     public function dimensao()

@@ -1,7 +1,10 @@
 <?php
 
-function formatDate($data) {
+function formatDate($data, $exercicio=false) {
   $data = date_create($data);
+  if($exercicio)
+    return date_format($data,"Y");
+
   return date_format($data,"d/m/Y");
 }
 

@@ -15,6 +15,7 @@ use App\Http\Controllers\PlanoEstrategicoController;
 use App\Http\Controllers\PlanoAcaoController;
 use App\Http\Controllers\EixoEstrategicoController;
 use App\Http\Controllers\DimensaoController;
+use App\Http\Controllers\ObjetivoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,7 @@ Route::resource('plano_estrategico', PlanoEstrategicoController::class);
 Route::resource('plano_acao', PlanoAcaoController::class);
 Route::resource('eixo_estrategico', EixoEstrategicoController::class);
 Route::resource('dimensao', DimensaoController::class);
+Route::resource('objetivo', ObjetivoController::class);
 
 
 

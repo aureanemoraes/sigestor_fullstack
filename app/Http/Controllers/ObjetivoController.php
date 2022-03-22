@@ -2,31 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Dimensao;
+use App\Models\Objetivo;
 use App\Models\Instituicao;
 use App\Models\PlanoEstrategico;
 use App\Models\EixoEstrategico;
+use App\Models\Dimensao;
 use Illuminate\Http\Request;
-use App\Http\Transformers\DimensaoTransformer;
+use App\Http\Transformers\ObjetivoTransformer;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class DimensaoController extends Controller
+class ObjetivoController extends Controller
 {
-	public function opcoes($eixo_estrategico_id)
-	{
-		return Dimensao::select('id', 'nome as text')->where('eixo_estrategico_id', $eixo_estrategico_id)->get();
-	}
-
 	public function index()
 	{
-		return view('dimensao.index')->with([
-			'dimensoes' => Dimensao::get()
+		return view('objetivo.index')->with([
+			'objetivos' => Objetivo::get()
 		]);
 	}
 
 	public function create() {
-		return view('dimensao.create')->with([
+		return view('objetivo.create')->with([
             'planos_estrategicos' => PlanoEstrategico::all()
 		]);
 	}
@@ -40,14 +36,14 @@ class DimensaoController extends Controller
 
 		try {
 			DB::beginTransaction();
-			$dimensao = DimensaoTransformer::toInstance($request->all());
-			$dimensao->save();
+			$objetivo = ObjetivoTransformer::toInstance($request->all());
+			$objetivo->save();
 			DB::commit();
 		} catch (Exception $ex) {
 			DB::rollBack();
 		}
 
-		return redirect()->route('dimensao.index');
+		return redirect()->route('objetivo.index');
 	}
 
 	public function show($id)
@@ -55,11 +51,12 @@ class DimensaoController extends Controller
 	}
 
 	public function edit($id) {
-		$dimensao = Dimensao::findOrFail($id);
-		return view('dimensao.edit')->with([
-			'dimensao' => $dimensao,
+		$objetivo = Objetivo::findOrFail($id);
+		return view('objetivo.edit')->with([
+			'objetivo' => $objetivo,
 			'planos_estrategicos' => PlanoEstrategico::all(),
-			'eixos_estrategicos' => EixoEstrategico::where('plano_estrategico_id', $dimensao->eixo_estrategico->plano_estrategico_id)->get()
+			'eixos_estrategicos' => EixoEstrategico::where('plano_estrategico_id', $objetivo->dimensao->eixo_estrategico->plano_estrategico_id)->get(),
+			'dimensoes' => Dimensao::where('eixo_estrategico_id', $objetivo->dimensao->eixo_estrategico_id)->get()
 		]);
 	}
 
@@ -70,13 +67,13 @@ class DimensaoController extends Controller
 
 		if($invalido) return $invalido;
 		
-		$dimensao = Dimensao::find($id);
+		$objetivo = Objetivo::find($id);
 
-		if(isset($dimensao)) {
+		if(isset($objetivo)) {
 			try {
 				DB::beginTransaction();
-				$dimensao = DimensaoTransformer::toInstance($request->all(), $dimensao);
-				$dimensao->save();
+				$objetivo = ObjetivoTransformer::toInstance($request->all(), $objetivo);
+				$objetivo->save();
 				DB::commit();
 
 			} catch (Exception $ex) {
@@ -84,21 +81,21 @@ class DimensaoController extends Controller
 			}
 		}
 
-		return redirect()->route('dimensao.index');
+		return redirect()->route('objetivo.index');
 
 	}
 
 	public function destroy($id)
 	{
-		$dimensao = Dimensao::find($id);
+		$objetivo = Objetivo::find($id);
 		try {
-			if(isset($dimensao)) {
-				$dimensao->delete();
+			if(isset($objetivo)) {
+				$objetivo->delete();
 			} 
 		} catch(Exception $ex) {
 		}
 
-		return redirect()->route('dimensao.index');
+		return redirect()->route('objetivo.index');
 
 	}
 
@@ -106,7 +103,7 @@ class DimensaoController extends Controller
 	{
 		$validator = Validator::make($request->all(), [
             'nome' => ['required'],
-            'eixo_estrategico_id' => ['integer', 'required', 'exists:eixos_estrategicos,id']
+            'dimensao_id' => ['integer', 'required', 'exists:dimensoes,id']
         ]);
 
 		if ($validator->fails()) {
