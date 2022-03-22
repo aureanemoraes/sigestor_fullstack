@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<h3>Naturezas de Despesas</h3>
+<h3>Subnaturezas de Despesas</h3>
 <section class="d-flex justify-content-end mb-2">
   <a href="{{ route('subnatureza_despesa.create') }}" type="button" class="btn btn-primary">
     Novo
