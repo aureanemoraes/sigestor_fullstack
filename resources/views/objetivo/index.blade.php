@@ -41,6 +41,17 @@
         </tr>
         @endforeach
       </tbody>
+      <tfoot>
+        <tr>
+          <th></th>
+          <th>DIMENSÃO ESTRATÉGICA</th>
+          <th>EIXO ESTRATÉGICO</th>
+          <th>PLANO ESTRATÉGICO</th>
+          <th>EXERCÍCIO DO PLANO DE AÇÃO</th>
+          <th></th>
+          <th></th>
+        </tr>
+    </tfoot>
     </table>
   </div>
 </section>
@@ -51,8 +62,29 @@
 
 @section('js')
   <script>
-    $(document).ready( function () {
-      $('#objetivos').DataTable();
-    });
+  $('#objetivos').DataTable( {
+        initComplete: function () {
+            this.api().columns().every( function (i) {
+                if([1, 2, 3, 4].includes(i)) {
+                  var column = this;
+                  var select = $('<select class="form-select form-select-sm"><option value=""></option></select>')
+                      .appendTo( $(column.footer()).empty() )
+                      .on( 'change', function () {
+                          var val = $.fn.dataTable.util.escapeRegex(
+                              $(this).val()
+                          );
+  
+                          column
+                              .search( val ? '^'+val+'$' : '', true, false )
+                              .draw();
+                      } );
+  
+                  column.data().unique().sort().each( function ( d, j ) {
+                      select.append( '<option value="'+d+'">'+d+'</option>' )
+                  } );
+                }
+            } );
+        }
+    } );
   </script>
 @endsection
