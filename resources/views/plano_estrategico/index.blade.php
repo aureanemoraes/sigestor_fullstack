@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-<h3>Exercícios</h3>
+<h3>Planos Estratégicos</h3>
 <section class="d-flex justify-content-end mb-2">
-  <a href="{{ route('exercicio.create') }}" type="button" class="btn btn-primary">
+  <a href="{{ route('plano_estrategico.create') }}" type="button" class="btn btn-primary">
     Novo
   </a>
 </section>
 <section>
   <div class="table-responsive">
-    <table class="table" id="exercicios">
+    <table class="table" id="planos_estrategicos">
       <thead>
         <th>NOME</th>
         <th>ÍNICIO</th>
@@ -17,17 +17,17 @@
         <th></th>
       </thead>
       <tbody>
-        @foreach($exercicios as $exercicio)
+        @foreach($planos_estrategicos as $plano_estrategico)
         <tr>
-          <td>{{ $exercicio->nome }}</td>
-          <td>{{ formatDate($exercicio->data_inicio) }}</td>
-          <td>{{ formatDate($exercicio->data_fim) }}</td>
+          <td>{{ $plano_estrategico->nome }}</td>
+          <td>{{ formatDate($plano_estrategico->data_inicio) }}</td>
+          <td>{{ formatDate($plano_estrategico->data_fim) }}</td>
           <td>
-            <form action="{{ route('exercicio.destroy', $exercicio->id) }}" method="post" id="form-delete">
+            <form action="{{ route('plano_estrategico.destroy', $plano_estrategico->id) }}" method="post" id="form-delete">
               @csrf
               @method('delete')
               <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
-                <a type="button" href="{{ route('exercicio.edit', $exercicio->id) }}" class="btn btn-primary" ><i class="bi bi-pen-fill"></i></a>
+                <a type="button" href="{{ route('plano_estrategico.edit', $plano_estrategico->id) }}" class="btn btn-primary" ><i class="bi bi-pen-fill"></i></a>
                 <button type="submit" class="btn btn-primary"><i class="bi bi-trash3-fill"></i></button>
               </div>
             </form>
@@ -46,7 +46,7 @@
 @section('js')
   <script>
     $(document).ready( function () {
-      $('#exercicios').DataTable();
+      $('#planos_estrategicos').DataTable();
     });
   </script>
 @endsection

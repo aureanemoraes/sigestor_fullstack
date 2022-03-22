@@ -80,10 +80,21 @@
             Metas Estratégicas
           </a>
           <div class="collapse" id="metas_estrategicas">
-            <a href="{{ route('instituicao.index') }}" class="nav_link active">
+            <a href="{{ route('plano_estrategico.index') }}" class="nav_link nav_link_tertiary active">
               <i class="bi bi-align-end"></i>
-
-              <span class="nav_name">Exercício</span>
+              <span class="nav_name">Planos Estratégicos</span>
+            </a>
+            <a href="#" class="nav_link nav_link_tertiary active">
+              <i class="bi bi-align-end"></i>
+              <span class="nav_name">Planos de Ações</span>
+            </a>
+            <a href="#" class="nav_link nav_link_tertiary active">
+              <i class="bi bi-align-end"></i>
+              <span class="nav_name">Eixos</span>
+            </a>
+            <a href="#" class="nav_link nav_link_tertiary active">
+              <i class="bi bi-align-end"></i>
+              <span class="nav_name">Dimensões</span>
             </a>
           </div>
         </div>

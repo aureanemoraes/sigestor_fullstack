@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Exercicio;
+use App\Models\PlanoEstrategico;
 use App\Models\Instituicao;
 use Illuminate\Http\Request;
-use App\Http\Transformers\ExercicioTransformer;
+use App\Http\Transformers\PlanoEstrategicoTransformer;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class ExercicioController extends Controller
+class PlanoEstrategicoController extends Controller
 {
 	public function index()
 	{
-		return view('exercicio.index')->with([
-			'exercicios' => Exercicio::get()
+		return view('plano_estrategico.index')->with([
+			'planos_estrategicos' => PlanoEstrategico::get()
 		]);
 	}
 
 	public function create() {
-		return view('exercicio.create')->with([
+		return view('plano_estrategico.create')->with([
 			'instituicoes' => Instituicao::all()
 		]);
 	}
@@ -33,14 +33,14 @@ class ExercicioController extends Controller
 
 		try {
 			DB::beginTransaction();
-			$exercicio = ExercicioTransformer::toInstance($request->all());
-			$exercicio->save();
+			$plano_estrategico = PlanoEstrategicoTransformer::toInstance($request->all());
+			$plano_estrategico->save();
 			DB::commit();
 		} catch (Exception $ex) {
 			DB::rollBack();
 		}
 
-		return redirect()->route('exercicio.index');
+		return redirect()->route('plano_estrategico.index');
 	}
 
 	public function show($id)
@@ -48,9 +48,9 @@ class ExercicioController extends Controller
 	}
 
 	public function edit($id) {
-		$exercicio = Exercicio::findOrFail($id);
-		return view('exercicio.edit')->with([
-			'exercicio' => $exercicio,
+		$plano_estrategico = PlanoEstrategico::findOrFail($id);
+		return view('plano_estrategico.edit')->with([
+			'plano_estrategico' => $plano_estrategico,
 			'instituicoes' => Instituicao::all()
 		]);
 	}
@@ -62,13 +62,13 @@ class ExercicioController extends Controller
 
 		if($invalido) return $invalido;
 		
-		$exercicio = Exercicio::find($id);
+		$plano_estrategico = PlanoEstrategico::find($id);
 
-		if(isset($exercicio)) {
+		if(isset($plano_estrategico)) {
 			try {
 				DB::beginTransaction();
-				$exercicio = ExercicioTransformer::toInstance($request->all(), $exercicio);
-				$exercicio->save();
+				$plano_estrategico = PlanoEstrategicoTransformer::toInstance($request->all(), $plano_estrategico);
+				$plano_estrategico->save();
 				DB::commit();
 
 			} catch (Exception $ex) {
@@ -76,21 +76,21 @@ class ExercicioController extends Controller
 			}
 		}
 
-		return redirect()->route('exercicio.index');
+		return redirect()->route('plano_estrategico.index');
 
 	}
 
 	public function destroy($id)
 	{
-		$exercicio = Exercicio::find($id);
+		$plano_estrategico = PlanoEstrategico::find($id);
 		try {
-			if(isset($exercicio)) {
-				$exercicio->delete();
+			if(isset($plano_estrategico)) {
+				$plano_estrategico->delete();
 			} 
 		} catch(Exception $ex) {
 		}
 
-		return redirect()->route('exercicio.index');
+		return redirect()->route('plano_estrategico.index');
 
 	}
 
@@ -102,8 +102,6 @@ class ExercicioController extends Controller
             'data_fim' => ['required'],
             'instituicao_id' => ['integer', 'required', 'exists:instituicoes,id']
         ]);
-
-				// dd($request, $validator->fails());
 
 		if ($validator->fails()) {
 			return redirect()->back()

@@ -11,8 +11,7 @@ use App\Http\Controllers\AcaoTipoController;
 use App\Http\Controllers\NaturezaDespesaController;
 use App\Http\Controllers\SubnaturezaDespesaController;
 use App\Http\Controllers\CentroCustoController;
-
-
+use App\Http\Controllers\PlanoEstrategicoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +41,9 @@ Route::patch('natureza_despesa/favoritar/{id}', [NaturezaDespesaController::clas
 Route::resource('natureza_despesa', NaturezaDespesaController::class);
 Route::resource('subnatureza_despesa', SubnaturezaDespesaController::class);
 Route::resource('centro_custo', CentroCustoController::class);
+
+Route::resource('plano_estrategico', PlanoEstrategicoController::class);
+
 
 
 
