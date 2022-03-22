@@ -10,14 +10,14 @@
   <nav class="nav">
     <div>
       <a href="/" class="nav_logo">
-        <img src="https://i.ibb.co/vJ0FXB2/logo-branca.png" alt="Logo" class="rounded logo" height="100px">
+        <img src="{{ asset('/storage/img/logo_branca.png') }}" alt="Logo" class="rounded logo" height="100px">
       </a>
       <div class="nav_list">
         <a class="nav_link active" data-bs-toggle="collapse" href="#configuracao" role="button" aria-expanded="true" aria-controls="configuracao">
           <i class="bi bi-gear-fill nav_icon"></i>
           Configurações
         </a>
-        <div class="collapse show" id="configuracao">
+        <div class="collapse" id="configuracao">
           <a class="nav_link nav_link_secondary" data-bs-toggle="collapse" href="#matriz_orcamamentaria" role="button" aria-expanded="false" aria-controls="matriz_orcamamentaria">
             <i class="bi bi-align-center"></i>
             Matriz Orçamentária
@@ -106,7 +106,7 @@
           <i class="bi bi-gear-fill nav_icon"></i>
           Matriz Estratégica
         </a>
-        <div class="collapse show" id="matriz_estratégica">
+        <div class="collapse" id="matriz_estratégica">
           <a href="{{ route('meta.index') }}" class="nav_link nav_link_secondary">
             <i class="bi bi-align-end"></i>
             <span class="nav_name">Metas</span>
