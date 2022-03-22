@@ -13,17 +13,19 @@
   <header class="header" id="header">
     <div class="header_toggle"></div>
     <div class="header_text">
-      <a type="button" href="{{ route('instituicao.index') }}" class="btn btn-sm btn-primary">Login</a>
+      <a type="button" href="{{ route('instituicao.index') }}" class="btn btn-primary">Login</a>
     </div>
   </header>
   <div class="container">
     <div class="main">
       <div class="img">
-        <img src="https://i.ibb.co/kcPJkCz/logo-colorida.png" alt="" height="300px" class="logo">
-        <p>Sistema de Gestão Orçamentária e Metas Estratégicas</p>
-
-        <a href="#" class="btn btn-secondary" type="button">Matriz Orçamentária</a>
-        <a href="#" class="btn btn-secondary" type="button">Metas Estratégicas</a>
+        <img src="{{ asset('storage/img/logo-sigestor.png') }}" alt="" height="300px" class="logo">
+      </div>
+      <div class="card links-container">
+        <div class="card-body d-grid gap-2">
+          <a href="#" class="btn btn-lg btn-secondary" type="button">Matriz Orçamentária</a>
+          <a href="#" class="btn btn-lg btn-secondary" type="button">Metas Estratégicas</a>
+        </div>
       </div>
     </div>
   </div>

@@ -6,7 +6,7 @@
   --first-color: #4723D9;
   --first-color-light: #AFA5D9;
   --white-color: #F7F6FB;
-  --header-color: #e4e4e4;
+  --header-color: rgb(124,124,124);
   --body-font: 'Nunito', sans-serif;
   --normal-font-size: 1rem;
   --z-fixed: 100
@@ -26,7 +26,7 @@ body {
     font-family: var(--body-font);
     font-size: var(--normal-font-size);
     transition: .5s;
-    background: url("https://i.ibb.co/FqLhthH/background.png");
+    background: url("/storage/img/background.png");
     background-repeat: no-repeat;
     background-position: -10px -10px;
     background-size: cover;
@@ -66,12 +66,18 @@ body {
   width: 40px
 }
 
+.container {
+  height: 100%;
+}
 
 .main {
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
+  flex-direction: column;
+  width: 100%;
 }
 
 .logo {
@@ -98,4 +104,16 @@ body {
   background: #86305b;
   border-color: #86305b;
   color: white;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.links-container {
+  border-radius: 20px;
+  padding: 2rem 10rem;
 }
