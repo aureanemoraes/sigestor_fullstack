@@ -26,7 +26,7 @@ use App\Http\Controllers\CentroCustoController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('public.home');
 });
 
 Route::resource('instituicao', InstituicaoController::class);
