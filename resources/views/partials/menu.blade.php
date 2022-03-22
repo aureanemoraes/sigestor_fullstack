@@ -9,7 +9,7 @@
 <div class="l-navbar" id="nav-bar">
   <nav class="nav">
     <div>
-      <a href="#" class="nav_logo">
+      <a href="/" class="nav_logo">
         <img src="https://i.ibb.co/vJ0FXB2/logo-branca.png" alt="Logo" class="rounded logo" height="100px">
       </a>
       <div class="nav_list">
