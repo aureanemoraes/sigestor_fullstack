@@ -1,5 +1,5 @@
 
-<h3>Naturezas de Despesas</h3>
+<h3>Subnaturezas de Despesas</h3>
 @php
     if(isset($subnatureza_despesa)) {
       $route = route('subnatureza_despesa.update', $subnatureza_despesa->id);
