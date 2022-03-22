@@ -33,9 +33,9 @@
   </div>
 
   <div class="form-floating mb-3">
-    <input type="text" class="form-control @error('ugr') is-invalid @enderror" id="ugr" name="ugr" value="{{ isset($unidade_administrativa->ugr) ? $unidade_administrativa->ugr : '' }}" placeholder="Ugr...">
-    <label for="ugr">Ugr</label>
-    @error('ugr')
+    <input type="text" class="form-control @error('uasg') is-invalid @enderror" id="uasg" name="uasg" value="{{ isset($unidade_administrativa->uasg) ? $unidade_administrativa->uasg : '' }}" placeholder="Ugr...">
+    <label for="uasg">Uasg</label>
+    @error('uasg')
       <div class="invalid-feedback">
         {{ $message }}
       </div>

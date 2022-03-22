@@ -95,7 +95,7 @@ class InstituicaoController extends Controller
 		$validator = Validator::make($request->all(), [
 			'nome' => ['required'],
 			'cnpj' => ['required'],
-			'uasg' => ['required']
+			'ugr' => ['required']
 		]);
 
 		if ($validator->fails()) {

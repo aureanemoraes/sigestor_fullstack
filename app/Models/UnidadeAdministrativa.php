@@ -16,7 +16,7 @@ class UnidadeAdministrativa extends Model
     protected $fillable = [
         'nome',
         'sigla',
-        'ugr',
+        'uasg',
         'logs',
         'instituicao_id',
         'unidade_gestora_id'

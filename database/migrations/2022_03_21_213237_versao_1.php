@@ -14,7 +14,7 @@ class Versao1 extends Migration
             $table->string('nome');
             $table->string('sigla')->nullable();
             $table->string('cnpj');
-            $table->string('uasg');
+            $table->string('ugr');
             $table->string('logradouro')->nullable();
             $table->string('numero')->nullable();
             $table->string('bairro')->nullable();
@@ -58,7 +58,7 @@ class Versao1 extends Migration
             $table->id();
             $table->string('nome');
             $table->string('sigla')->nullable();
-            $table->string('ugr');
+            $table->string('uasg');
             $table->json('logs')->nullable();
             $table->unsignedBigInteger('instituicao_id');
             $table->foreign('instituicao_id')->references('id')->on('instituicoes');

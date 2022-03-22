@@ -14,7 +14,7 @@
         <th>NOME</th>
         <th>SIGLA</th>
         <th>CNPJ</th>
-        <th>UASG</th>
+        <th>UGR</th>
         <th>ENDEREÇO</th>
         <th></th>
       </thead>
@@ -24,7 +24,7 @@
           <td>{{ $instituicao->nome }}</td>
           <td>{{ $instituicao->sigla }}</td>
           <td>{{ cnpj($instituicao->cnpj) }}</td>
-          <td>{{ $instituicao->uasg }}</td>
+          <td>{{ $instituicao->ugr }}</td>
           <td>{{ "$instituicao->logradouro, $instituicao->numero, $instituicao->bairro - $instituicao->complemento" }}</td>
           <td>
             <form action="{{ route('instituicao.destroy', $instituicao->id) }}" method="post" id="form-delete">

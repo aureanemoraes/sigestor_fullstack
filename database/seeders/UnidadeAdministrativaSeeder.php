@@ -17,14 +17,14 @@ class UnidadeAdministrativaSeeder extends Seeder
         UnidadeAdministrativa::create([
             'nome' => 'Unidade Administrativa 1',
             'sigla' => 'UA1',
-            'ugr' => '123456',
+            'uasg' => '123456',
             'instituicao_id' => 1,
             'unidade_gestora_id' => 1
         ]);
         UnidadeAdministrativa::create([
             'nome' => 'Unidade Administrativa 2',
             'sigla' => 'UA2',
-            'ugr' => '223456',
+            'uasg' => '223456',
             'instituicao_id' => 1,
             'unidade_gestora_id' => 1
         ]);

@@ -17,7 +17,7 @@ class Instituicao extends Model
         'nome',
         'sigla',
         'cnpj',
-        'uasg',
+        'ugr',
         'logradouro',
         'numero',
         'bairro',

@@ -13,7 +13,7 @@
       <thead>
         <th>NOME</th>
         <th>SIGLA</th>
-        <th>UGR</th>
+        <th>UASG</th>
         <th>UNIDADE GESTORA</th>
         <th></th>
       </thead>
@@ -22,7 +22,7 @@
         <tr>
           <td>{{ $unidade_administrativa->nome }}</td>
           <td>{{ $unidade_administrativa->sigla }}</td>
-          <td>{{ $unidade_administrativa->ugr }}</td>
+          <td>{{ $unidade_administrativa->uasg }}</td>
           <td>{{ $unidade_administrativa->unidade_gestora->nome }}</td>
           <td>
             <form action="{{ route('unidade_administrativa.destroy', $unidade_administrativa->id) }}" method="post" id="form-delete">

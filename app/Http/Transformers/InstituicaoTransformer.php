@@ -24,8 +24,8 @@ class InstituicaoTransformer
           case 'cnpj':
             $instituicao->cnpj = $value;
             break;
-          case 'uasg':
-            $instituicao->uasg = $value;
+          case 'ugr':
+            $instituicao->ugr = $value;
             break;
           case 'logradouro':
             $instituicao->logradouro = $value;

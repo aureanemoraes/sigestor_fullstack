@@ -101,7 +101,7 @@ class UnidadeAdministrativaController extends Controller
 	{
 		$validator = Validator::make($request->all(), [
 			'nome' => ['required'],
-			'ugr' => ['required'],
+			'uasg' => ['required'],
 			'instituicao_id' => ['required', 'exists:instituicoes,id'],
 			'unidade_gestora_id' => ['required', 'exists:unidades_gestoras,id']
 		]);
