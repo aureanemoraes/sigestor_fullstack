@@ -77,3 +77,25 @@ body {
 .logo {
   object-fit: contain;
 }
+
+.btn-primary, .page-item.active .page-link {
+  background: #77274F;
+  border-color: #77274F;
+}
+
+.btn-primary:hover, .page-item.active .page-link:hover {
+  background: #9e3c6d;
+  border-color: #9e3c6d;
+}
+
+.btn-info {
+  background: #9e3c6d;
+  border-color: #9e3c6d;
+  color: white;
+}
+
+.btn-info:hover {
+  background: #86305b;
+  border-color: #86305b;
+  color: white;
+}
