@@ -7,6 +7,7 @@
     --first-color-light: #F7F6FB;
     --white-color: #F7F6FB;
     --header-color: #e4e4e4;
+    --secondary-color: #909599;
     --body-font: 'Nunito', sans-serif;
     --normal-font-size: 0.75rem;
     --z-fixed: 100
@@ -73,7 +74,8 @@ a {
     background-color: var(--first-color);
     padding: .5rem 1rem 0 0;
     transition: .5s;
-    z-index: var(--z-fixed)
+    z-index: var(--z-fixed);
+    display: inline-block;
 }
 
 .nav {
@@ -81,7 +83,12 @@ a {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    overflow: hidden
+    overflow: hidden;
+}
+
+.collapse {
+    display: inline-block;
+
 }
 
 .nav_logo,
@@ -109,14 +116,34 @@ a {
     font-weight: 700
 }
 
-.nav_link {
+.nav_link, .nav_link_secondary {
     position: relative;
     color: var(--first-color-light);
-    transition: .3s
+    transition: .3s;
+    font-weight: bold;
+    border-radius: 8px;
+    margin-left: 0.3rem;
+}
+
+.nav_link {
+    color: var(--first-color-light);
+}
+
+.nav_link_secondary {
+    color: var(--secondary-color);
+}
+
+.nav_link_tertiary {
+    font-weight: normal;
+    padding-left: 2rem;
 }
 
 .nav_link:hover {
-    color: var(--white-color)
+    color: #606468;
+}
+
+.nav_link_secondary:hover {
+    color: #606468
 }
 
 .nav_icon {
@@ -132,17 +159,16 @@ a {
     background-color: var(--header-color);
 }
 
-.active {
-    color: var(--white-color)
+.active{
+    background-color: var(--header-color);
+    color: rgb(19, 17, 17);
 }
 
-.active::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    width: 2px;
-    height: 32px;
-    background-color: var(--white-color)
+.collapsing {
+    margin: initial;
+    padding: initial;
+    width: initial;
+    height: initial;
 }
 
 .height-100 {
