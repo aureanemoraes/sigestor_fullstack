@@ -14,6 +14,7 @@
         <th>CÓDIGO</th>
         <th>NOME</th>
         <th>NATUREZA DE DESPESA</th>
+        <th>TIPOS DE DESPESAS</th>
         <th></th>
       </thead>
       <tbody>
@@ -22,6 +23,11 @@
           <td>{{ $subnatureza_despesa->codigo }}</td>
           <td>{{ $subnatureza_despesa->nome }}</td>
           <td>{{ $subnatureza_despesa->natureza_despesa->codigo . ' - ' . $subnatureza_despesa->natureza_despesa->nome }}</td>
+          <td>
+            @if($subnatureza_despesa->natureza_despesa->tipo)
+            <span class="badge bg-secondary">{{ $subnatureza_despesa->natureza_despesa->tipo }}</span>
+            @endif
+        </td>
           <td class="action-buttons">
             <form action="{{ route('subnatureza_despesa.destroy', $subnatureza_despesa->id) }}" method="post" id="form-delete">
               @csrf
