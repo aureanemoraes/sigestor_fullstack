@@ -125,8 +125,6 @@ class Versao1 extends Migration
             $table->string('nome');
             $table->unsignedBigInteger('eixo_estrategico_id');
             $table->foreign('eixo_estrategico_id')->references('id')->on('eixos_estrategicos');
-            $table->unsignedBigInteger('instituicao_id');
-            $table->foreign('instituicao_id')->references('id')->on('instituicoes');
             $table->timestamps();
         });
 

@@ -13,22 +13,11 @@ class Dimensao extends Model
 
     protected $fillable = [
         'nome',
-        'eixo_estrategico_id',
-        'instituicao_id',
+        'eixo_estrategico_id'
     ];
 
-    public function instituicao()
+    public function eixo_estrategico()
     {
-        return $this->belongsTo(Instituicao::class);
-    } 
-
-    public function exercicio()
-    {
-        return $this->belongsTo(Exercicio::class);
-    } 
-
-    public function objetivos()
-    {
-        return $this->hasMany(Objetivo::class);
+        return $this->belongsTo(EixoEstrategico::class);
     } 
 }

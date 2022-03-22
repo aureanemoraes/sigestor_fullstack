@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Validator;
 
 class EixoEstrategicoController extends Controller
 {
+	public function opcoes($plano_estrategico_id)
+	{
+		return EixoEstrategico::select('id', 'nome as text')->where('plano_estrategico_id', $plano_estrategico_id)->get();
+	}
+
 	public function index()
 	{
 		return view('eixo_estrategico.index')->with([

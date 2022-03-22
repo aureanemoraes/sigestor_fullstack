@@ -90,9 +90,9 @@
             </a>
             <a href="{{ route('eixo_estrategico.index') }}" class="nav_link nav_link_tertiary active">
               <i class="bi bi-align-end"></i>
-              <span class="nav_name">Eixos Estratégicos</span>
+              <span class="nav_name">Eixos</span>
             </a>
-            <a href="#" class="nav_link nav_link_tertiary active">
+            <a href="{{ route('dimensao.index') }}" class="nav_link nav_link_tertiary active">
               <i class="bi bi-align-end"></i>
               <span class="nav_name">Dimensões</span>
             </a>

@@ -21,9 +21,6 @@ class DimensaoTransformer
           case 'eixo_estrategico_id':
             $dimensao->eixo_estrategico_id = $value;
             break;
-          case 'instituicao_id':
-            $dimensao->instituicao_id = $value;
-            break;
         }
       }
 

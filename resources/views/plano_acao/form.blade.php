@@ -47,7 +47,7 @@
     <select class="form-select @error('plano_estrategico_id') is-invalid @enderror" id="plano_estrategico_id" name="plano_estrategico_id" aria-label="Selecione o grupo">
       <option selected value="">-- selecione --</option>
       @foreach($planos_estrategicos as $plano_estrategico)
-        @if(isset($subplano_estrategico) && $plano_estrategico->id == $subplano_estrategico->plano_estrategico_id)
+        @if(isset($plano_acao) && $plano_estrategico->id == $plano_acao->plano_estrategico_id)
           <option selected value="{{ $plano_estrategico->id }}">{{ $plano_estrategico->nome }}</option>
         @else
           <option value="{{ $plano_estrategico->id }}">{{ $plano_estrategico->nome }}</option>
