@@ -53,16 +53,12 @@ a {
 }
 
 .header_img {
-    width: 35px;
-    height: 35px;
     display: flex;
     justify-content: center;
-    border-radius: 50%;
     overflow: hidden
 }
 
 .header_img img {
-    width: 40px
 }
 
 .l-navbar {
