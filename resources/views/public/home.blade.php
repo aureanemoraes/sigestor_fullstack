@@ -19,7 +19,7 @@
   <div class="container">
     <div class="main">
       <div class="img">
-        <img src="{{ asset('storage/img/logo_colorida.png') }}" alt="" height="300px" class="logo">
+        <img src="https://i.ibb.co/kcPJkCz/logo-colorida.png" alt="" height="300px" class="logo">
         <p>Sistema de Gestão Orçamentária e Metas Estratégicas</p>
 
         <a href="#" class="btn btn-secondary" type="button">Matriz Orçamentária</a>

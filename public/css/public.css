@@ -26,8 +26,10 @@ body {
     font-family: var(--body-font);
     font-size: var(--normal-font-size);
     transition: .5s;
-    background: url("/storage/img/background.png");
+    background: url("https://i.ibb.co/FqLhthH/background.png");
+    background-repeat: no-repeat;
     background-position: -10px -10px;
+    background-size: cover;
 }
 
 .header {
