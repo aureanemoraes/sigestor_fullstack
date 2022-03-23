@@ -26,9 +26,6 @@ class MetaController extends Controller
 		return view('meta.create')->with([
             'unidades_gestoras' => UnidadeGestora::all(),
 						'planos_estrategicos' => PlanoEstrategico::all(),
-						'eixos_estrategicos' => EixoEstrategico::all(),
-						'dimensao' => Dimensao::all(),
-						'objetivo' => Objetivo::all()
         ]);
 	}
 
@@ -59,7 +56,8 @@ class MetaController extends Controller
 		$meta = Meta::findOrFail($id);
 		return view('meta.edit')->with([
 			'meta' => $meta,
-            'unidades_gestoras' => UnidadeGestora::all()
+			'unidades_gestoras' => UnidadeGestora::all(),
+			'planos_estrategicos' => PlanoEstrategico::all(),
 		]);
 	}
 

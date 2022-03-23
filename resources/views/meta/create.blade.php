@@ -38,12 +38,31 @@
       }
     });
 
+    $('#dimensao_id').on('change', () => {
+      $('#objetivo_id').empty().trigger("change");
+      $('#objetivo_id').select2({data: [
+        {id: '', text: '-- selecione --'}
+      ]});
+      let dimensao_id = $('#dimensao_id').val();
+      if(dimensao_id) {
+        $.ajax({
+          method: "GET",
+          url: `/api/objetivo/opcoes/${dimensao_id}`,
+        }).done(function(response) {
+          $('#objetivo_id').select2({data: response});
+        });
+      }
+    });
+
     $(document).ready(function() {
         $('#plano_estrategico_id').select2();
         $('#eixo_estrategico_id').select2({data: [
           {id: '', text: '-- selecione --'}
         ]});
         $('#dimensao_id').select2({data: [
+          {id: '', text: '-- selecione --'}
+        ]});
+        $('#objetivo_id').select2({data: [
           {id: '', text: '-- selecione --'}
         ]});
         $('#unidade_gestora_id').select2();

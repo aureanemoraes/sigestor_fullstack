@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Validator;
 
 class ObjetivoController extends Controller
 {
+	public function opcoes($dimensao_id)
+	{
+		return Objetivo::select('id', 'nome as text')->where('dimensao_id', $dimensao_id)->where('ativo', 1)->get();
+	}
+
 	public function index()
 	{
 		return view('objetivo.index')->with([

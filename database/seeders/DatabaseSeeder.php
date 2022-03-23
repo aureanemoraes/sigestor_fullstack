@@ -32,7 +32,12 @@ class DatabaseSeeder extends Seeder
             MetaOrcamentariaSeeder::class,
             DespesaSeeder::class,
             FonteProgramaSeeder::class,
-            UserSeeder::class
+            UserSeeder::class,
+            PlanoEstrategicoSeeder::class,
+            PlanoAcaoSeeder::class,
+            EixoEstrategicoSeeder::class,
+            DimensaoSeeder::class,
+            ObjetivoSeeder::class,
         ]);
     }
 }
