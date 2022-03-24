@@ -9,19 +9,15 @@
 </section>
 <section>
   <div class="table-responsive">
-    {{-- <table class="table" id="subnaturezas_despesas">
+    <table class="table" id="metas">
       <thead>
-        <th>CÓDIGO</th>
         <th>NOME</th>
-        <th>NATUREZA DE DESPESA</th>
         <th></th>
       </thead>
       <tbody>
-        @foreach($subnaturezas_despesas as $meta)
+        @foreach($metas as $meta)
         <tr>
-          <td>{{ $meta->codigo }}</td>
           <td>{{ $meta->nome }}</td>
-          <td>{{ $meta->natureza_despesa->codigo . ' - ' . $meta->natureza_despesa->nome }}</td>
           <td class="action-buttons">
             <form action="{{ route('meta.destroy', $meta->id) }}" method="post" id="form-delete">
               @csrf
@@ -35,18 +31,15 @@
         </tr>
         @endforeach
       </tbody>
-    </table> --}}
+    </table>
   </div>
 </section>
 @endsection
 
-
-{{-- {{ dd($errors->any()) }} --}}
-
 @section('js')
   <script>
     $(document).ready( function () {
-      $('#subnaturezas_despesas').DataTable();
+      $('#metas').DataTable();
     });
   </script>
 @endsection

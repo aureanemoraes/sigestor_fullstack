@@ -24,6 +24,9 @@ class MetaTransformer
           case 'tipo':
             $meta->tipo = $value;
             break;
+          case 'tipo_dado':
+            $meta->tipo_dado = $value;
+            break;
           case 'valor_inicial':
             $meta->valor_inicial = $value;
             break;
@@ -35,9 +38,6 @@ class MetaTransformer
             break;
           case 'objetivo_id':
             $meta->objetivo_id = $value;
-            break;
-          case 'unidade_gestora_id':
-            $meta->unidade_gestora_id = $value;
             break;
         }
       }

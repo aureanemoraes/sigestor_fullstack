@@ -14,15 +14,15 @@ class Meta extends Model
     protected $fillable = [
         'nome',
         'descricao', // dar mais bolsas para alunos carentes
-        'tipo', // porcentagem, valor, maior_que, menor_que 
+        'tipo', // porcentagem, valor, maior_que, menor_que ,
+        'tipo_dado',
         'valor_inicial', //
         'valor_final', // 100%
         'valor_atingido', // 2%
-        'objetivo_id',
-        'unidade_gestora_id'
+        'objetivo_id'
     ];
 
-    protected $appends = ['porcentagem_atual'];
+    protected $appends = ['porcentagem_atual', 'unidades_gestoras_ids'];
 
     public function getPorcentagemAtualAttribute()
     {
@@ -38,8 +38,8 @@ class Meta extends Model
         return $this->belongsTo(Objetivo::class);
     } 
 
-    public function unidade_gestora()
+    public function responsaveis()
     {
-        return $this->belongsTo(UnidadeGestora::class);
-    } 
+        return $this->belongsToMany(UnidadeGestora::class, 'metas_responsaveis', 'meta_id', 'unidade_gestora_id');
+    }
 }

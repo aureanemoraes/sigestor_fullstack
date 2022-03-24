@@ -108,7 +108,7 @@
   </div>
 
   <div class="form-floating mb-3">
-    <textarea class="form-control @error('descricao') is-invalid @enderror" placeholder="Descrição" id="floatingTextarea"></textarea>
+    <textarea class="form-control @error('descricao') is-invalid @enderror" placeholder="Descrição" id="floatingTextarea">{{ isset($meta->descricao) ? $descricao : '' }}</textarea>
     <label for="floatingTextarea">Descrição</label>
     @error('descricao')
       <div class="invalid-feedback">
@@ -121,10 +121,18 @@
     <div class="form-floating mb-3 col-md-3">
       <select class="form-control form-select @error('tipo') is-invalid @enderror" id="tipo" name="tipo" aria-label="Selecione a instituição">
         <option selected value="">-- selecione --</option>
-        <option value="porcentagem">Porcentagem</option>
-        <option value="valor">Valor</option>
-        <option value="maior_que">Maior que</option>
-        <option value="menor_que">Menor que</option>
+        <option value="porcentagem" {{ isset($meta->tipo) && $meta->tipo == 'porcentagem' ? 'selected' : ''  }}>
+          Porcentagem
+        </option>
+        <option value="valor" {{ isset($meta->tipo) && $meta->tipo == 'valor' ? 'selected' : ''  }}>
+          Valor
+        </option>
+        <option value="maior_que" {{ isset($meta->tipo) && $meta->tipo == 'maior_que' ? 'selected' : ''  }}>
+          Maior que
+        </option>
+        <option value="menor_que" {{ isset($meta->tipo) && $meta->tipo == 'menor_que' ? 'selected' : ''  }}>
+          Menor que
+        </option>
       </select>
       <label for="tipo">Tipo</label>
       @error('tipo')
@@ -137,11 +145,19 @@
     <div class="form-floating mb-3 col-md-3">
       <select class="form-control form-select @error('tipo_dado') is-invalid @enderror" id="tipo_dado" name="tipo_dado" aria-label="Selecione a instituição">
         <option selected value="">-- selecione --</option>
-        <option value="numeral">Numeral</option>
-        <option value="porcentagem">Porcentagem</option>
-        <option value="moeda">Moeda (R$)</option>
+        <option value="numeral" {{ isset($meta->tipo_dado) && $meta->tipo_dado == 'numeral' ? 'selected' : ''  }}>
+          Numeral
+        </option>
+        <option value="porcentagem" {{ isset($meta->tipo_dado) && $meta->tipo_dado == 'porcentagem' ? 'selected' : ''  }}>
+          Porcentagem
+        </option>
+        <option value="moeda" {{ isset($meta->tipo_dado) && $meta->tipo_dado == 'moeda' ? 'selected' : ''  }}>
+          Moeda (R$)
+        </option>
       </select>
-      <label for="tipo_dado">Tipo de dado</label>
+      <label for="tipo_dado" {{ isset($meta->tipo_dado) && $meta->tipo_dado == 'tipo_dado' ? 'selected' : ''  }}>
+        Tipo de dado
+      </label>
       @error('tipo_dado')
         <div class="invalid-feedback">
           {{ $message }}
@@ -173,10 +189,9 @@
   <div class="mb-3">
     <label for="unidade_gestora_id">Responsável (Unidades Gestoras)</label>
     <select class="form-select @error('unidade_gestora_id') is-invalid @enderror" id="unidade_gestora_id" name="unidade_gestora_id[]" aria-label="Selecione o grupo"  multiple>
-      <option selected value="">-- selecione --</option>
       @foreach($unidades_gestoras as $unidade_gestora)
-        @if(isset($meta) && $unidade_gestora->id == $meta->unidade_gestora_id)
-          <option selected value="{{ $unidade_gestora->id }}">{{ $unidade_gestora->nome }}</option>
+        @if(isset($meta) && in_array($unidade_gestora->id, $meta->responsaveis()->pluck('unidade_gestora_id')->toArray()))
+          <option value="{{ $unidade_gestora->id }}" selected>{{ $unidade_gestora->nome }}</option>
         @else
           <option value="{{ $unidade_gestora->id }}">{{ $unidade_gestora->nome }}</option>
         @endif

@@ -142,11 +142,19 @@ class Versao1 extends Migration
             $table->string('nome');
             $table->longText('descricao')->nullable();
             $table->string('tipo');
+            $table->string('tipo_dado');
             $table->string('valor_inicial');
             $table->string('valor_final');
             $table->string('valor_atingido')->nullable();
             $table->unsignedBigInteger('objetivo_id');
             $table->foreign('objetivo_id')->references('id')->on('objetivos');
+            $table->timestamps();
+        });
+
+        Schema::create('metas_responsaveis', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('meta_id');
+            $table->foreign('meta_id')->references('id')->on('metas');
             $table->unsignedBigInteger('unidade_gestora_id');
             $table->foreign('unidade_gestora_id')->references('id')->on('unidades_gestoras');
             $table->timestamps();
