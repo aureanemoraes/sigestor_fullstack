@@ -19,24 +19,45 @@ class Meta extends Model
         'valor_inicial', //
         'valor_final', // 100%
         'valor_atingido', // 2%
-        'objetivo_id'
+        'objetivo_id',
+        'plano_acao_id'
     ];
 
     protected $appends = ['porcentagem_atual', 'unidades_gestoras_ids'];
 
     public function getPorcentagemAtualAttribute()
     {
+        $valor_inicial = isset($this->attributes['valor_inicial']) ? $this->attributes['valor_inicial'] : 0;
+
         if(isset($this->attributes['valor_atingido'])) {
             $porcentagem_atual = ($this->attributes['valor_atingido'] * 100)/$this->attributes['valor_final'];
             return $porcentagem_atual;
-        } else 
+        } elseif($valor_inicial > 0) {
+            $porcentagem_atual = ($valor_inicial * 100)/$this->attributes['valor_final'];
+            return $porcentagem_atual;
+        } else {
             return null;
+        }
+    }
+
+    public function getValorAtingidoAttribute($value)
+    {
+        if(is_null($value))
+            return $this->valor_inicial;
+        else
+            return $value;
     }
 
     public function objetivo()
     {
         return $this->belongsTo(Objetivo::class);
     } 
+
+    public function plano_acao()
+    {
+        return $this->belongsTo(PlanoAcao::class);
+    } 
+
 
     public function responsaveis()
     {

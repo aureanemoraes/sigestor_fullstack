@@ -1,6 +1,7 @@
 <?php
 
-function formatDate($data, $exercicio=false) {
+function formatDate($data, $exercicio=false) 
+{
   $data = date_create($data);
   if($exercicio)
     return date_format($data,"Y");
@@ -8,13 +9,14 @@ function formatDate($data, $exercicio=false) {
   return date_format($data,"d/m/Y");
 }
 
-function dateToInput($data) {
+function dateToInput($data) 
+{
   $data = date_create($data);
   return date_format($data,"Y-m-d");
 }
 
-function cnpj($cnpj) {
-
+function cnpj($cnpj) 
+{
   if (! $cnpj) {
       return '';
   }
@@ -24,3 +26,32 @@ function cnpj($cnpj) {
 
   return $cnpj;
 }
+
+function formatCurrency($valor) 
+{
+  $valor = 'R$ ' . number_format($valor, 2, ',');
+
+  return $valor;
+}
+
+function formatMetaValue($dado, $tipo_dado)
+{
+  $dado = is_null($dado) || empty($dado) ? 0 : $dado;
+  switch($tipo_dado) {
+    case 'numeral':
+      $dado_formatado = $dado;
+      break;
+    case 'porcentagem':
+      $dado_formatado = $dado . '%';
+      break;
+    case 'moeda':
+      $dado_formatado = formatCurrency($dado);
+      break;
+    default:
+      $dado_formatado = $dado;
+  }
+
+  return $dado_formatado;
+}
+
+

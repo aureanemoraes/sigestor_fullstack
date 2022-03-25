@@ -18,6 +18,7 @@
     <!--Container Main start-->
     <div class="height-100 bg-light" id="main">
         <div class="container pt-2">
+          @yield('breadcrumb')
           @yield('content')
         </div>
     </div>

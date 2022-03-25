@@ -107,7 +107,7 @@
           Matriz Estratégica
         </a>
         <div class="collapse" id="matriz_estratégica">
-          <a href="{{ route('meta.index') }}" class="nav_link nav_link_secondary">
+          <a href="{{ route('objetivo.index', ['modo_exibicao' => 'metas']) }}" class="nav_link nav_link_secondary">
             <i class="bi bi-align-center"></i>
             
             <span class="nav_name">Metas</span>

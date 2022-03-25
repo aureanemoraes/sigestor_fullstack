@@ -148,6 +148,8 @@ class Versao1 extends Migration
             $table->string('valor_atingido')->nullable();
             $table->unsignedBigInteger('objetivo_id');
             $table->foreign('objetivo_id')->references('id')->on('objetivos');
+            $table->unsignedBigInteger('plano_acao_id');
+            $table->foreign('plano_acao_id')->references('id')->on('planos_acoes');
             $table->timestamps();
         });
 

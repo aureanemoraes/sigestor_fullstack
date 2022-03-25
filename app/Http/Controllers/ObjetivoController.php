@@ -19,10 +19,22 @@ class ObjetivoController extends Controller
 		return Objetivo::select('id', 'nome as text')->where('dimensao_id', $dimensao_id)->where('ativo', 1)->get();
 	}
 
-	public function index()
+	public function index(Request $request)
 	{
+		if(isset($request->modo_exibicao)) {
+			$modo_exibicao = $request->modo_exibicao;
+		} else {
+			$modo_exibicao = 'objetivo';
+		}
+
+		if($modo_exibicao == 'metas') {
+			$objetivos = Objetivo::where('ativo', 1)->get();
+		} else {
+			$objetivos = Objetivo::all();
+		}
 		return view('objetivo.index')->with([
-			'objetivos' => Objetivo::get()
+			'objetivos' => $objetivos,
+			'modo_exibicao' => $modo_exibicao
 		]);
 	}
 

@@ -39,6 +39,9 @@ class MetaTransformer
           case 'objetivo_id':
             $meta->objetivo_id = $value;
             break;
+          case 'plano_acao_id':
+            $meta->plano_acao_id = $value;
+            break;
         }
       }
 

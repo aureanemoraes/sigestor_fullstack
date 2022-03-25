@@ -15,7 +15,7 @@
         <th>DIMENSÃO ESTRATÉGICA</th>
         <th>EIXO ESTRATÉGICO</th>
         <th>PLANO ESTRATÉGICO</th>
-        <th>EXERCÍCIO DO PLANO DE AÇÃO</th>
+        {{-- <th>EXERCÍCIO DO PLANO DE AÇÃO</th> --}}
         <th>ÍNDICE DE PROGRESSO</th>
         <th>SITUAÇÃO</th>
         <th></th>
@@ -27,18 +27,24 @@
           <td>{{ $objetivo->dimensao->nome }}</td>
           <td>{{ $objetivo->dimensao->eixo_estrategico->nome }}</td>
           <td>{{ $objetivo->dimensao->eixo_estrategico->plano_estrategico->nome }}</td>
-          <td>{{ formatDate($objetivo->dimensao->eixo_estrategico->plano_estrategico->data_fim, true) }}</td>
+          {{-- <td>{{ formatDate($objetivo->dimensao->eixo_estrategico->plano_estrategico->data_fim, true) }}</td> --}}
           <td><span class="badge bg-secondary">{{ $objetivo->porcentagem_atual }}</span></td>
           <td><span class="badge btn-primary">{{ $objetivo->ativo ? 'ativo' : 'inativo' }}</span></td>
           <td>
-            <form action="{{ route('objetivo.destroy', $objetivo->id) }}" method="post" id="form-delete">
-              @csrf
-              @method('delete')
-              <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
-                <a type="button" href="{{ route('objetivo.edit', $objetivo->id) }}" class="btn btn-primary" ><i class="bi bi-pen-fill"></i></a>
-                <button type="submit" class="btn btn-primary"><i class="bi bi-trash3-fill"></i></button>
-              </div>
-            </form>
+            @if($modo_exibicao == 'metas')
+            <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
+              <a type="button" href="{{ route('meta.index', ['objetivo' => $objetivo->id]) }}" class="btn btn-primary" ><i class="bi bi-eye-fill"></i> Metas</a>
+            </div>
+            @else
+              <form action="{{ route('objetivo.destroy', $objetivo->id) }}" method="post" id="form-delete">
+                @csrf
+                @method('delete')
+                <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
+                  <a type="button" href="{{ route('objetivo.edit', $objetivo->id) }}" class="btn btn-primary" ><i class="bi bi-pen-fill"></i></a>
+                  <button type="submit" class="btn btn-primary"><i class="bi bi-trash3-fill"></i></button>
+                </div>
+              </form>
+            @endif
           </td>
         </tr>
         @endforeach

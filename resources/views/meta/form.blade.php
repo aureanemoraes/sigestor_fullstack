@@ -16,85 +16,57 @@
   <div class="row g-3">
     <div class="mb-3 col-md-6">
       <label for="plano_estrategico_id">Plano Estratégico</label>
-      <select class="form-select @error('plano_estrategico_id') is-invalid @enderror" id="plano_estrategico_id" name="plano_estrategico_id" aria-label="Selecione o grupo">
-        <option selected value="">-- selecione --</option>
-        @foreach($planos_estrategicos as $plano_estrategico)
-          @if(isset($meta) && $plano_estrategico->id == $meta->objetivo->dimensao->eixo_estrategico->plano_estrategico_id)
-            <option selected value="{{ $plano_estrategico->id }}">{{ $plano_estrategico->nome }}</option>
-          @else
-            <option value="{{ $plano_estrategico->id }}">{{ $plano_estrategico->nome }}</option>
+      <select class="form-select"  id="plano_estrategico_id" aria-label="Selecione o grupo" disabled>
+          @if(isset($plano_estrategico))
+            <option selected value="">{{ $plano_estrategico }}</option>
           @endif
-        @endforeach
       </select>
-      @error('plano_estrategico_id')
-        <div class="invalid-feedback">
-          {{ $message }}
-        </div>
-      @enderror
     </div>
   
     <div class="mb-3 col-md-6">
       <label for="eixo_estrategico_id">Eixo Estratégico</label>
-      <select class="form-control form-select @error('eixo_estrategico_id') is-invalid @enderror" id="eixo_estrategico_id" name="eixo_estrategico_id" aria-label="Selecione a instituição">
-        @if(isset($eixos_estrategicos))
-          @foreach($eixos_estrategicos as $eixo_estrategico)
-            @if(isset($meta) && $eixo_estrategico->id == $meta->objetivo->dimensao->eixo_estrategico_id)
-              <option selected value="">-- selecione --</option>
-              <option selected value="{{ $eixo_estrategico->id }}">{{ $eixo_estrategico->nome }}</option>
-            @else
-              <option value="{{ $eixo_estrategico->id }}">{{ $eixo_estrategico->nome }}</option>
-            @endif
-          @endforeach
-        @endif
+      <select class="form-select"  id="eixo_estrategico_id" aria-label="Selecione o grupo" disabled>
+          @if(isset($eixo_estrategico))
+            <option selected value="">{{ $eixo_estrategico }}</option>
+          @endif
       </select>
-      @error('eixo_estrategico_id')
-        <div class="invalid-feedback">
-          {{ $message }}
-        </div>
-      @enderror
     </div>
   
     <div class="mb-3 col-md-6">
       <label for="dimensao_id">Dimensão Estratégica</label>
-      <select class="form-control form-select @error('dimensao_id') is-invalid @enderror" id="dimensao_id" name="dimensao_id" aria-label="Selecione a instituição">
-        @if(isset($dimensoes))
-          @foreach($dimensoes as $dimensao)
-            @if(isset($meta) && $dimensao->id == $meta->objetivo->dimensao_id)
-              <option selected value="">-- selecione --</option>
-              <option selected value="{{ $dimensao->id }}">{{ $dimensao->nome }}</option>
-            @else
-              <option value="{{ $dimensao->id }}">{{ $dimensao->nome }}</option>
-            @endif
-          @endforeach
-        @endif
+      <select class="form-select"  id="dimensao_id" aria-label="Selecione o grupo" disabled>
+          @if(isset($dimensao))
+            <option selected value="">{{ $dimensao }}</option>
+          @endif
       </select>
-      @error('dimensao_id')
-        <div class="invalid-feedback">
-          {{ $message }}
-        </div>
-      @enderror
     </div>
 
     <div class="mb-3 col-md-6">
       <label for="objetivo_id">Objetivo Estratégico</label>
-      <select class="form-control form-select @error('objetivo_id') is-invalid @enderror" id="objetivo_id" name="objetivo_id" aria-label="Selecione a instituição">
-        @if(isset($objetivos))
-          @foreach($objetivos as $objetivo)
-            @if(isset($meta) && $objetivo->id == $meta->objetivo_id)
-              <option selected value="">-- selecione --</option>
-              <option selected value="{{ $objetivo->id }}">{{ $objetivo->nome }}</option>
-            @else
-              <option value="{{ $objetivo->id }}">{{ $objetivo->nome }}</option>
-            @endif
-          @endforeach
-        @endif
+      <select class="form-select" id="objetivo_id" name="objetivo_id" aria-label="Selecione o grupo">
+          @if(isset($objetivo))
+            <option selected value="{{ $objetivo->id }}">{{ $objetivo->nome }}</option>
+          @endif
       </select>
-      @error('objetivo_id')
-        <div class="invalid-feedback">
-          {{ $message }}
-        </div>
-      @enderror
     </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="plano_acao_id">Exercício (Plano de Ação)</label>
+    <select class="form-select @error('plano_acao_id') is-invalid @enderror" id="plano_acao_id" name="plano_acao_id" aria-label="Selecione o grupo">
+      @foreach($planos_acoes as $plano_acao)
+        @if(isset($meta) && $meta->plano_acao_id == $plano_acao->id)
+          <option value="{{ $plano_acao->id }}" selected>{{ $plano_acao->nome }}</option>
+        @else
+          <option value="{{ $plano_acao->id }}">{{ $plano_acao->nome }}</option>
+        @endif
+      @endforeach
+    </select>
+    @error('plano_acao_id')
+      <div class="invalid-feedback">
+        {{ $message }}
+      </div>
+    @enderror
   </div>
 
   <div class="form-floating mb-3">
@@ -108,7 +80,7 @@
   </div>
 
   <div class="form-floating mb-3">
-    <textarea class="form-control @error('descricao') is-invalid @enderror" placeholder="Descrição" id="floatingTextarea">{{ isset($meta->descricao) ? $descricao : '' }}</textarea>
+    <textarea class="form-control @error('descricao') is-invalid @enderror" placeholder="Descrição" id="descricao" name="descricao">{{ isset($meta->descricao) ? $meta->descricao : '' }}</textarea>
     <label for="floatingTextarea">Descrição</label>
     @error('descricao')
       <div class="invalid-feedback">
