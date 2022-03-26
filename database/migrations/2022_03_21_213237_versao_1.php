@@ -197,19 +197,6 @@ class Versao1 extends Migration
             $table->string('codigo')->nullable();
             $table->timestamps();
         });
-        // Tabela Fontes
-        Schema::create('fontes', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('fonte_tipo_id');
-            $table->foreign('fonte_tipo_id')->references('id')->on('fontes_tipos');
-            $table->unsignedBigInteger('exercicio_id');
-            $table->foreign('exercicio_id')->references('id')->on('exercicios');
-            $table->unsignedBigInteger('instituicao_id');
-            $table->foreign('instituicao_id')->references('id')->on('instituicoes');
-            $table->tinyInteger('fav')->default(0);
-            $table->float('valor');
-            $table->timestamps();
-        });
         // Tabela Ações Tipos
         Schema::create('acoes_tipos', function (Blueprint $table) {
             $table->id();
@@ -221,53 +208,12 @@ class Versao1 extends Migration
             $table->tinyInteger('fav')->default(0);
             $table->timestamps();
         });
-        // Tabela Ações
-        Schema::create('acoes', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('acao_tipo_id');
-            $table->foreign('acao_tipo_id')->references('id')->on('acoes_tipos');
-            $table->unsignedBigInteger('exercicio_id');
-            $table->tinyInteger('fav')->default(0);
-            $table->foreign('exercicio_id')->references('id')->on('exercicios');
-            $table->unsignedBigInteger('instituicao_id');
-            $table->foreign('instituicao_id')->references('id')->on('instituicoes');
-            $table->timestamps();
-        });
-        // Tabela Fontes Ações
-        Schema::create('fontes_acoes', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('fonte_id');
-            $table->foreign('fonte_id')->references('id')->on('fontes');
-            $table->unsignedBigInteger('acao_id');
-            $table->foreign('acao_id')->references('id')->on('acoes');
-            $table->unsignedBigInteger('exercicio_id');
-            $table->foreign('exercicio_id')->references('id')->on('exercicios');
-            $table->unsignedBigInteger('instituicao_id')->nullable();
-            $table->foreign('instituicao_id')->references('id')->on('instituicoes');
-            $table->unsignedBigInteger('unidade_gestora_id')->nullable();
-            $table->foreign('unidade_gestora_id')->references('id')->on('unidades_gestoras');
-            $table->unsignedBigInteger('unidade_administrativa_id')->nullable();
-            $table->foreign('unidade_administrativa_id')->references('id')->on('unidades_administrativas');
-            $table->float('valor');
-            $table->timestamps();
-        });
         // Tabela Programas
         Schema::create('programas', function (Blueprint $table) {
             $table->id();
             $table->string('codigo');
             $table->string('nome');
             $table->tinyInteger('fav')->default(0);
-            $table->timestamps();
-        });
-        // Tabela Fontes Programas
-        Schema::create('fontes_programas', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('fonte_id');
-            $table->foreign('fonte_id')->references('id')->on('fontes');
-            $table->unsignedBigInteger('programa_id');
-            $table->foreign('programa_id')->references('id')->on('programas');
-            $table->unsignedBigInteger('exercicio_id');
-            $table->foreign('exercicio_id')->references('id')->on('exercicios');
             $table->timestamps();
         });
         // Tabela de Naturezas Despesas
@@ -294,99 +240,6 @@ class Versao1 extends Migration
             $table->string('nome');
             $table->timestamps();
         });
-        // Tabela de Despesas
-        Schema::create('despesas', function (Blueprint $table) {
-            $table->id();
-            $table->string('descricao');
-            $table->float('valor');
-            $table->float('valor_total');
-            $table->integer('qtd')->default(1);
-            $table->integer('qtd_pessoas')->default(1);
-            $table->string('tipo'); // fixa ou variável
-            $table->unsignedBigInteger('fonte_acao_id');
-            $table->foreign('fonte_acao_id')->references('id')->on('fontes_acoes');
-            $table->unsignedBigInteger('centro_custo_id');
-            $table->foreign('centro_custo_id')->references('id')->on('centros_custos');
-            $table->unsignedBigInteger('natureza_despesa_id');
-            $table->foreign('natureza_despesa_id')->references('id')->on('naturezas_despesas');
-            $table->unsignedBigInteger('subnatureza_despesa_id')->nullable();
-            $table->foreign('subnatureza_despesa_id')->references('id')->on('subnaturezas_despesas');
-            $table->unsignedBigInteger('unidade_administrativa_id')->nullable();
-            $table->foreign('unidade_administrativa_id')->references('id')->on('unidades_administrativas');
-            $table->unsignedBigInteger('exercicio_id')->nullable();
-            $table->foreign('exercicio_id')->references('id')->on('exercicios');
-            $table->timestamps();
-        });
-        Schema::create('movimentos', function (Blueprint $table) {
-            $table->id();
-            $table->longText('descricao');
-            $table->float('valor');
-            $table->unsignedBigInteger('exercicio_id')->nullable();
-            $table->foreign('exercicio_id')->references('id')->on('exercicios');
-            $table->string('tipo'); // 'entrada' ou 'bloqueio' (contigenciamento)
-            $table->timestamps();
-        });
-        Schema::create('metas_orcamentarias', function (Blueprint $table) {
-            $table->id();
-            $table->string('nome');
-            $table->float('qtd_estimada')->nullable();
-            $table->float('qtd_alcancada')->nullable();
-            $table->unsignedBigInteger('natureza_despesa_id')->nullable();
-            $table->foreign('natureza_despesa_id')->references('id')->on('naturezas_despesas');
-            $table->unsignedBigInteger('acao_id')->nullable();
-            $table->foreign('acao_id')->references('id')->on('acoes');
-            $table->unsignedBigInteger('instituicao_id');
-            $table->foreign('instituicao_id')->references('id')->on('instituicoes');
-            $table->unsignedBigInteger('unidade_gestora_id');
-            $table->foreign('unidade_gestora_id')->references('id')->on('unidades_gestoras');
-            $table->unsignedBigInteger('exercicio_id')->nullable();
-            $table->foreign('exercicio_id')->references('id')->on('exercicios');
-            $table->timestamps();
-        });
-        Schema::create('limites_orcamentarios', function (Blueprint $table) {
-            $table->id();
-            $table->float('valor_solicitado');
-            $table->float('valor_disponivel')->nullable();
-            $table->string('numero_processo');
-            $table->longText('descricao');
-            $table->unsignedBigInteger('despesa_id');
-            $table->foreign('despesa_id')->references('id')->on('despesas');
-            $table->unsignedBigInteger('unidade_gestora_id')->nullable();
-            $table->foreign('unidade_gestora_id')->references('id')->on('unidades_gestoras');
-            $table->timestamps();
-        });
-        Schema::create('creditos_planejados', function (Blueprint $table) {
-            $table->id();
-            $table->longText('descricao');
-            $table->float('valor_solicitado');
-            $table->float('valor_disponivel')->nullable();
-            $table->unsignedBigInteger('despesa_id');
-            $table->foreign('despesa_id')->references('id')->on('despesas');
-            $table->unsignedBigInteger('unidade_administrativa_id')->nullable();
-            $table->foreign('unidade_administrativa_id')->references('id')->on('unidades_administrativas');
-            $table->timestamps();
-        });
-        Schema::create('creditos_disponiveis', function (Blueprint $table) {
-            $table->id();
-            $table->longText('descricao');
-            $table->float('valor_solicitado');
-            $table->float('valor_disponivel')->nullable();
-            $table->unsignedBigInteger('despesa_id');
-            $table->foreign('despesa_id')->references('id')->on('despesas');
-            $table->unsignedBigInteger('unidade_administrativa_id');
-            $table->foreign('unidade_administrativa_id')->references('id')->on('unidades_administrativas');
-            $table->timestamps();
-        });
-        Schema::create('empenhos', function (Blueprint $table) {
-            $table->id();
-            $table->float('valor_empenhado');
-            $table->date('data_empenho');
-            $table->unsignedBigInteger('credito_disponivel_id');
-            $table->foreign('credito_disponivel_id')->references('id')->on('creditos_disponiveis');
-            $table->unsignedBigInteger('unidade_administrativa_id');
-            $table->foreign('unidade_administrativa_id')->references('id')->on('unidades_administrativas');
-            $table->timestamps();
-        });
 
         
     }
@@ -398,15 +251,5 @@ class Versao1 extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pessoas');
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('password_resets');
-        Schema::dropIfExists('instituicoes');
-        Schema::dropIfExists('exercicios');
-        Schema::dropIfExists('unidades_gestoras');
-        Schema::dropIfExists('unidades_administrativas');
-        Schema::dropIfExists('grupos_fontes');
-        Schema::dropIfExists('especificacoes');
-        Schema::dropIfExists('fontes_tipos');
     }
 }
