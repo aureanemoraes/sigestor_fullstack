@@ -13,7 +13,7 @@ class Versao2 extends Migration
             $table->string('nome');
             $table->date('data_inicio');
             $table->date('data_fim');
-            $table->string('status'); // [elaboracao, aberta, analise, finalizada]
+            $table->string('status')->nullable(); // [elaboracao, aberta, analise, finalizada]
             $table->unsignedBigInteger('exercicio_id');
             $table->foreign('exercicio_id')->references('id')->on('exercicios');
             $table->timestamps();

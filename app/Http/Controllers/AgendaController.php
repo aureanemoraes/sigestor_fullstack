@@ -13,14 +13,21 @@ class AgendaController extends Controller
 {
 	public function index(Request $request)
 	{
-		return view('agenda.index')->with([
-			'agendas' => Agenda::all()
-		]);
+		if(isset($request->exercicio)) {
+			$exercicio_id = $request->exercicio;
+			$exercicio = Exercicio::find($exercicio_id);
+			$agenda = Agenda::where('exercicio_id', $exercicio_id)->first();
+
+			return view('agenda.index')->with([
+				'agenda' => $agenda,
+				'exercicio' => $exercicio
+			]);
+		}
 	}
 
-	public function create() {
+	public function create(Request $request) {
 		return view('agenda.create')->with([
-			'exercicios' => Exercicio::all()
+			'exercicio' => Exercicio::find($request->exercicio)
 		]);
 	}
 
@@ -40,7 +47,7 @@ class AgendaController extends Controller
 			DB::rollBack();
 		}
 
-		return redirect()->route('agenda.index');
+		return redirect()->route('agenda.index', ['exercicio' => $agenda->exercicio_id]);
 	}
 
 	public function show($id)
@@ -51,7 +58,7 @@ class AgendaController extends Controller
 		$agenda = Agenda::findOrFail($id);
 		return view('agenda.edit')->with([
 			'agenda' => $agenda,
-			'exercicios' => Exercicio::all()
+			'exercicio' => Exercicio::find($agenda->exercicio_id)
 		]);
 	}
 
@@ -76,7 +83,7 @@ class AgendaController extends Controller
 			}
 		}
 
-		return redirect()->route('agenda.index');
+		return redirect()->route('agenda.index', ['exercicio' => $agenda->exercicio_id]);
 
 	}
 
@@ -90,7 +97,7 @@ class AgendaController extends Controller
 		} catch(Exception $ex) {
 		}
 
-		return redirect()->route('agenda.index');
+		return redirect()->route('agenda.index', ['exercicio' => $agenda->exercicio_id]);
 
 	}
 
@@ -100,7 +107,6 @@ class AgendaController extends Controller
             'nome' => ['required'],
             'data_inicio' => ['required'],
             'data_fim' => ['required'],
-            'status' => ['required'],
             'exercicio_id' => ['integer', 'required', 'exists:exercicios,id']
         ]);
 

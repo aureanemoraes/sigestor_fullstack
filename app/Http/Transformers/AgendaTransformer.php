@@ -32,6 +32,9 @@ class AgendaTransformer
         }
       }
 
+      if(!isset($agenda->status))
+        $agenda->status = '';
+        
       return $agenda;
     }
 }
