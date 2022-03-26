@@ -42,10 +42,9 @@
   )
 @endsection
 
+@section('content')
 @include('meta.form-checkin')
 @include('meta.checkins-list')
-
-@section('content')
 <h3>Metas Estratégicas</h3>
 <section class="d-flex justify-content-end mb-2">
   <a href="{{ route('meta.create', ['objetivo' => $objetivo->id]) }}" type="button" class="btn btn-primary">
