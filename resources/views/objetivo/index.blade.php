@@ -8,10 +8,23 @@
     Objetivos Estratégicos
   @endif
 </h3>
-<section class="d-flex justify-content-end mb-2">
-  <a href="{{ route('objetivo.create') }}" type="button" class="btn btn-primary">
-    Novo
-  </a>
+
+<section class="row">
+  @if($modo_exibicao == 'metas')
+  <div class="d-flex flex-column justify-content-start mb-2 col-2">
+    <select class="form-select form-select-sm" aria-label="Default select example" id="plano_acao" name="plano_acao">
+      <option selected value="">Plano de ação...</option>
+      @foreach($planos_acoes as $plano_acao)
+      <option value="{{ $plano_acao->id }}" {{ isset($plano_acao_id) && $plano_acao_id == $plano_acao->id ? 'selected' : null }}>{{ $plano_acao->nome }}</option>
+      @endforeach
+    </select>
+  </div>
+  @endif
+  <div class="d-flex justify-content-end mb-2 col">
+    <a href="{{ route('objetivo.create') }}" type="button" class="btn btn-primary">
+      Novo
+    </a>
+  </div>
 </section>
 <section>
   <div class="table-responsive">
@@ -77,6 +90,10 @@
 
 @section('js')
   <script>
+  $('#plano_acao').on('change', () => {
+    window.location.href = `/objetivo?modo_exibicao=metas&plano_acao=${$('#plano_acao').val()}`;
+  });
+
   $('#objetivos').DataTable( {
     initComplete: function () {
         this.api().columns().every( function (i) {

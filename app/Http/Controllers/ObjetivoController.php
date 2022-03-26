@@ -7,6 +7,7 @@ use App\Models\Instituicao;
 use App\Models\PlanoEstrategico;
 use App\Models\EixoEstrategico;
 use App\Models\Dimensao;
+use App\Models\PlanoAcao;
 use Illuminate\Http\Request;
 use App\Http\Transformers\ObjetivoTransformer;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +22,8 @@ class ObjetivoController extends Controller
 
 	public function index(Request $request)
 	{
+		$plano_acao_id = null;
+
 		if(isset($request->modo_exibicao)) {
 			$modo_exibicao = $request->modo_exibicao;
 		} else {
@@ -28,13 +31,26 @@ class ObjetivoController extends Controller
 		}
 
 		if($modo_exibicao == 'metas') {
-			$objetivos = Objetivo::where('ativo', 1)->get();
+			if(isset($request->plano_acao)) {
+				$plano_acao_id = $request->plano_acao;
+				$objetivos = Objetivo::whereHas(
+					'metas', function ($query) use ($plano_acao_id) {
+						$query->where('plano_acao_id', $plano_acao_id);
+					}
+				)->where('ativo', 1)->get();
+			}
+			else
+				$objetivos = Objetivo::where('ativo', 1)->get();
+
 		} else {
 			$objetivos = Objetivo::all();
 		}
+
 		return view('objetivo.index')->with([
 			'objetivos' => $objetivos,
-			'modo_exibicao' => $modo_exibicao
+			'modo_exibicao' => $modo_exibicao,
+			'planos_acoes' => PlanoAcao::all(),
+			'plano_acao_id' => $plano_acao_id
 		]);
 	}
 
