@@ -143,9 +143,9 @@ class Versao1 extends Migration
             $table->longText('descricao')->nullable();
             $table->string('tipo');
             $table->string('tipo_dado');
-            $table->string('valor_inicial');
-            $table->string('valor_final');
-            $table->string('valor_atingido')->nullable();
+            $table->float('valor_inicial');
+            $table->float('valor_final');
+            $table->float('valor_atingido')->nullable();
             $table->unsignedBigInteger('objetivo_id');
             $table->foreign('objetivo_id')->references('id')->on('objetivos');
             $table->unsignedBigInteger('plano_acao_id');
@@ -164,7 +164,7 @@ class Versao1 extends Migration
 
         Schema::create('checkins', function (Blueprint $table) {
             $table->id();
-            $table->string('valor');
+            $table->float('valor');
             $table->longText('descricao');
             $table->unsignedBigInteger('meta_id');
             $table->foreign('meta_id')->references('id')->on('metas');

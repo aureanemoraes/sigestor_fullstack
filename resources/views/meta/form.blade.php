@@ -1,4 +1,3 @@
-
 <h3>Metas Estratégicas</h3>
 @php
     if(isset($meta)) {
@@ -98,6 +97,9 @@
         </option>
         <option value="valor" {{ isset($meta->tipo) && $meta->tipo == 'valor' ? 'selected' : ''  }}>
           Valor
+        </option>
+        <option value="numero" {{ isset($meta->tipo) && $meta->tipo == 'numero' ? 'selected' : ''  }}>
+          Número
         </option>
         <option value="maior_que" {{ isset($meta->tipo) && $meta->tipo == 'maior_que' ? 'selected' : ''  }}>
           Maior que

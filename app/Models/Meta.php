@@ -29,11 +29,11 @@ class Meta extends Model
     {
         $valor_inicial = isset($this->attributes['valor_inicial']) ? $this->attributes['valor_inicial'] : 0;
 
-        if(isset($this->attributes['valor_atingido'])) {
-            $porcentagem_atual = ($this->attributes['valor_atingido'] * 100)/$this->attributes['valor_final'];
+        if(isset($this->valor_atingido)) {
+            $porcentagem_atual = ($this->valor_atingido * 100)/$this->valor_final;
             return $porcentagem_atual;
         } elseif($valor_inicial > 0) {
-            $porcentagem_atual = ($valor_inicial * 100)/$this->attributes['valor_final'];
+            $porcentagem_atual = ($valor_inicial * 100)/$this->valor_final;
             return $porcentagem_atual;
         } else {
             return null;
@@ -43,9 +43,11 @@ class Meta extends Model
     public function getValorAtingidoAttribute($value)
     {
         if(is_null($value))
-            return $this->valor_inicial;
-        else
-            return $value;
+            $value = !is_null($this->valor_inicial) ? $this->valor_inicial : 0;
+
+        $value += $this->checkins()->sum('valor');
+   
+        return $value;
     }
 
     public function objetivo()

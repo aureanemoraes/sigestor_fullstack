@@ -127,15 +127,10 @@
   <script>
     function formCheckin(meta_id, nome){
 ;      $('#form-modal').attr('action', `/meta/checkin/${meta_id}`);
-      // $.ajax({
-      //   method: "GET",
-      //   url: `/api/meta/${meta_id}`,
-      // }).done(function(response) {
-      //   console.log(response);
-      // });
     }
 
     function listCheckin(nome, checkins, meta_id) {
+      $('#tbodyCheckinsTable').html('');
       checkins.map(checkin => {
         $('#tbodyCheckinsTable').append(`
         <tr>
