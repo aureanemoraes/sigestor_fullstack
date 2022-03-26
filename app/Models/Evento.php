@@ -15,9 +15,22 @@ class Evento extends Model
         'nome',
         'data_inicio',
         'data_fim',
-        'status',
         'agenda_id'
     ];
+
+    protected $appends = ['status'];
+
+
+    public function getStatusAttribute($value)
+    {
+        // if(empty($value))
+        //     $this->attributes['status'] = 'aberta';
+        // else {
+        //     if($this->data_fim <= date('Y-m-d'))
+        //         $this->attributes['status'] = 'aberta';
+        // }
+    }
+
 
     public function agenda()
     {

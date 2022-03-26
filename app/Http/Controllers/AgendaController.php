@@ -13,6 +13,7 @@ class AgendaController extends Controller
 {
 	public function index(Request $request)
 	{
+		$error = isset($request->error) ? $request->error : null;
 		if(isset($request->exercicio)) {
 			$exercicio_id = $request->exercicio;
 			$exercicio = Exercicio::find($exercicio_id);
@@ -20,12 +21,14 @@ class AgendaController extends Controller
 
 			return view('agenda.index')->with([
 				'agenda' => $agenda,
-				'exercicio' => $exercicio
+				'exercicio' => $exercicio,
+				'error' => $error
 			]);
 		}
 	}
 
-	public function create(Request $request) {
+	public function create(Request $request) 
+	{
 		return view('agenda.create')->with([
 			'exercicio' => Exercicio::find($request->exercicio)
 		]);
@@ -61,7 +64,6 @@ class AgendaController extends Controller
 			'exercicio' => Exercicio::find($agenda->exercicio_id)
 		]);
 	}
-
 
 	public function update(Request $request, $id)
 	{
@@ -105,12 +107,10 @@ class AgendaController extends Controller
 	{
 		$validator = Validator::make($request->all(), [
             'nome' => ['required'],
-            'data_inicio' => ['required'],
-            'data_fim' => ['required'],
+            'data_inicio' => ['required', 'date'],
+            'data_fim' => ['required', 'date', 'after:data_inicio'],
             'exercicio_id' => ['integer', 'required', 'exists:exercicios,id']
         ]);
-
-				// dd($request, $validator->fails());
 
 		if ($validator->fails()) {
 			return redirect()->back()

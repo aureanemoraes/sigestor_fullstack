@@ -23,17 +23,12 @@ class AgendaTransformer
           case 'data_fim':
             $agenda->data_fim = $value;
             break;
-          case 'status':
-            $agenda->status = $value;
-            break;
           case 'exercicio_id':
             $agenda->exercicio_id = $value;
             break;
         }
       }
 
-      if(!isset($agenda->status))
-        $agenda->status = '';
         
       return $agenda;
     }

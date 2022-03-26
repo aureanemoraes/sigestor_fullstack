@@ -15,34 +15,27 @@ class Agenda extends Model
         'nome',
         'data_inicio',
         'data_fim',
-        'status',
         'exercicio_id'
     ];
 
-    protected $appends = ['status_formatado'];
+    protected $appends = ['status'];
 
-    public function getStatusFormatadoAttribute()
+    public function getStatusAttribute()
     {
-        switch ($this->status) {
-            case 'elaboracao':
+        $data_valida = date('Y-m-y') <= $this->data_fim  ;
+
+        if($data_valida) {
+            if(count($this->eventos) > 0) {
+                if($this->eventos->last()->data_fim > date('Y-m-y'))
+                    return 'Aberta para planejamento das Unidades Gestoras e Administrativas';
+                else
+                    return 'Fechada para planejamento das Unidades Gestoras e Administrativas e aguardando aprovação da reitoria';
+            }
+            else 
                 return 'Em elaboração';
-                break;
-            case 'aberta':
-                return 'Aberta para planejamento das Unidades Gestoras e Administrativas';
-                break;
-            case 'analise':
-                return 'Fechada para planejamento das Unidades Gestoras e Administrativas e aguardando aprovação da reitoria';
-                break;
-            case 'finalizada':
-                return 'Finalizada';
-                break;
         }
-    }
-
-    public function setStatusAttribute($value)
-    {
-        if(empty($value))
-            $this->attributes['status'] = 'elaboracao';
+        else 
+            return 'Finalizada';
     }
 
     public function exercicio()

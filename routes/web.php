@@ -18,6 +18,7 @@ use App\Http\Controllers\DimensaoController;
 use App\Http\Controllers\ObjetivoController;
 use App\Http\Controllers\MetaController;
 use App\Http\Controllers\AgendaController;
+use App\Http\Controllers\EventoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,3 +62,4 @@ Route::post('meta/checkin/{meta_id}', [MetaController::class, 'checkin'])->name(
 Route::delete('meta/checkin/destroy/{meta_id}/{checkin_id}', [MetaController::class, 'destroy_checkin']);
 Route::resource('meta', MetaController::class);
 Route::resource('agenda', AgendaController::class);
+Route::resource('evento', EventoController::class);
