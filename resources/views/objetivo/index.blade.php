@@ -11,14 +11,24 @@
   <div class="table-responsive">
     <table class="table" id="objetivos">
       <thead>
-        <th>NOME</th>
-        <th>DIMENSÃO ESTRATÉGICA</th>
-        <th>EIXO ESTRATÉGICO</th>
-        <th>PLANO ESTRATÉGICO</th>
-        {{-- <th>EXERCÍCIO DO PLANO DE AÇÃO</th> --}}
-        <th>ÍNDICE DE PROGRESSO</th>
-        <th>SITUAÇÃO</th>
-        <th></th>
+        <tr>
+          <th></th>
+          <th>DIMENSÃO ESTRATÉGICA</th>
+          <th>EIXO ESTRATÉGICO</th>
+          <th>PLANO ESTRATÉGICO</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>NOME</th>
+          <th>DIMENSÃO ESTRATÉGICA</th>
+          <th>EIXO ESTRATÉGICO</th>
+          <th>PLANO ESTRATÉGICO</th>
+          <th>ÍNDICE DE PROGRESSO</th>
+          <th>SITUAÇÃO</th>
+          <th></th>
+        </tr>
       </thead>
       <tbody>
         @foreach($objetivos as $objetivo)
@@ -54,16 +64,7 @@
         @endforeach
       </tbody>
       <tfoot>
-        <tr>
-          <th></th>
-          <th>DIMENSÃO ESTRATÉGICA</th>
-          <th>EIXO ESTRATÉGICO</th>
-          <th>PLANO ESTRATÉGICO</th>
-          <th>EXERCÍCIO DO PLANO DE AÇÃO</th>
-          <th></th>
-          <th></th>
-        </tr>
-    </tfoot>
+      </tfoot>
     </table>
   </div>
 </section>
@@ -72,28 +73,29 @@
 @section('js')
   <script>
   $('#objetivos').DataTable( {
-        initComplete: function () {
-            this.api().columns().every( function (i) {
-                if([1, 2, 3, 4].includes(i)) {
-                  var column = this;
-                  var select = $('<select class="form-select form-select-sm"><option value=""></option></select>')
-                      .appendTo( $(column.footer()).empty() )
-                      .on( 'change', function () {
-                          var val = $.fn.dataTable.util.escapeRegex(
-                              $(this).val()
-                          );
-  
-                          column
-                              .search( val ? '^'+val+'$' : '', true, false )
-                              .draw();
-                      } );
-  
-                  column.data().unique().sort().each( function ( d, j ) {
-                      select.append( '<option value="'+d+'">'+d+'</option>' )
-                  } );
-                }
+    initComplete: function () {
+        this.api().columns().every( function (i) {
+          if([1, 2, 3].includes(i)) {
+
+            var column = this;
+            var select = $('<select class="form-select form-select-sm"><option value=""></option></select>')
+                .appendTo( $("#objetivos thead tr:eq(0) th").eq(column.index()).empty() )
+                .on( 'change', function () {
+                    var val = $.fn.dataTable.util.escapeRegex(
+                        $(this).val()
+                    );
+
+                    column
+                        .search( val ? '^'+val+'$' : '', true, false )
+                        .draw();
+                } );
+
+            column.data().unique().sort().each( function ( d, j ) {
+                select.append( '<option value="'+d+'">'+d+'</option>' );
             } );
-        }
-    } );
+          }
+        });
+    }
+  });
   </script>
 @endsection
