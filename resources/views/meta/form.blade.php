@@ -140,7 +140,7 @@
     </div>
   
     <div class="form-floating mb-3 col-md-3">
-      <input type="text" class="form-control @error('valor_inicial') is-invalid @enderror" id="valor_inicial" name="valor_inicial" value="{{ isset($meta->valor_inicial) ? $meta->valor_inicial : ''}}" placeholder="Nome...">
+      <input type="text" class="form-control @error('valor_inicial') is-invalid @enderror" id="valor_inicial" name="valor_inicial" value="{{ isset($meta->valor_inicial) ? $meta->valor_inicial : 0}}" placeholder="Nome...">
       <label for="valor_inicial">Valor Inicial</label>
       @error('valor_inicial')
         <div class="invalid-feedback">
