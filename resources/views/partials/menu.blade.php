@@ -3,7 +3,7 @@
     <i class='bx bx-menu' id="header-toggle"></i>
   </div>
   <div class="header_user">
-    <button class="btn btn-primary">Usuário</button>
+    <button class="btn btn-black">Usuário</button>
   </div>
 </header>
 <div class="l-navbar" id="nav-bar">

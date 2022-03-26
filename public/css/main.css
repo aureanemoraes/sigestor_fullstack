@@ -8,6 +8,7 @@
     --white-color: #F7F6FB;
     --header-color: rgb(124,124,124);
     --secondary-color: #909599;
+    --black-color: #2C272E;
     --body-font: 'Nunito', sans-serif;
     --normal-font-size: 0.95rem;
     --z-fixed: 100
@@ -185,13 +186,19 @@ a {
     column-gap: 0.5rem;
 }
 
-.btn-primary, .page-item.active .page-link {
+
+.bg-black, .btn-black {
+    background-color: var(--black-color);
+    color: var(--white-color)
+}
+
+.btn-primary, .page-item.active .page-link, .bg-primary {
     background-color: #77274F;
     background: #77274F;
     border-color: #77274F;
 }
 
-.btn-primary:hover, .page-item.active .page-link:hover {
+.btn-primary:hover, .page-item.active .page-link:hover, .bg-primary:hover {
     background: #9e3c6d;
     border-color: #9e3c6d;
 }
