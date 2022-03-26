@@ -1,7 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<h3>Objetivos Estratégicos</h3>
+<h3>
+  @if($modo_exibicao == 'metas')
+    Metas Estratégicas - Objetivos
+  @else
+    Objetivos Estratégicos
+  @endif
+</h3>
 <section class="d-flex justify-content-end mb-2">
   <a href="{{ route('objetivo.create') }}" type="button" class="btn btn-primary">
     Novo
