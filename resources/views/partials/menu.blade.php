@@ -109,14 +109,36 @@
         <div class="collapse" id="matriz_estratégica">
           <a href="{{ route('objetivo.index', ['modo_exibicao' => 'metas']) }}" class="nav_link nav_link_secondary">
             <i class="bi bi-align-center"></i>
-            
             <span class="nav_name">Metas</span>
           </a>
           <a href="{{ route('objetivo.index') }}" class="nav_link nav_link_secondary">
             <i class="bi bi-align-center"></i>
-            
             <span class="nav_name">Relatórios</span>
           </a>
+        </div>
+        <a class="nav_link" data-bs-toggle="collapse" href="#matriz_orcamentaria_planejamento" role="button" aria-expanded="true" aria-controls="matriz_orcamentaria_planejamento">
+          <i class="bi bi-gear-fill nav_icon"></i>
+          Matriz Orçamentária
+        </a>
+        <div class="collapse" id="matriz_orcamentaria_planejamento">
+          <a class="nav_link nav_link_secondary" data-bs-toggle="collapse" href="#ploa_planejamento" role="button" aria-expanded="false" aria-controls="ploa_planejamento">
+            <i class="bi bi-align-center"></i>
+            PLOA
+          </a>
+          <div class="collapse" id="ploa_planejamento">
+            <a href="#" class="nav_link nav_link_tertiary">
+              <span class="nav_name">Agenda</span>
+            </a>
+          </div>
+          <a class="nav_link nav_link_secondary" data-bs-toggle="collapse" href="#loa_planejamento" role="button" aria-expanded="false" aria-controls="loa_planejamento">
+            <i class="bi bi-align-center"></i>
+            LOA
+          </a>
+          <div class="collapse" id="loa_planejamento">
+            <a href="#" class="nav_link nav_link_tertiary">
+              <span class="nav_name">Movimentação</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>

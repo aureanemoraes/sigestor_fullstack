@@ -26,6 +26,8 @@
             <form action="{{ route('exercicio.destroy', $exercicio->id) }}" method="post" id="form-delete">
               @csrf
               @method('delete')
+              @if($modo_exibicao == 'agenda')
+              @endif
               <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
                 <a type="button" href="{{ route('exercicio.edit', $exercicio->id) }}" class="btn btn-primary" ><i class="bi bi-pen-fill"></i></a>
                 <button type="submit" class="btn btn-primary"><i class="bi bi-trash3-fill"></i></button>
