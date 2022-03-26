@@ -90,7 +90,9 @@
             </div>
           </td>
           <td>
-            <span class="badge btn-primary">{{ formatMetaValue($meta->porcentagem_atual, 'porcentagem')}}</span>
+            <div class="progress">
+              <div style="width: {{ $meta->porcentagem_atual }}" class="progress-bar progress-bar-striped bg-green" role="progressbar"  aria-valuenow="{{ $meta->porcentagem_atual }}" aria-valuemin="0" aria-valuemax="100">{{ $meta->porcentagem_atual }}</div>
+            </div>
           </td>
           <td>
             @foreach($meta->responsaveis as $responsavel)

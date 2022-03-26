@@ -27,8 +27,12 @@
           <td>{{ $objetivo->dimensao->nome }}</td>
           <td>{{ $objetivo->dimensao->eixo_estrategico->nome }}</td>
           <td>{{ $objetivo->dimensao->eixo_estrategico->plano_estrategico->nome }}</td>
-          {{-- <td>{{ formatDate($objetivo->dimensao->eixo_estrategico->plano_estrategico->data_fim, true) }}</td> --}}
-          <td><span class="badge bg-secondary">{{ $objetivo->porcentagem_atual }}</span></td>
+         
+          <td>
+            <div class="progress">
+              <div style="width: {{ $objetivo->porcentagem_atual }}" class="progress-bar progress-bar-striped bg-green" role="progressbar"  aria-valuenow="{{ $objetivo->porcentagem_atual }}" aria-valuemin="0" aria-valuemax="100">{{ $objetivo->porcentagem_atual }}</div>
+            </div>
+          </td>
           <td><span class="badge btn-primary">{{ $objetivo->ativo ? 'ativo' : 'inativo' }}</span></td>
           <td>
             @if($modo_exibicao == 'metas')

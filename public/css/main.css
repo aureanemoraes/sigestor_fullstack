@@ -9,6 +9,7 @@
     --header-color: rgb(124,124,124);
     --secondary-color: #909599;
     --black-color: #2C272E;
+    --green-color: #198754;
     --body-font: 'Nunito', sans-serif;
     --normal-font-size: 0.95rem;
     --z-fixed: 100
@@ -186,6 +187,10 @@ a {
     column-gap: 0.5rem;
 }
 
+.bg-green {
+    background-color: var(--green-color);
+    color: var(--white-color)
+}
 
 .bg-black, .btn-black {
     background-color: var(--black-color);
