@@ -45,17 +45,19 @@
           </td>
           <td><span class="badge btn-primary">{{ $objetivo->ativo ? 'ativo' : 'inativo' }}</span></td>
           <td>
-              <form action="{{ route('objetivo.destroy', $objetivo->id) }}" method="post" id="form-delete">
-                @csrf
-                @method('delete')
-                <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
-                  @if($modo_exibicao == 'metas')
-                    <a type="button" href="{{ route('meta.index', ['objetivo' => $objetivo->id]) }}" class="btn btn-primary" ><i class="bi bi-eye-fill"></i> Metas</a>
-                  @endif
-                  <a type="button" href="{{ route('objetivo.edit', $objetivo->id) }}" class="btn btn-primary" ><i class="bi bi-pen-fill"></i></a>
-                  <button type="submit" class="btn btn-primary"><i class="bi bi-trash3-fill"></i></button>
-                </div>
-              </form>
+            @if($modo_exibicao == 'metas')
+              <a type="button" href="{{ route('meta.index', ['objetivo' => $objetivo->id]) }}" class="btn btn-primary btn-sm" ><i class="bi bi-eye-fill"></i> Metas</a>
+            @else
+            <form action="{{ route('objetivo.destroy', $objetivo->id) }}" method="post" id="form-delete">
+              @csrf
+              @method('delete')
+              <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
+                <a type="button" href="{{ route('meta.index', ['objetivo' => $objetivo->id]) }}" class="btn btn-primary btn-sm" ><i class="bi bi-eye-fill"></i> Metas</a>
+                <a type="button" href="{{ route('objetivo.edit', $objetivo->id) }}" class="btn btn-primary" ><i class="bi bi-pen-fill"></i></a>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-trash3-fill"></i></button>
+              </div>
+            </form>
+            @endif
           </td>
         </tr>
         @endforeach

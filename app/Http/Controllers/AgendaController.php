@@ -2,32 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agenda;
 use App\Models\Exercicio;
-use App\Models\Instituicao;
 use Illuminate\Http\Request;
-use App\Http\Transformers\ExercicioTransformer;
+use App\Http\Transformers\AgendaTransformer;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class ExercicioController extends Controller
+class AgendaController extends Controller
 {
 	public function index(Request $request)
 	{
-		if(isset($request->modo_exibicao)) {
-			$modo_exibicao = $request->modo_exibicao;
-		} else {
-			$modo_exibicao = 'exercicio';
-		}
-
-		return view('exercicio.index')->with([
-			'exercicios' => Exercicio::all(),
-			'modo_exibicao' => $modo_exibicao
+		return view('agenda.index')->with([
+			'agendas' => Agenda::all()
 		]);
 	}
 
 	public function create() {
-		return view('exercicio.create')->with([
-			'instituicoes' => Instituicao::all()
+		return view('agenda.create')->with([
+			'exercicios' => Exercicio::all()
 		]);
 	}
 
@@ -40,14 +33,14 @@ class ExercicioController extends Controller
 
 		try {
 			DB::beginTransaction();
-			$exercicio = ExercicioTransformer::toInstance($request->all());
-			$exercicio->save();
+			$agenda = AgendaTransformer::toInstance($request->all());
+			$agenda->save();
 			DB::commit();
 		} catch (Exception $ex) {
 			DB::rollBack();
 		}
 
-		return redirect()->route('exercicio.index');
+		return redirect()->route('agenda.index');
 	}
 
 	public function show($id)
@@ -55,10 +48,10 @@ class ExercicioController extends Controller
 	}
 
 	public function edit($id) {
-		$exercicio = Exercicio::findOrFail($id);
-		return view('exercicio.edit')->with([
-			'exercicio' => $exercicio,
-			'instituicoes' => Instituicao::all()
+		$agenda = Agenda::findOrFail($id);
+		return view('agenda.edit')->with([
+			'agenda' => $agenda,
+			'exercicios' => Exercicio::all()
 		]);
 	}
 
@@ -69,13 +62,13 @@ class ExercicioController extends Controller
 
 		if($invalido) return $invalido;
 		
-		$exercicio = Exercicio::find($id);
+		$agenda = Agenda::find($id);
 
-		if(isset($exercicio)) {
+		if(isset($agenda)) {
 			try {
 				DB::beginTransaction();
-				$exercicio = ExercicioTransformer::toInstance($request->all(), $exercicio);
-				$exercicio->save();
+				$agenda = AgendaTransformer::toInstance($request->all(), $agenda);
+				$agenda->save();
 				DB::commit();
 
 			} catch (Exception $ex) {
@@ -83,21 +76,21 @@ class ExercicioController extends Controller
 			}
 		}
 
-		return redirect()->route('exercicio.index');
+		return redirect()->route('agenda.index');
 
 	}
 
 	public function destroy($id)
 	{
-		$exercicio = Exercicio::find($id);
+		$agenda = Agenda::find($id);
 		try {
-			if(isset($exercicio)) {
-				$exercicio->delete();
+			if(isset($agenda)) {
+				$agenda->delete();
 			} 
 		} catch(Exception $ex) {
 		}
 
-		return redirect()->route('exercicio.index');
+		return redirect()->route('agenda.index');
 
 	}
 
@@ -107,7 +100,8 @@ class ExercicioController extends Controller
             'nome' => ['required'],
             'data_inicio' => ['required'],
             'data_fim' => ['required'],
-            'instituicao_id' => ['integer', 'required', 'exists:instituicoes,id']
+            'status' => ['required'],
+            'exercicio_id' => ['integer', 'required', 'exists:exercicios,id']
         ]);
 
 				// dd($request, $validator->fails());
