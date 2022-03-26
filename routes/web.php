@@ -56,6 +56,8 @@ Route::resource('plano_acao', PlanoAcaoController::class);
 Route::resource('eixo_estrategico', EixoEstrategicoController::class);
 Route::resource('dimensao', DimensaoController::class);
 Route::resource('objetivo', ObjetivoController::class);
+Route::post('meta/checkin/{meta_id}', [MetaController::class, 'checkin'])->name('meta.checkin');
+Route::delete('meta/checkin/destroy/{meta_id}/{checkin_id}', [MetaController::class, 'destroy_checkin']);
 Route::resource('meta', MetaController::class);
 
 

@@ -32,15 +32,18 @@
 @endsection
 
 @section('breadcrumb')
-@include('partials.breadcrumb', [
-  'data' => 
-    [
-      ['nome' => 'Objetivos', 'rota' => 'objetivo.index', 'parametros' => ['modo_exibicao' =>'metas']], 
-      ['nome' => 'Meta'] 
+  @include('partials.breadcrumb', [
+    'data' => 
+      [
+        ['nome' => 'Objetivos', 'rota' => 'objetivo.index', 'parametros' => ['modo_exibicao' =>'metas']], 
+        ['nome' => 'Meta'] 
+      ]
     ]
-  ]
-)
+  )
 @endsection
+
+@include('meta.form-checkin')
+@include('meta.checkins-list')
 
 @section('content')
 <h3>Metas Estratégicas</h3>
@@ -75,7 +78,7 @@
       </thead>
       <tbody>
         @foreach($metas as $meta)
-        <tr>
+        <tr class="odd dt-hasChild shown">
           <td>
             <div class="descricao-meta-container">
               <section>
@@ -89,9 +92,6 @@
           </td>
           <td>
             <span class="badge btn-primary">{{ formatMetaValue($meta->porcentagem_atual, 'porcentagem')}}</span>
-            {{-- <div class="progress">
-              <div class="progress-bar progress-bar-striped btn-primary" role="progressbar"  style="width: 10%" aria-valuenow="{{ $meta->porcentagem_atual }}" aria-valuemin="0" aria-valuemax="{{ $meta->valor_final }}">{{ formatMetaValue($meta->porcentagem_atual, 'porcentagem') }}</div>
-            </div> --}}
           </td>
           <td>
             @foreach($meta->responsaveis as $responsavel)
@@ -104,6 +104,12 @@
               @csrf
               @method('delete')
               <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formCheckin" onClick="formCheckin({{ $meta->id }}, '{{ $meta->nome }}')">
+                  <i class="bi bi-check-square-fill"></i>
+                </button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#listCheckin" onClick="listCheckin('{{ $meta->nome }}', {{ $meta->checkins }}, {{ $meta->id }})">
+                  <i class="bi bi-ui-checks"></i>
+                </button>
                 <a type="button" href="{{ route('meta.edit', ['metum' => $meta->id, 'objetivo' => $objetivo->id]) }}" class="btn btn-primary" ><i class="bi bi-pen-fill"></i></a>
                 <button type="submit" class="btn btn-primary"><i class="bi bi-trash3-fill"></i></button>
               </div>
@@ -112,25 +118,44 @@
         </tr>
         @endforeach
       </tbody>
-      <tfoot>
-        <tr>
-          <th></th>
-          <th></th>
-          <th>RESPONSÁVEIS</th>
-          <th>PLANO DE AÇÃO</th>
-          <th></th>
-        </tr>
-    </tfoot>
     </table>
   </div>
 </section>
 @endsection
 
+
 @section('js')
   <script>
+    function formCheckin(meta_id, nome){
+;      $('#form-modal').attr('action', `/meta/checkin/${meta_id}`);
+      // $.ajax({
+      //   method: "GET",
+      //   url: `/api/meta/${meta_id}`,
+      // }).done(function(response) {
+      //   console.log(response);
+      // });
+    }
+
+    function listCheckin(nome, checkins, meta_id) {
+      checkins.map(checkin => {
+        $('#tbodyCheckinsTable').append(`
+        <tr>
+          <td>${checkin.valor_formatado}</td>
+          <td>${checkin.descricao}</td>
+          <td>${checkin.data_formatada}</td>
+          <td>
+            <form action="/meta/checkin/destroy/${meta_id}/${checkin.id}" method="post" id="form-delete">
+              @csrf
+              <input type="hidden" name="_method" value="delete">
+              <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-trash3-fill"></i></button></td>
+            </form>
+        </tr>
+        `);
+      })
+    }
+
     $(document).ready( function () {
-      $('#metas').DataTable({
-      });
+      $('#metas').DataTable({});
       $("body").tooltip({ selector: '[data-bs-toggle=tooltip]', customClass: 'tooltip-value' });
     });
   </script>

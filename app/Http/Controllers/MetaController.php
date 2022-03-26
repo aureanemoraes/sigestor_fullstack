@@ -6,6 +6,7 @@ use App\Models\Meta;
 use App\Models\UnidadeGestora;
 use App\Models\PlanoEstrategico;
 use App\Models\PlanoAcao;
+use App\Models\Checkin;
 use App\Models\EixoEstrategico;
 use App\Models\Dimensao;
 use App\Models\Objetivo;
@@ -16,6 +17,29 @@ use Illuminate\Support\Facades\Validator;
 
 class MetaController extends Controller
 {
+	public function destroy_checkin($meta_id, $checkin_id) {
+		$meta = Meta::find($meta_id);
+		Checkin::where('id', $checkin_id)->delete();
+
+		return redirect()->route('meta.index', ['objetivo' => $meta->objetivo_id]);
+	}
+
+	public function checkin($meta_id, Request $request) {
+		$meta = Meta::find($meta_id);
+		$meta->checkins()->create([
+			'valor' => $request->valor,
+			'descricao' => $request->descricao
+		]);
+
+		return redirect()->route('meta.index', ['objetivo' => $meta->objetivo_id]);
+	}
+
+	public function dados($id) {
+		$meta = Meta::find($id);
+		// $meta->load('checkins');
+		return $meta;
+	}
+
 	public function index(Request $request)
 	{
 		if(isset($request->objetivo)) {

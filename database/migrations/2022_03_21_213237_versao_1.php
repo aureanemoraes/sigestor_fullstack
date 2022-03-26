@@ -161,6 +161,16 @@ class Versao1 extends Migration
             $table->foreign('unidade_gestora_id')->references('id')->on('unidades_gestoras');
             $table->timestamps();
         });
+
+        Schema::create('checkins', function (Blueprint $table) {
+            $table->id();
+            $table->string('valor');
+            $table->longText('descricao');
+            $table->unsignedBigInteger('meta_id');
+            $table->foreign('meta_id')->references('id')->on('metas');
+            $table->timestamps();
+        });
+
         // Tabela de GruposFontes
         Schema::create('grupos_fontes', function (Blueprint $table) {
             $table->id();

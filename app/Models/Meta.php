@@ -23,7 +23,7 @@ class Meta extends Model
         'plano_acao_id'
     ];
 
-    protected $appends = ['porcentagem_atual', 'unidades_gestoras_ids'];
+    protected $appends = ['porcentagem_atual'];
 
     public function getPorcentagemAtualAttribute()
     {
@@ -58,6 +58,10 @@ class Meta extends Model
         return $this->belongsTo(PlanoAcao::class);
     } 
 
+    public function checkins()
+    {
+        return $this->hasMany(Checkin::class);
+    }
 
     public function responsaveis()
     {
