@@ -31,10 +31,10 @@ class Meta extends Model
 
         if(isset($this->valor_atingido)) {
             $porcentagem_atual = ($this->valor_atingido * 100)/$this->valor_final;
-            return $porcentagem_atual . '%';
+            return $porcentagem_atual;
         } elseif($valor_inicial > 0) {
             $porcentagem_atual = ($valor_inicial * 100)/$this->valor_final;
-            return $porcentagem_atual . '%';
+            return $porcentagem_atual;
         } else {
             return null;
         }

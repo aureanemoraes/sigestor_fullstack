@@ -30,7 +30,7 @@
          
           <td>
             <div class="progress">
-              <div style="width: {{ $objetivo->porcentagem_atual }}" class="progress-bar progress-bar-striped bg-green" role="progressbar"  aria-valuenow="{{ $objetivo->porcentagem_atual }}" aria-valuemin="0" aria-valuemax="100">{{ $objetivo->porcentagem_atual }}</div>
+              <div style="width: {{ $objetivo->porcentagem_atual . '%'}}" class="progress-bar progress-bar-striped bg-green" role="progressbar"  aria-valuenow="{{ $objetivo->porcentagem_atual }}" aria-valuemin="0" aria-valuemax="100">{{ $objetivo->porcentagem_atual . '%'}}</div>
             </div>
           </td>
           <td><span class="badge btn-primary">{{ $objetivo->ativo ? 'ativo' : 'inativo' }}</span></td>
