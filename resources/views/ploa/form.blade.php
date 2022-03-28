@@ -74,15 +74,15 @@
   </div>
 
   <div class="mb-3">
-    <label for="acao_tipo_id">Ação</label>
-    <select class="form-control form-select @error('acao_tipo_id') is-invalid @enderror" id="acao_tipo_id" name="acao_tipo_id" aria-label="Selecione a instituição">
+    <label for="acao_tipo">Ação</label>
+    <select class="form-control form-select @error('acao_tipo_id') is-invalid @enderror" id="acao_tipo" aria-label="Selecione a instituição">
       <option selected value="">-- selecione --</option>
       @if(isset($acoes))
         @foreach($acoes as $acao)
           @if(isset($ploa) && $acao->id == $ploa->acao_tipo_id)
-            <option selected value="{{ $acao->id }}">{{ $acao->codigo . ' - ' . $acao->nome }}</option>
+            <option selected value="{{ $acao }}">{{ $acao->codigo . ' - ' . $acao->nome }}</option>
           @else
-            <option value="{{ $acao->id }}">{{ $acao->codigo . ' - ' . $acao->nome }}</option>
+            <option value="{{ $acao }}">{{ $acao->codigo . ' - ' . $acao->nome }}</option>
           @endif
         @endforeach
       @endif
@@ -93,6 +93,8 @@
       </div>
     @enderror
   </div>
+
+  <input type="hidden" name="acao_tipo_id" id="acao_tipo_id" value="{{ isset($ploa) ? $ploa->acao_tipo_id : '' }}">
 
   <div class="form-group mb-3">
     <label for="tipo_acao">Tipo de despesa</label>
@@ -107,10 +109,10 @@
   </div>
 
   <div class="form-group mb-3">
-    <label for="tipo_acao">Instituição</label>
-    <select class="form-control form-select @error('tipo_acao') is-invalid @enderror" id="tipo_acao" name="tipo_acao" aria-label="Selecione a instituição">
+    <label for="instituicao_id">Instituição</label>
+    <select class="form-control form-select @error('instituicao_id') is-invalid @enderror" id="instituicao_id" name="instituicao_id" aria-label="Selecione a instituição">
       @foreach($instituicoes as $instituicao)
-        @if(isset($ploa) && $instituicao->id == $ploa->tipo_acao)
+        @if(isset($ploa) && $instituicao->id == $ploa->instituicao_id)
           <option selected value="{{ $instituicao->id }}">{{ $instituicao->nome }}</option>
         @else
           <option value="{{ $instituicao->id }}">{{ $instituicao->nome }}</option>
@@ -124,20 +126,15 @@
     @enderror
   </div>
 
-  <div class="mb-3">
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="ativo" id="ativo" {{ isset($ploa->ativo) && $ploa->ativo ? 'checked' : '' }} value="1">
-      <label class="form-check-label" for="ativo">
-        Ativo
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="ativo" id="inativo" {{ isset($ploa->ativo) && !$ploa->ativo ? 'checked' : '' }} value="0">
-      <label class="form-check-label" for="inativo">
-        Inativo
-      </label>
-    </div>
+  <div class="form-floating mb-3">
+    <input type="number" class="form-control @error('valor') is-invalid @enderror" id="valor" name="valor" value="{{ isset($ploa->valor) ? $ploa->valor : null}}" placeholder="Nome...">
+    <label for="valor">Valor</label>
+    @error('valor')
+      <div class="invalid-feedback">
+        {{ $message }}
+      </div>
+    @enderror
   </div>
-  
+
   <button type="submit" class="btn btn-primary">Salvar</button>
 </form>

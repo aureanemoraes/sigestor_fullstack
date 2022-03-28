@@ -32,7 +32,7 @@ class PloaController extends Controller
 			'exercicios' => Exercicio::all(),
 			'programas' => Programa::all(),
 			'fontes' => FonteTipo::all(),
-			'acoes' => AcaoTipo::all(),
+			'acoes' => AcaoTipo::where('fav', 1)->get(),
 			'instituicoes' => Instituicao::all(),
 		]);
 	}
@@ -113,9 +113,14 @@ class PloaController extends Controller
 	protected function validation($request) 
 	{
 		$validator = Validator::make($request->all(), [
-            'nome' => ['required'],
-            'dimensao_id' => ['integer', 'required', 'exists:dimensoes,id']
-        ]);
+			'valor' => ['required'],
+			'exercicio_id' => ['integer', 'required', 'exists:exercicios,id'],
+			'programa_id' => ['integer', 'required', 'exists:programas,id'],
+			'fonte_tipo_id' => ['integer', 'required', 'exists:fontes_tipos,id'],
+			'acao_tipo_id' => ['integer', 'required', 'exists:acoes_tipos,id'],
+			'instituicao_id' => ['integer', 'required', 'exists:instituicoes,id'],
+			'tipo_acao' => ['required']
+		]);
 
 		if ($validator->fails()) {
 			return redirect()->back()
