@@ -19,6 +19,7 @@ use App\Http\Controllers\ObjetivoController;
 use App\Http\Controllers\MetaController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\EventoController;
+use App\Http\Controllers\PloaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,3 +64,5 @@ Route::delete('meta/checkin/destroy/{meta_id}/{checkin_id}', [MetaController::cl
 Route::resource('meta', MetaController::class);
 Route::resource('agenda', AgendaController::class);
 Route::resource('evento', EventoController::class);
+
+Route::resource('ploa', PloaController::class);

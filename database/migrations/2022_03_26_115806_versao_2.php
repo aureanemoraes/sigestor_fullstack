@@ -8,6 +8,22 @@ class Versao2 extends Migration
 {
     public function up()
     {
+        Schema::create('ploas', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('exercicio_id');
+            $table->foreign('exercicio_id')->references('id')->on('exercicios');
+            $table->unsignedBigInteger('programa_id');
+            $table->foreign('programa_id')->references('id')->on('programas');
+            $table->unsignedBigInteger('fonte_tipo_id');
+            $table->foreign('fonte_tipo_id')->references('id')->on('fontes_tipos');
+            $table->unsignedBigInteger('acao_tipo_id');
+            $table->foreign('acao_tipo_id')->references('id')->on('acoes_tipos');
+            $table->unsignedBigInteger('instituicao_id');
+            $table->foreign('instituicao_id')->references('id')->on('instituicoes');
+            $table->string('tipo_acao');
+            $table->float('valor');
+            $table->timestamps();
+        });
         // Tabela de Despesas
         // Schema::create('despesas', function (Blueprint $table) {
         //     $table->id();

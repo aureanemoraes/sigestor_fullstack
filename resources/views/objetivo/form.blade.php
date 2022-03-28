@@ -44,10 +44,10 @@
   <div class="mb-3">
     <label for="eixo_estrategico_id">Eixo Estratégico</label>
     <select class="form-control form-select @error('eixo_estrategico_id') is-invalid @enderror" id="eixo_estrategico_id" name="eixo_estrategico_id" aria-label="Selecione a instituição">
+      <option selected value="">-- selecione --</option>
       @if(isset($eixos_estrategicos))
         @foreach($eixos_estrategicos as $eixo_estrategico)
           @if(isset($objetivo) && $eixo_estrategico->id == $objetivo->dimensao->eixo_estrategico_id)
-            <option selected value="">-- selecione --</option>
             <option selected value="{{ $eixo_estrategico->id }}">{{ $eixo_estrategico->nome }}</option>
           @else
             <option value="{{ $eixo_estrategico->id }}">{{ $eixo_estrategico->nome }}</option>
@@ -65,10 +65,10 @@
   <div class="mb-3">
     <label for="dimensao_id">Dimensão Estratégica</label>
     <select class="form-control form-select @error('dimensao_id') is-invalid @enderror" id="dimensao_id" name="dimensao_id" aria-label="Selecione a instituição">
+      <option selected value="">-- selecione --</option>
       @if(isset($dimensoes))
         @foreach($dimensoes as $dimensao)
           @if(isset($objetivo) && $dimensao->id == $objetivo->dimensao_id)
-            <option selected value="">-- selecione --</option>
             <option selected value="{{ $dimensao->id }}">{{ $dimensao->nome }}</option>
           @else
             <option value="{{ $dimensao->id }}">{{ $dimensao->nome }}</option>

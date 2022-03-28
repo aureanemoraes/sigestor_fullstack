@@ -129,6 +129,9 @@
             <a href="{{ route('exercicio.index', ['modo_exibicao' => 'agenda']) }}" class="nav_link nav_link_tertiary">
               <span class="nav_name">Agenda</span>
             </a>
+            <a href="{{ route('ploa.index') }}" class="nav_link nav_link_tertiary">
+              <span class="nav_name">Matriz</span>
+            </a>
           </div>
           <a class="nav_link nav_link_secondary" data-bs-toggle="collapse" href="#loa_planejamento" role="button" aria-expanded="false" aria-controls="loa_planejamento">
             <i class="bi bi-align-center"></i>
