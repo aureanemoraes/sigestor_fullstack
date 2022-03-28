@@ -62,6 +62,7 @@ Route::resource('objetivo', ObjetivoController::class);
 Route::post('meta/checkin/{meta_id}', [MetaController::class, 'checkin'])->name('meta.checkin');
 Route::delete('meta/checkin/destroy/{meta_id}/{checkin_id}', [MetaController::class, 'destroy_checkin']);
 Route::resource('meta', MetaController::class);
+Route::get('agenda/eventos/{agenda_id}', [AgendaController::class, 'eventos'])->name('agenda.eventos');
 Route::resource('agenda', AgendaController::class);
 Route::resource('evento', EventoController::class);
 

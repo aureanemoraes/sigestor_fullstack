@@ -50,13 +50,14 @@ class EventoController extends Controller
 			}
 			else {
 				DB::rollBack();
-				return redirect()->route('agenda.index', ['exercicio' => $evento->agenda->exercicio_id, 'error' => $rules['msg']]);
+				session(['error_evento' => $rules['msg']]);
+				return redirect()->route('agenda.eventos', $evento->agenda_id);
 			}
 		} catch (Exception $ex) {
 			DB::rollBack();
 		}
 
-		return redirect()->route('agenda.index', ['exercicio' => $evento->agenda->exercicio_id]);
+		return redirect()->route('agenda.eventos', $evento->agenda_id);
 	}
 
 	public function show($id)
@@ -125,7 +126,7 @@ class EventoController extends Controller
 	}
 
 	protected function rules($evento) {
-		if($evento->data_fim <= $evento->agenda->data_fim) {
+		if($evento->data_inicio >= $evento->agenda->data_inicio && $evento->data_fim <= $evento->agenda->data_fim) {
 			$existe = Evento::whereBetween('data_inicio', [$evento->data_inicio, $evento->data_fim])->orWhereBetween('data_fim', [$evento->data_inicio, $evento->data_fim])->exists();
 			if(!$existe)
 				return [
@@ -140,7 +141,7 @@ class EventoController extends Controller
 		} else
 			return [
 				'status' => false,
-				'msg' => 'O período selecionado é maior que a data de encerramento da agenda atual.'
+				'msg' => 'O período selecionado é inválido. Por favor, crie um evento dentro do período de vigência da agenda atual.'
 			];
 	}
 }

@@ -27,9 +27,9 @@ class Agenda extends Model
         if($data_valida) {
             if(count($this->eventos) > 0) {
                 if($this->eventos->last()->data_fim > date('Y-m-y'))
-                    return 'Aberta para planejamento das Unidades Gestoras e Administrativas';
+                    return 'Aberta para planejamento';
                 else
-                    return 'Fechada para planejamento das Unidades Gestoras e Administrativas e aguardando aprovação da reitoria';
+                    return 'Em análise/aprovação';
             }
             else 
                 return 'Em elaboração';

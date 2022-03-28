@@ -23,12 +23,10 @@ class Evento extends Model
 
     public function getStatusAttribute($value)
     {
-        // if(empty($value))
-        //     $this->attributes['status'] = 'aberta';
-        // else {
-        //     if($this->data_fim <= date('Y-m-d'))
-        //         $this->attributes['status'] = 'aberta';
-        // }
+        if($this->data_fim < date('Y-m-d'))
+            return 'Fechada';
+        else
+            return 'Aberta';
     }
 
 

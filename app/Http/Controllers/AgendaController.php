@@ -11,26 +11,24 @@ use Illuminate\Support\Facades\Validator;
 
 class AgendaController extends Controller
 {
+	public function eventos($agenda_id)
+	{
+			return view('agenda.eventos')->with([
+				'agenda' => Agenda::find($agenda_id)
+			]);
+	}
+
 	public function index(Request $request)
 	{
-		$error = isset($request->error) ? $request->error : null;
-		if(isset($request->exercicio)) {
-			$exercicio_id = $request->exercicio;
-			$exercicio = Exercicio::find($exercicio_id);
-			$agenda = Agenda::where('exercicio_id', $exercicio_id)->first();
-
 			return view('agenda.index')->with([
-				'agenda' => $agenda,
-				'exercicio' => $exercicio,
-				'error' => $error
+				'agendas' => Agenda::all()
 			]);
-		}
 	}
 
 	public function create(Request $request) 
 	{
 		return view('agenda.create')->with([
-			'exercicio' => Exercicio::find($request->exercicio)
+			'exercicios' => Exercicio::all()
 		]);
 	}
 
@@ -50,7 +48,7 @@ class AgendaController extends Controller
 			DB::rollBack();
 		}
 
-		return redirect()->route('agenda.index', ['exercicio' => $agenda->exercicio_id]);
+		return redirect()->route('agenda.index');
 	}
 
 	public function show($id)
@@ -85,7 +83,7 @@ class AgendaController extends Controller
 			}
 		}
 
-		return redirect()->route('agenda.index', ['exercicio' => $agenda->exercicio_id]);
+		return redirect()->route('agenda.index');
 
 	}
 
@@ -99,7 +97,7 @@ class AgendaController extends Controller
 		} catch(Exception $ex) {
 		}
 
-		return redirect()->route('agenda.index', ['exercicio' => $agenda->exercicio_id]);
+		return redirect()->route('agenda.index');
 
 	}
 
@@ -109,7 +107,7 @@ class AgendaController extends Controller
             'nome' => ['required'],
             'data_inicio' => ['required', 'date'],
             'data_fim' => ['required', 'date', 'after:data_inicio'],
-            'exercicio_id' => ['integer', 'required', 'exists:exercicios,id']
+            'exercicio_id' => ['integer', 'required', 'exists:exercicios,id', 'unique:agendas,exercicio_id']
         ]);
 
 		if ($validator->fails()) {

@@ -13,12 +13,22 @@
     @method('PUT')
   @endif
   <div class="mb-3">
-    <label for="plano_estrategico_id">Exercício</label>
-    <select class="form-select"  id="exercicio_id" name="exercicio_id" aria-label="Selecione o grupo">
-        @if(isset($exercicio))
+    <label for="exercicio_id">Exercício</label>
+    <select class="form-control form-select  @error('exercicio_id') is-invalid @enderror"  id="exercicio_id" name="exercicio_id" aria-label="Selecione o grupo">
+      <option selected value="">-- selecione --</option>
+      @foreach($exercicios as $exercicio)
+        @if(isset($agenda) && $exercicio->id == $agenda->exercicio_id)
           <option selected value="{{ $exercicio->id }}">{{ $exercicio->nome }}</option>
+        @else
+          <option value="{{ $exercicio->id }}">{{ $exercicio->nome }}</option>
         @endif
+      @endforeach
     </select>
+    @error('exercicio_id')
+      <div class="invalid-feedback">
+        {{ $message }}
+      </div>
+    @enderror
   </div>
 
   <div class="form-floating mb-3">

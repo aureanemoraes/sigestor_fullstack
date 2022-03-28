@@ -126,7 +126,7 @@
             PLOA
           </a>
           <div class="collapse" id="ploa_planejamento">
-            <a href="{{ route('exercicio.index', ['modo_exibicao' => 'agenda']) }}" class="nav_link nav_link_tertiary">
+            <a href="{{ route('agenda.index') }}" class="nav_link nav_link_tertiary">
               <span class="nav_name">Agenda</span>
             </a>
             <a href="{{ route('ploa.index') }}" class="nav_link nav_link_tertiary">
