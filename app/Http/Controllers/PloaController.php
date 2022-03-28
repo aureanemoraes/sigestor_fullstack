@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Transformers\PloaTransformer;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class PloaController extends Controller
 {
@@ -23,7 +24,7 @@ class PloaController extends Controller
 	public function index()
 	{
 		return view('ploa.index')->with([
-			'ploas' => Ploa::all()
+			'programas' => Programa::all(),
 		]);
 	}
 
@@ -33,7 +34,7 @@ class PloaController extends Controller
 			'programas' => Programa::all(),
 			'fontes' => FonteTipo::all(),
 			'acoes' => AcaoTipo::where('fav', 1)->get(),
-			'instituicoes' => Instituicao::all(),
+			'instituicoes' => Instituicao::all()
 		]);
 	}
 
@@ -46,8 +47,16 @@ class PloaController extends Controller
 		try {
 			DB::beginTransaction();
 			$ploa = PloaTransformer::toInstance($request->all());
-			$ploa->save();
-			DB::commit();
+			$rules = $this->rules($ploa);
+			if($rules['status']) {
+				$ploa->save();
+				DB::commit();
+			} else 	{
+				DB::rollBack();
+				session(['error_ploa' => $rules['msg']]);
+				return redirect()->route('ploa.create');
+			}
+
 		} catch (Exception $ex) {
 			DB::rollBack();
 		}
@@ -126,6 +135,19 @@ class PloaController extends Controller
 			return redirect()->back()
 									->withErrors($validator)
 									->withInput();
+		}
+	}
+
+	protected function rules($ploa) {
+		$existe = Ploa::where('exercicio_id', $ploa->exercicio_id)
+			->where('programa_id', $ploa->programa_id)
+			->where('fonte_tipo_id', $ploa->fonte_tipo_id)
+			->where('acao_tipo_id', $ploa->acao_tipo_id)
+			->where('tipo_acao', $ploa->tipo_acao)
+			->exists();
+
+		if($existe) {
+			return ['status' => false, 'msg' => 'Este vínculo já existe na matriz atual.'];
 		}
 	}
 }

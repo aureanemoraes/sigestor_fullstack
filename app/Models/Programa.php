@@ -23,4 +23,9 @@ class Programa extends Model
             'exercicio_id',
         );
     }
+
+    public function ploas()
+    {
+        return $this->hasMany(Ploa::class);
+    }
 }

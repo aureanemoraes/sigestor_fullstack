@@ -27,37 +27,44 @@
 <section>
   <div class="table-responsive-sm table-loa">
     <table class="table table-secondary table-sm">
-      <tbody>
-        <tr>
-          <th colspan="2">Programa</th>
-          <td>Nome</td>
-        </tr>
-        <tr>
-          <th colspan="2">Total estimado</th>
-          <td>R$ 00,00</td>
-        </tr>
-        <tr>
-          <td colspan="3">
-            <table class="table table-light mb-0 table-sm">
-              <thead>
-                <tr>
-                  <th>Ação</th>
-                  <th>Fonte</th>
-                  <th>Valor</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>R$ 00,00</td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-        
-      </tbody>
+      @foreach($programas as $programa)
+        @if(count($programa->ploas) > 0)
+          <tbody>
+            <tr>
+              <th colspan="3">Programa</th>
+              <td>{{ $programa->nome }}</td>
+            </tr>
+            <tr>
+              <th colspan="3">Total estimado</th>
+              <td>{{ formatCurrency($programa->ploas()->sum('valor')) }}</td>
+            </tr>
+            @foreach($programa->ploas as $ploa)
+            <tr>
+              <td colspan="4">
+                <table class="table table-light mb-0 table-sm">
+                  <thead>
+                    <tr>
+                      <th>Ação</th>
+                      <th>Tipo</th>
+                      <th>Fonte</th>
+                      <th>Valor</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{ $ploa->acao_tipo->codigo . ' - ' . $ploa->acao_tipo->nome }}</td>
+                      <td>{{ ucfirst($ploa->tipo_acao) }}</td>
+                      <td>{{ $ploa->fonte_tipo->codigo }}</td>
+                      <td>{{ formatCurrency($ploa->valor) }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+            @endforeach
+          </tbody>
+        @endif
+      @endforeach
     </table>
   </div>
 </section>
