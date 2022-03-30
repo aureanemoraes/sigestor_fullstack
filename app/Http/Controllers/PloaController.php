@@ -25,6 +25,11 @@ class PloaController extends Controller
 	{
 		return view('ploa.index')->with([
 			'programas' => Programa::all(),
+			'exercicios' => Exercicio::all(),
+			'programas' => Programa::all(),
+			'fontes' => FonteTipo::all(),
+			'acoes' => AcaoTipo::where('fav', 1)->get(),
+			'instituicoes' => Instituicao::all()
 		]);
 	}
 
@@ -54,7 +59,7 @@ class PloaController extends Controller
 			} else 	{
 				DB::rollBack();
 				session(['error_ploa' => $rules['msg']]);
-				return redirect()->route('ploa.create');
+				return redirect()->route('ploa.index');
 			}
 
 		} catch (Exception $ex) {
@@ -148,6 +153,7 @@ class PloaController extends Controller
 
 		if($existe) {
 			return ['status' => false, 'msg' => 'Este vínculo já existe na matriz atual.'];
-		}
+		} else 
+			return ['status' => true, 'msg' => ''];
 	}
 }

@@ -15,9 +15,9 @@ class AcaoTipoSeeder extends Seeder
     public function run()
     {
         // FAVORITAR AÇÕES
-        AcaoTipo::create([ 'codigo' => '0581', 'nome' => 'ABONO SALARIAL' ]);
-        AcaoTipo::create([ 'codigo' => '15ST', 'nome' => 'ACESSAO A ORGANIZACAO PARA A COOPERACAO E DESENVOLVIMENTO ECONOMICO - OCDE' ]);
-        AcaoTipo::create([ 'codigo' => '2317', 'nome' => 'ACESSO A INFORMACAO CIENTIFICA E TECNOLOGICA' ]);
+        AcaoTipo::create([ 'codigo' => '0581', 'nome' => 'ABONO SALARIAL', 'fav' => 1, 'custeio' => true ]);
+        AcaoTipo::create([ 'codigo' => '15ST', 'nome' => 'ACESSAO A ORGANIZACAO PARA A COOPERACAO E DESENVOLVIMENTO ECONOMICO - OCDE', 'fav' => 1, 'custeio' => 1, 'investimento' => 1 ]);
+        AcaoTipo::create([ 'codigo' => '2317', 'nome' => 'ACESSO A INFORMACAO CIENTIFICA E TECNOLOGICA', 'fav' => 1, 'investimento' => 1 ]);
         AcaoTipo::create([ 'codigo' => '20V5', 'nome' => 'ACOES COMPLEMENTARES DE PROTECAO SOCIAL BASICA' ]);
         AcaoTipo::create([ 'codigo' => '2866', 'nome' => 'ACOES DE CARATER SIGILOSO' ]);
         AcaoTipo::create([ 'codigo' => '20XY', 'nome' => 'ACOES DE COOPERACAO DA MARINHA' ]);
