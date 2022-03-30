@@ -63,7 +63,7 @@
       Novo
     </button>
   </p>
-  <div class="collapse" id="novoCollapse">
+  <div class="collapse collpase-form" id="novoCollapse">
     <div class="card card-body">
       @include('ploa.form')
     </div>
@@ -151,13 +151,20 @@
 
       $('#valor').val(ploa.valor);
 
-      $('.collapse').collapse('show');
+      $('.collpase-form').collapse('show');
 
       $('#subtitle').removeClass('subtitle-new');
+
       $('#subtitle').addClass('subtitle-edit');
+      
       $('#subtitle').text('Edição');
+
       $('#novo-button').attr('disabled', true);
+
       $('#cancel-button').show();
+
+      $('#form').attr('action', `/ploa/${ploa.id}`);
+      $('#form').append('<input type="hidden" name="_method" value="PUT" id="method">');
 
       $("html, body").animate({ scrollTop: 0 }, "slow");
 
@@ -190,38 +197,39 @@
 
       $('#cancel-button').hide();
 
-      $('.collapse').collapse('hide');
+      $('#form').attr('action', `/ploa`);
+      $('#method').remove();
+
+      $('.collpase-form').collapse('hide');
 
     });
 
     $('#acao_tipo').on('change', () => {
       $('#tipo_acao').html('');
-      console.log($('#acao_tipo').val());
 
       let acao_tipo = $('#acao_tipo').val();
 
       if(acao_tipo) {
         let acao = JSON.parse($('#acao_tipo').val());
-      let tipos_acao = [];
-      let html = '<option selected value="">-- selecione --</option>';
+        let tipos_acao = [];
+        let html = '<option selected value="">-- selecione --</option>';
 
-      if(acao.id) {
-        $('#acao_tipo_id').val(acao.id);
+        if(acao.id) {
+          $('#acao_tipo_id').val(acao.id);
 
-        if(acao.investimento)
-          tipos_acao.push('investimento');
-        if(acao.custeio)
-          tipos_acao.push('custeio');
+          if(acao.investimento)
+            tipos_acao.push('investimento');
+          if(acao.custeio)
+            tipos_acao.push('custeio');
 
-        tipos_acao.map(tipo_acao => {
-          let string = tipo_acao[0].toUpperCase() + tipo_acao.substring(1);
-          html += `<option value="${tipo_acao}">${string}</option>`;
-        });
+          tipos_acao.map(tipo_acao => {
+            let string = tipo_acao[0].toUpperCase() + tipo_acao.substring(1);
+            html += `<option value="${tipo_acao}">${string}</option>`;
+          });
 
-        $('#tipo_acao').html(html);
+          $('#tipo_acao').html(html);
+        }
       }
-      }
-      
     });
 
     $(document).ready(function() {

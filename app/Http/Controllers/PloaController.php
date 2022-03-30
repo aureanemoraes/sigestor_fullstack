@@ -86,8 +86,6 @@ class PloaController extends Controller
 
 	public function update(Request $request, $id)
 	{
-		// dd($request->all());
-
 		$invalido = $this->validation($request);
 
 		if($invalido) return $invalido;
@@ -98,9 +96,16 @@ class PloaController extends Controller
 			try {
 				DB::beginTransaction();
 				$ploa = PloaTransformer::toInstance($request->all(), $ploa);
-				$ploa->save();
-				DB::commit();
-
+				$rules = $this->rules($ploa);
+				if($rules['status']) {
+					$ploa->save();
+					DB::commit();
+				} else 	{
+					DB::rollBack();
+					session(['error_ploa' => $rules['msg']]);
+					return redirect()->route('ploa.index');
+				}
+	
 			} catch (Exception $ex) {
 				DB::rollBack();
 			}
@@ -148,8 +153,12 @@ class PloaController extends Controller
 			->where('programa_id', $ploa->programa_id)
 			->where('fonte_tipo_id', $ploa->fonte_tipo_id)
 			->where('acao_tipo_id', $ploa->acao_tipo_id)
-			->where('tipo_acao', $ploa->tipo_acao)
-			->exists();
+			->where('tipo_acao', $ploa->tipo_acao);
+
+		if(isset($ploa->id))
+			$existe = $existe->where('id', '!=', $ploa->id);
+			
+		$existe = $existe->exists();
 
 		if($existe) {
 			return ['status' => false, 'msg' => 'Este vínculo já existe na matriz atual.'];
