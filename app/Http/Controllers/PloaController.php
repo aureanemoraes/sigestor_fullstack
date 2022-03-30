@@ -23,13 +23,16 @@ class PloaController extends Controller
 
 	public function index()
 	{
+		$total_ploa = Ploa::sum('valor');
+
 		return view('ploa.index')->with([
 			'programas' => Programa::all(),
 			'exercicios' => Exercicio::all(),
 			'programas' => Programa::all(),
 			'fontes' => FonteTipo::all(),
 			'acoes' => AcaoTipo::where('fav', 1)->get(),
-			'instituicoes' => Instituicao::all()
+			'instituicoes' => Instituicao::all(),
+			'total_ploa' => $total_ploa
 		]);
 	}
 

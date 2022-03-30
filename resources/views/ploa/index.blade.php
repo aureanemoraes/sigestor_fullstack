@@ -30,6 +30,10 @@
     .float-end {
       margin-right: 1rem;
     }
+
+    .total-matriz {
+      padding: 0.5rem;
+    }
   </style>
 @endsection
 
@@ -70,6 +74,9 @@
   </div>
 </section>
 <section>
+  <div class="d-flex justify-content-end ">
+    <p class="btn-primary total-matriz">VALOR TOTAL: {{ formatCurrency($total_ploa) }}</p>
+  </div>
   <div class="table-responsive-sm table-loa">
     <table class="table table-secondary table-sm">
       @foreach($programas as $programa)
