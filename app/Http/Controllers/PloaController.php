@@ -16,6 +16,10 @@ use Illuminate\Validation\Rule;
 
 class PloaController extends Controller
 {
+	public function distribuicao() {
+		return view('ploa.distribuicao');
+	}
+
 	public function opcoes($dimensao_id)
 	{
 		return Ploa::select('id', 'nome as text')->where('dimensao_id', $dimensao_id)->where('ativo', 1)->get();

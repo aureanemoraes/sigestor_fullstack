@@ -66,4 +66,5 @@ Route::get('agenda/eventos/{agenda_id}', [AgendaController::class, 'eventos'])->
 Route::resource('agenda', AgendaController::class);
 Route::resource('evento', EventoController::class);
 
+Route::get('ploa/distribuicao', [PloaController::class, 'distribuicao'])->name('ploa.distribuicao');
 Route::resource('ploa', PloaController::class);

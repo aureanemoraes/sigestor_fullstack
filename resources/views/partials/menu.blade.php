@@ -24,54 +24,36 @@
           </a>
           <div class="collapse" id="matriz_orcamamentaria">
             <a href="{{ route('instituicao.index') }}" class="nav_link nav_link_tertiary active">
-            
               <span class="nav_name">Instituições</span>
             </a>
             <a href="{{ route('exercicio.index') }}" class="nav_link nav_link_tertiary">
-            
               <span class="nav_name">Exercícios</span>
             </a>
             <a href="{{ route('unidade_gestora.index') }}" class="nav_link nav_link_tertiary">
-            
               <span class="nav_name">Unidades Gestoras</span>
             </a>
             <a href="{{ route('unidade_administrativa.index') }}" class="nav_link nav_link_tertiary">
-            
               <span class="nav_name">Unidades Administrativas</span>
             </a>
             <a href="{{ route('programa.index') }}" class="nav_link nav_link_tertiary">
-            
-
               <span class="nav_name">Programas</span>
             </a>
             <a href="{{ route('fonte_tipo.index') }}" class="nav_link nav_link_tertiary">
-            
-
               <span class="nav_name">Fontes</span>
             </a>
             <a href="{{ route('acao_tipo.index') }}" class="nav_link nav_link_tertiary">
-            
-
               <span class="nav_name">Ações</span>
             </a>
             <a href="{{ route('natureza_despesa.index') }}" class="nav_link nav_link_tertiary">
-            
-
               <span class="nav_name">Naturezas de Despesas</span>
             </a>
             <a href="{{ route('subnatureza_despesa.index') }}" class="nav_link nav_link_tertiary">
-            
-
               <span class="nav_name">Subnaturezas de Despesas</span>
             </a>
             <a href="{{ route('centro_custo.index') }}" class="nav_link nav_link_tertiary">
-            
-
               <span class="nav_name">Centros de Custo</span>
             </a>
             <a href="#" class="nav_link nav_link_tertiary">
-            
-
               <span class="nav_name">Usuários</span>
             </a>
           </div>
@@ -81,23 +63,18 @@
           </a>
           <div class="collapse" id="metas_estrategicas">
             <a href="{{ route('plano_estrategico.index') }}" class="nav_link nav_link_tertiary active">
-              
               <span class="nav_name">Planos Estratégicos</span>
             </a>
             <a href="{{ route('plano_acao.index') }}" class="nav_link nav_link_tertiary active">
-              
               <span class="nav_name">Planos de Ações</span>
             </a>
             <a href="{{ route('eixo_estrategico.index') }}" class="nav_link nav_link_tertiary active">
-              
               <span class="nav_name">Eixos</span>
             </a>
             <a href="{{ route('dimensao.index') }}" class="nav_link nav_link_tertiary active">
-              
               <span class="nav_name">Dimensões</span>
             </a>
             <a href="{{ route('objetivo.index') }}" class="nav_link nav_link_tertiary active">
-              
               <span class="nav_name">Objetivos</span>
             </a>
           </div>
@@ -132,7 +109,7 @@
             <a href="{{ route('ploa.index') }}" class="nav_link nav_link_tertiary">
               <span class="nav_name">Matriz</span>
             </a>
-            <a href="{{ route('ploa.index') }}" class="nav_link nav_link_tertiary">
+            <a href="{{ route('ploa.distribuicao') }}" class="nav_link nav_link_tertiary">
               <span class="nav_name">Distribuição</span>
             </a>
           </div>
