@@ -17,7 +17,12 @@ use Illuminate\Validation\Rule;
 class PloaController extends Controller
 {
 	public function distribuicao() {
-		return view('ploa.distribuicao');
+		$total_ploa = Ploa::sum('valor');
+
+		return view('ploa.distribuicao')->with([
+			'programas' => Programa::all(),
+			'total_ploa' => $total_ploa
+		]);
 	}
 
 	public function opcoes($dimensao_id)
