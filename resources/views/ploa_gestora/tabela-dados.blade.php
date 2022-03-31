@@ -42,19 +42,17 @@
                                 @csrf
                                 @method('delete')
                                 <div class="btn-group btn-group-sm float-end" role="group" aria-label="acoes">
-                                  <button type="button"  class="btn btn-primary" ><i class="bi bi-pen-fill" 
-                                    onClick="edit(
-                                      '{{ $ploa_gestora->id }}', 
-                                      '{{ $ploa_gestora->ploa->exercicio_id }}', 
-                                      '{{ $ploa_gestora->ploa->programa_id }}',
-                                      '{{ $ploa_gestora->ploa->fonte_tipo_id }}',
-                                      '{{ $ploa_gestora->ploa->acao_tipo_id }}',
-                                      '{{ json_encode($ploa_gestora->ploa->acao_tipo) }}',
-                                      '{{ $ploa_gestora->ploa->tipo_acao }}',
-                                      '{{ $ploa_gestora->ploa->instituicao_id }}',
-                                      '{{ $ploa_gestora->valor }}'
-                                    )"
-                                  ></i></button>
+                                  <button type="button"  class="btn btn-primary" onClick="edit(
+                                    '{{ $ploa_gestora->id }}', 
+                                    '{{ $ploa_gestora->ploa->exercicio_id }}', 
+                                    '{{ $ploa_gestora->ploa->programa_id }}',
+                                    '{{ $ploa_gestora->ploa->fonte_tipo_id }}',
+                                    '{{ $ploa_gestora->ploa->acao_tipo_id }}',
+                                    '{{ json_encode($ploa_gestora->ploa->acao_tipo) }}',
+                                    '{{ $ploa_gestora->ploa->tipo_acao }}',
+                                    '{{ $ploa_gestora->ploa->instituicao_id }}',
+                                    '{{ $ploa_gestora->valor }}'
+                                  )"><i class="bi bi-pen-fill"></i></button>
                                   <button type="submit" class="btn btn-primary"><i class="bi bi-trash3-fill"></i></button>
                                 </div>
                               </form>

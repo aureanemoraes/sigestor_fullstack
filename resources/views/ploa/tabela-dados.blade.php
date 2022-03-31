@@ -42,7 +42,7 @@
                               @csrf
                               @method('delete')
                               <div class="btn-group btn-group-sm float-end" role="group" aria-label="acoes">
-                                <button type="button"  class="btn btn-primary" ><i class="bi bi-pen-fill" 
+                                <button type="button"  class="btn btn-primary"  
                                   onClick="edit(
                                     '{{ $ploa->id }}', 
                                     '{{ $ploa->exercicio_id }}', 
@@ -54,7 +54,7 @@
                                     '{{ $ploa->instituicao_id }}',
                                     '{{ $ploa->valor }}'
                                   )"
-                                ></i></button>
+                                ><i class="bi bi-pen-fill"></i></button>
                                 <button type="submit" class="btn btn-primary"><i class="bi bi-trash3-fill"></i></button>
                               </div>
                             </form>
