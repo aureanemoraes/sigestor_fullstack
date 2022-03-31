@@ -31,25 +31,6 @@
 
   <div class="row">
     <div class="mb-3 col-4">
-      <label for="exercicio_id">Exercício</label>
-      <select class="form-select @error('exercicio_id') is-invalid @enderror" id="exercicio_id" name="exercicio_id" aria-label="Selecione o grupo">
-        <option selected value="">-- selecione --</option>
-        @foreach($exercicios as $exercicios)
-          @if(isset($ploa) && $exercicios->id == $ploa->exercicio_id)
-            <option selected value="{{ $exercicios->id }}">{{ $exercicios->nome }}</option>
-          @else
-            <option value="{{ $exercicios->id }}">{{ $exercicios->nome }}</option>
-          @endif
-        @endforeach
-      </select>
-      @error('exercicio_id')
-        <div class="invalid-feedback">
-          {{ $message }}
-        </div>
-      @enderror
-    </div>
-  
-    <div class="mb-3 col-4">
       <label for="programa_id">Programa</label>
       <select class="form-control form-select @error('programa_id') is-invalid @enderror" id="programa_id" name="programa_id" aria-label="Selecione a instituição">
         <option selected value="">-- selecione --</option>
@@ -90,9 +71,7 @@
         </div>
       @enderror
     </div>
-  </div>
 
-  <div class="row">
     <div class="mb-3 col-4">
       <label for="acao_tipo">Ação</label>
       <select class="form-control form-select @error('acao_tipo_id') is-invalid @enderror" id="acao_tipo" aria-label="Selecione a instituição">
@@ -113,9 +92,12 @@
         </div>
       @enderror
     </div>
-  
+  </div>
+
+  <div class="row">
     <input type="hidden" name="acao_tipo_id" id="acao_tipo_id" value="{{ isset($ploa) ? $ploa->acao_tipo_id : '' }}">
-  
+
+    <input type="hidden" name="exercicio_id" id="exercicio" value="{{ isset($ploa) ? $ploa->exercicio_id : '' }}">
     <div class="form-group mb-3 col-4">
       <label for="tipo_acao">Tipo de despesa</label>
       <select class="form-control form-select @error('tipo_acao') is-invalid @enderror" id="tipo_acao" name="tipo_acao" aria-label="Selecione a instituição">
@@ -145,17 +127,19 @@
         </div>
       @enderror
     </div>
+
+    <div class="form-group mb-3 col-4">
+      <label for="valor">Valor</label>
+      <input type="number" class="form-control @error('valor') is-invalid @enderror" id="valor" name="valor" value="{{ isset($ploa->valor) ? $ploa->valor : null}}" placeholder="R$ 00,00">
+      @error('valor')
+        <div class="invalid-feedback">
+          {{ $message }}
+        </div>
+      @enderror
+    </div>
   </div>
 
-  <div class="form-floating mb-3">
-    <input type="number" class="form-control @error('valor') is-invalid @enderror" id="valor" name="valor" value="{{ isset($ploa->valor) ? $ploa->valor : null}}" placeholder="Nome...">
-    <label for="valor">Valor</label>
-    @error('valor')
-      <div class="invalid-feedback">
-        {{ $message }}
-      </div>
-    @enderror
-  </div>
+  
   <div class="btn-group btn-group-sm float-end" role="group" id="buttons-form">
     <button type="button" class="btn btn-warning" style="display: none;" id="cancel-button">Cancelar</button>
     <button type="submit" class="btn btn-primary">Salvar</button>

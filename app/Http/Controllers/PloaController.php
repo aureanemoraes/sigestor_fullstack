@@ -30,18 +30,31 @@ class PloaController extends Controller
 		return Ploa::select('id', 'nome as text')->where('dimensao_id', $dimensao_id)->where('ativo', 1)->get();
 	}
 
-	public function index()
+	public function index($exercicio_id = null)
 	{
-		$total_ploa = Ploa::sum('valor');
+		if(!isset($exercicio_id)) {
+			$exercicio_selecionado = Exercicio::all()->last();
+			$exercicio_id = $exercicio_selecionado->id;
+		}
+		else 
+			$exercicio_selecionado = Exercicio::find($exercicio_id);
+		
+
+		$total_ploa = Ploa::where('exercicio_id', $exercicio_id)->sum('valor');
 
 		return view('ploa.index')->with([
-			'programas' => Programa::all(),
+			'programas_ploa' => Programa::whereHas(
+				'ploas', function ($query) use($exercicio_id) {
+					$query->where('exercicio_id', $exercicio_id);
+				}
+			)->get(),
 			'exercicios' => Exercicio::all(),
 			'programas' => Programa::all(),
 			'fontes' => FonteTipo::all(),
 			'acoes' => AcaoTipo::where('fav', 1)->get(),
 			'instituicoes' => Instituicao::all(),
-			'total_ploa' => $total_ploa
+			'total_ploa' => $total_ploa,
+			'exercicio_selecionado' => $exercicio_selecionado
 		]);
 	}
 
@@ -71,14 +84,14 @@ class PloaController extends Controller
 			} else 	{
 				DB::rollBack();
 				session(['error_ploa' => $rules['msg']]);
-				return redirect()->route('ploa.index');
+				return redirect()->route('ploa.index', $request->exercicio_id);
 			}
 
 		} catch (Exception $ex) {
 			DB::rollBack();
 		}
 
-		return redirect()->route('ploa.index');
+		return redirect()->route('ploa.index', $request->exercicio_id);
 	}
 
 	public function show($id)
@@ -115,7 +128,7 @@ class PloaController extends Controller
 				} else 	{
 					DB::rollBack();
 					session(['error_ploa' => $rules['msg']]);
-					return redirect()->route('ploa.index');
+					return redirect()->route('ploa.index', $request->exercicio_id);
 				}
 	
 			} catch (Exception $ex) {
@@ -123,13 +136,14 @@ class PloaController extends Controller
 			}
 		}
 
-		return redirect()->route('ploa.index');
+		return redirect()->route('ploa.index', $request->exercicio_id);
 
 	}
 
 	public function destroy($id)
 	{
 		$ploa = Ploa::find($id);
+		$exercicio_id = $ploa->exercicio_id;
 		try {
 			if(isset($ploa)) {
 				$ploa->delete();
@@ -137,7 +151,7 @@ class PloaController extends Controller
 		} catch(Exception $ex) {
 		}
 
-		return redirect()->route('ploa.index');
+		return redirect()->route('ploa.index', $exercicio_id);
 
 	}
 

@@ -68,7 +68,10 @@ Route::resource('agenda', AgendaController::class);
 Route::resource('evento', EventoController::class);
 
 Route::get('ploa/distribuicao', [PloaController::class, 'distribuicao'])->name('ploa.distribuicao');
-Route::resource('ploa', PloaController::class);
+Route::get('ploa/{exercicio_id?}', [PloaController::class, 'index'])->name('ploa.index');
+Route::resource('ploa', PloaController::class)->except([
+    'index'
+]);
 Route::get('ploa_gestora/{unidade_gestora_id?}', [PloaGestoraController::class, 'index'])->name('ploa_gestora.index');
 Route::resource('ploa_gestora', PloaGestoraController::class)->except([
     'index'

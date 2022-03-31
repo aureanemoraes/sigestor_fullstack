@@ -42,6 +42,8 @@
     PLOA - Matriz
 </h3>
 
+@include('ploa.filtro-exercicios')
+
 <section class="row">
   @if(session('error_ploa') != null)
     <section class="alert-container">
@@ -73,26 +75,23 @@
 
 @section('js')
   <script>
-    function edit(ploa) {
-      $('#exercicio_id').val(ploa.exercicio_id);
-      $('#exercicio_id').select2().trigger('change');
-
-      $('#programa_id').val(ploa.programa_id);
+    function edit(id, exercicio_id, programa_id, fonte_tipo_id, acao_tipo_id, acao_tipo, tipo_acao, instituicao_id, valor) {
+      $('#programa_id').val(programa_id);
       $('#programa_id').select2().trigger('change');
 
-      $('#fonte_tipo_id').val(ploa.fonte_tipo_id);
+      $('#fonte_tipo_id').val(fonte_tipo_id);
       $('#fonte_tipo_id').select2().trigger('change');
 
-      $('#acao_tipo_id').val(ploa.acao_tipo_id);
+      $('#acao_tipo_id').val(acao_tipo_id);
 
-      $('#acao_tipo').val(JSON.stringify(ploa.acao_tipo));
+      $('#acao_tipo').val(acao_tipo);
       $('#acao_tipo').select2().trigger('change');
 
-      $('#tipo_acao').val(ploa.tipo_acao);
+      $('#tipo_acao').val(tipo_acao);
 
-      $('#instituicao_id').val(ploa.instituicao_id);
+      $('#instituicao_id').val(instituicao_id);
 
-      $('#valor').val(ploa.valor);
+      $('#valor').val(valor);
 
       $('.collpase-form').collapse('show');
 
@@ -106,7 +105,7 @@
 
       $('#cancel-button').show();
 
-      $('#form').attr('action', `/ploa/${ploa.id}`);
+      $('#form').attr('action', `/ploa/${id}`);
       $('#form').append('<input type="hidden" name="_method" value="PUT" id="method">');
 
       $("html, body").animate({ scrollTop: 0 }, "slow");
@@ -114,8 +113,6 @@
     }
 
     $('#cancel-button').on('click', () => {
-      $('#exercicio_id').val(null).trigger('change');
-
       $('#programa_id').val(null).trigger('change');
 
       $('#fonte_tipo_id').val(null).trigger('change');
@@ -175,12 +172,17 @@
       }
     });
 
+    $('#exercicio_id').on('change', () => {
+        window.location.href = `/ploa/${$('#exercicio_id').val()}`;
+      });
+
     $(document).ready(function() {
         $('#exercicio_id').select2();
         $('#programa_id').select2();
         $('#fonte_tipo_id').select2();
         $('#acao_tipo').select2();
         $('#ploas').DataTable( {} );
+        $('#exercicio').val($('#exercicio_id').val());
     });
   </script>
 @endsection
