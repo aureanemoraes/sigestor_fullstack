@@ -17,6 +17,10 @@ use Illuminate\Validation\Rule;
 class PloaController extends Controller
 {
 	public function distribuicao($exercicio_id = null) {
+		$valor_distribuido = 0;
+		$valor_a_distribuir = 0;
+		$total_ploa = 0;
+
 		if(!isset($exercicio_id)) {
 			$exercicio_selecionado = Exercicio::all()->last();
 			$exercicio_id = $exercicio_selecionado->id;
@@ -24,17 +28,31 @@ class PloaController extends Controller
 		else 
 			$exercicio_selecionado = Exercicio::find($exercicio_id);
 
-		$total_ploa = Ploa::where('exercicio_id', $exercicio_id)->sum('valor');
+		$ploas = Ploa::where('exercicio_id', $exercicio_id)->get();
+
+		if(count($ploas) > 0) {
+			foreach($ploas as $ploa) {
+				$valor_distribuido += $ploa->ploas_gestoras()->sum('ploas_gestoras.valor');
+			}
+		}
+
+		$total_ploa = $ploas->sum('valor');
+
+		$valor_a_distribuir = $total_ploa - $valor_distribuido;
+
+		$programas_ploa = Programa::whereHas(
+			'ploas', function ($query) use($exercicio_id) {
+				$query->where('exercicio_id', $exercicio_id);
+			}
+		)->get();
 
 		return view('ploa.distribuicao')->with([
-			'programas_ploa' => Programa::whereHas(
-				'ploas', function ($query) use($exercicio_id) {
-					$query->where('exercicio_id', $exercicio_id);
-				}
-			)->get(),
-			'total_ploa' => $total_ploa,
+			'programas_ploa' => $programas_ploa,
 			'exercicios' => Exercicio::all(),
-			'exercicio_selecionado' => $exercicio_selecionado
+			'exercicio_selecionado' => $exercicio_selecionado,
+			'valor_distribuido' => $valor_distribuido,
+			'valor_a_distribuir' => $valor_a_distribuir,
+			'total_ploa' => $total_ploa
 		]);
 	}
 
