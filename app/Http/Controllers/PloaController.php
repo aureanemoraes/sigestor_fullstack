@@ -16,12 +16,25 @@ use Illuminate\Validation\Rule;
 
 class PloaController extends Controller
 {
-	public function distribuicao() {
-		$total_ploa = Ploa::sum('valor');
+	public function distribuicao($exercicio_id = null) {
+		if(!isset($exercicio_id)) {
+			$exercicio_selecionado = Exercicio::all()->last();
+			$exercicio_id = $exercicio_selecionado->id;
+		}
+		else 
+			$exercicio_selecionado = Exercicio::find($exercicio_id);
+
+		$total_ploa = Ploa::where('exercicio_id', $exercicio_id)->sum('valor');
 
 		return view('ploa.distribuicao')->with([
-			'programas' => Programa::all(),
-			'total_ploa' => $total_ploa
+			'programas_ploa' => Programa::whereHas(
+				'ploas', function ($query) use($exercicio_id) {
+					$query->where('exercicio_id', $exercicio_id);
+				}
+			)->get(),
+			'total_ploa' => $total_ploa,
+			'exercicios' => Exercicio::all(),
+			'exercicio_selecionado' => $exercicio_selecionado
 		]);
 	}
 

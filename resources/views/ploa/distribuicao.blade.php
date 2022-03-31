@@ -9,10 +9,15 @@
     .distribuicao-resumo {
       margin-bottom: 1rem;
     }
+    
+    .card {
+      margin-bottom: 1rem;
+    }
   </style>
 @endsection
 
 @section('content')
+  @include('ploa.filtro-exercicios')
   <div class="d-flex justify-content-end mb-2 col">
     <a href="{{ route('ploa_gestora.index') }}" type="button" class="btn btn-primary">
       Distribuir
@@ -34,4 +39,16 @@
     </div>
   </section>
   @include('ploa.tabela-dados')
+@endsection
+
+@section('js')
+  <script>
+    $('#exercicio_id').on('change', () => {
+      window.location.href = `/ploa/distribuicao/${$('#exercicio_id').val()}`;
+    });
+
+    $(document).ready(function() {
+      $('#exercicio_id').select2();
+    });
+  </script>
 @endsection
