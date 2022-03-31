@@ -45,4 +45,9 @@ class Ploa extends Model
     {
         return $this->belongsTo(Instituicao::class);
     }
+
+    public function ploas_gestoras()
+    {
+        return $this->hasMany(PloaGestora::class);
+    }
 }

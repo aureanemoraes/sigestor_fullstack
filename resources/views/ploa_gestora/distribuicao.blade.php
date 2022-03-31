@@ -14,7 +14,7 @@
 
 @section('content')
   <div class="d-flex justify-content-end mb-2 col">
-    <a href="{{ route('ploa_gestora.index') }}" type="button" class="btn btn-primary">
+    <a href="{{ route('objetivo.create') }}" type="button" class="btn btn-primary">
       Distribuir
     </a>
   </div>

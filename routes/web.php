@@ -20,6 +20,7 @@ use App\Http\Controllers\MetaController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\PloaController;
+use App\Http\Controllers\PloaGestoraController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,3 +69,8 @@ Route::resource('evento', EventoController::class);
 
 Route::get('ploa/distribuicao', [PloaController::class, 'distribuicao'])->name('ploa.distribuicao');
 Route::resource('ploa', PloaController::class);
+Route::get('ploa_gestora/{unidade_gestora_id?}', [PloaGestoraController::class, 'index'])->name('ploa_gestora.index');
+Route::resource('ploa_gestora', PloaGestoraController::class)->except([
+    'index'
+]);
+

@@ -24,6 +24,26 @@ class Versao2 extends Migration
             $table->float('valor');
             $table->timestamps();
         });
+
+        Schema::create('ploas_gestoras', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('ploa_id');
+            $table->foreign('ploa_id')->references('id')->on('ploas');
+            $table->unsignedBigInteger('unidade_gestora_id');
+            $table->foreign('unidade_gestora_id')->references('id')->on('unidades_gestoras');
+            $table->float('valor');
+            $table->timestamps();
+        });
+
+        Schema::create('ploas_administrativas', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('ploa_gestora_id');
+            $table->foreign('ploa_gestora_id')->references('id')->on('ploas_gestoras');
+            $table->unsignedBigInteger('unidade_administrativa_id');
+            $table->foreign('unidade_administrativa_id')->references('id')->on('unidades_administrativas');
+            $table->float('valor');
+            $table->timestamps();
+        });
         // Tabela de Despesas
         // Schema::create('despesas', function (Blueprint $table) {
         //     $table->id();
