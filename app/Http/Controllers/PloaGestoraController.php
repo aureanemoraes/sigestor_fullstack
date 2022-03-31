@@ -124,7 +124,7 @@ class PloaGestoraController extends Controller
 			DB::rollBack();
 		}
 
-		return redirect()->route('ploa_gestora.index');
+		return redirect()->route('ploa_gestora.index', [$request->unidade_gestora_id, $request->exercicio_id]);
 	}
 
 	public function show($id)
