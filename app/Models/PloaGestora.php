@@ -17,7 +17,7 @@ class PloaGestora extends Model
         'valor'
     ];
 
-    public function ploas()
+    public function ploa()
     {
         return $this->belongsTo(Ploa::class);
     }

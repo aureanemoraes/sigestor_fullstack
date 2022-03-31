@@ -41,9 +41,7 @@
   @section('content')
     <h3>MATRIZ PLOA - DISTRIBUIÇÃO</h3>
 
-    <div class="d-flex justify-content-end">
-      @include('ploa_gestora.filtro-unidade-gestora')
-    </div>
+    @include('ploa_gestora.filtro-unidade-gestora')
 
     <section class="row">
       @if(session('error_ploa_gestora') != null)
@@ -71,31 +69,28 @@
         </div>
       </div>
     </section>
-    {{-- @include('ploa_gestora.tabela-dados') --}}
+    @include('ploa_gestora.tabela-dados')
   @endsection
 
   @section('js')
     <script>
-      function edit(ploa_gestora) {
-        $('#exercicio_id').val(ploa_gestora.exercicio_id);
-        $('#exercicio_id').select2().trigger('change');
-
-        $('#programa_id').val(ploa_gestora.programa_id);
+      function edit(id, exercicio_id, programa_id, fonte_tipo_id, acao_tipo_id, acao_tipo, tipo_acao, instituicao_id, valor) {
+        $('#programa_id').val(programa_id);
         $('#programa_id').select2().trigger('change');
 
-        $('#fonte_tipo_id').val(ploa_gestora.fonte_tipo_id);
+        $('#fonte_tipo_id').val(fonte_tipo_id);
         $('#fonte_tipo_id').select2().trigger('change');
 
-        $('#acao_tipo_id').val(ploa_gestora.acao_tipo_id);
+        $('#acao_tipo_id').val(acao_tipo_id);
 
-        $('#acao_tipo').val(JSON.stringify(ploa_gestora.acao_tipo));
+        $('#acao_tipo').val(acao_tipo);
         $('#acao_tipo').select2().trigger('change');
 
-        $('#tipo_acao').val(ploa_gestora.tipo_acao);
+        $('#tipo_acao').val(tipo_acao);
 
-        $('#instituicao_id').val(ploa_gestora.instituicao_id);
+        $('#instituicao_id').val(instituicao_id);
 
-        $('#valor').val(ploa_gestora.valor);
+        $('#valor').val(valor);
 
         $('.collpase-form').collapse('show');
 
@@ -109,7 +104,7 @@
 
         $('#cancel-button').show();
 
-        $('#form').attr('action', `/ploa_gestora/${ploa_gestora.id}`);
+        $('#form').attr('action', `/ploa_gestora/${id}`);
         $('#form').append('<input type="hidden" name="_method" value="PUT" id="method">');
 
         $("html, body").animate({ scrollTop: 0 }, "slow");
@@ -117,8 +112,6 @@
       }
 
       $('#cancel-button').on('click', () => {
-        $('#exercicio_id').val(null).trigger('change');
-
         $('#programa_id').val(null).trigger('change');
 
         $('#fonte_tipo_id').val(null).trigger('change');
@@ -178,9 +171,25 @@
         }
       });
 
+      let unidade_gestora_id = null;
+      let exercicio_id = null;
+      
+      $('#unidade_gestora_id').select2();
+      $('#exercicio_id').select2();
+
       $('#unidade_gestora_id').on('change', () => {
-        $('#unidade_gestora').val($('#unidade_gestora_id').val());
-        window.location.href = `/ploa_gestora/${$('#unidade_gestora_id').val()}`;
+        unidade_gestora_id = $('#unidade_gestora_id').val();
+        exercicio_id = $('#exercicio_id').val();
+
+        if(unidade_gestora_id && exercicio_id)
+          window.location.href = `/ploa_gestora/${unidade_gestora_id}/${exercicio_id}`;
+      });
+
+      $('#exercicio_id').on('change', () => {
+        unidade_gestora_id = $('#unidade_gestora_id').val();
+        exercicio_id = $('#exercicio_id').val();
+        if(unidade_gestora_id && exercicio_id)
+          window.location.href = `/ploa_gestora/${unidade_gestora_id}/${exercicio_id}`;
       });
 
       $(document).ready(function() {
@@ -191,23 +200,34 @@
           $('#ploa_gestoras').DataTable( {} );
           $('#unidade_gestora_id').select2();
           $('#unidade_gestora').val($('#unidade_gestora_id').val());
+          $('#exercicio').val($('#exercicio_id').val());
       });
     </script>
   @endsection
 @else
   @section('content')
   <h3>MATRIZ PLOA - DISTRIBUIÇÃO</h3>
-  <div class="d-flex justify-content-end">
-    @include('ploa_gestora.filtro-unidade-gestora')
-  </div>
+  @include('ploa_gestora.filtro-unidade-gestora')
   @endsection
 
   @section('js')
     <script>
+      let unidade_gestora_id = null;
+      let exercicio_id = null;
+      
       $('#unidade_gestora_id').select2();
+      $('#exercicio_id').select2();
 
       $('#unidade_gestora_id').on('change', () => {
-        window.location.href = `/ploa_gestora/${$('#unidade_gestora_id').val()}`;
+        unidade_gestora_id = $('#unidade_gestora_id').val();
+        if(unidade_gestora_id && exercicio_id)
+          window.location.href = `/ploa_gestora/${unidade_gestora_id}/${exercicio_id}`;
+      });
+
+      $('#exercicio_id').on('change', () => {
+        exercicio_id = $('#exercicio_id').val();
+        if(unidade_gestora_id && exercicio_id)
+          window.location.href = `/ploa_gestora/${unidade_gestora_id}/${exercicio_id}`;
       });
     </script>
   @endsection
