@@ -32,7 +32,7 @@ class PloaController extends Controller
 
 		if(count($ploas) > 0) {
 			foreach($ploas as $ploa) {
-				$valor_distribuido += $ploa->ploas_gestoras()->sum('ploas_gestoras.valor');
+				$valor_distribuido += isset($ploa->ploa_gestora) ? $ploa->ploa_gestora->valor : 0;
 			}
 		}
 

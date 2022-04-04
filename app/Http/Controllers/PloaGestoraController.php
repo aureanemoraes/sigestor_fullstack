@@ -18,15 +18,6 @@ use Illuminate\Validation\Rule;
 
 class PloaGestoraController extends Controller
 {
-	public function distribuicao() {
-		$total_ploa = PloaGestora::sum('valor');
-
-		return view('ploa_gestora.distribuicao')->with([
-			'programas' => Programa::all(),
-			'total_ploa' => $total_ploa
-		]);
-	}
-
 	public function opcoes($dimensao_id)
 	{
 		return PloaGestora::select('id', 'nome as text')->where('dimensao_id', $dimensao_id)->where('ativo', 1)->get();
@@ -48,7 +39,7 @@ class PloaGestoraController extends Controller
 						$programas_ploa = Programa::whereHas(
 								'ploas', function ($query) use($unidade_gestora_id, $exercicio_id) {
 										$query->where('exercicio_id', $exercicio_id);
-										$query->whereHas('ploas_gestoras', function($query) use ($unidade_gestora_id) {
+										$query->whereHas('ploa_gestora', function($query) use ($unidade_gestora_id) {
 												$query->select('ploas_gestoras.valor');
 												$query->where('unidade_gestora_id', $unidade_gestora_id);
 										});
@@ -59,7 +50,7 @@ class PloaGestoraController extends Controller
 							if(count($programa->ploas) > 0) {
 								$programa->valor_total = 0;
 								foreach($programa->ploas as $ploa) {
-									$programa->valor_total += $ploa->ploas_gestoras()->sum('ploas_gestoras.valor');
+									$programa->valor_total += isset($ploa->ploa_gestora) ? $ploa->ploa_gestora->valor : 0;
 								}
 							}
 						}
