@@ -58,6 +58,36 @@
   @endif
 </section>
 
+<div class="d-flex justify-content-end mb-2 col">
+  <a href="{{ route('ploa.distribuicao') }}" type="button" class="btn btn-primary">
+    Distribuir
+  </a>
+</div>
+<section class="distribuicao-resumo">
+  <div class="table-responsive table-responsive-sm">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>VALOR PLOA</th>
+          <th>DISTRIBUÍDO</th>
+          <th>A DISTRIBUIR</th>
+          <th>PLANEJADA</th>
+          <th>A PLANEJAR</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ formatCurrency($total_ploa) }}</td>
+          <td>{{ formatCurrency($valor_distribuido) }}</td>
+          <td>{{ formatCurrency($valor_a_distribuir) }}</td>
+          <td>R$ 00,00</td>
+          <td>R$ 00,00</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
 <section class="row">
   <p>
     <button class="btn btn-primary" data-bs-toggle="collapse" href="#novoCollapse" role="button" aria-expanded="false" aria-controls="novoCollapse" id="novo-button">

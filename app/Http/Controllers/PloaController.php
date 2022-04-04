@@ -8,6 +8,7 @@ use App\Models\Programa;
 use App\Models\FonteTipo;
 use App\Models\AcaoTipo;
 use App\Models\Instituicao;
+use App\Models\UnidadeGestora;
 use Illuminate\Http\Request;
 use App\Http\Transformers\PloaTransformer;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +17,61 @@ use Illuminate\Validation\Rule;
 
 class PloaController extends Controller
 {
-	public function distribuicao($exercicio_id = null) {
+	public function distribuicao($unidade_gestora_id = null, $exercicio_id = null)
+	{
+        if(isset($unidade_gestora_id) && isset($exercicio_id)) {
+						$exercicio_selecionado = Exercicio::find($exercicio_id);
+
+            $ploas_gestoras = PloaGestora::whereHas(
+							'ploa', function ($query) use ($exercicio_id) {
+								$query->where('exercicio_id', $exercicio_id);
+							}
+						)->where('unidade_gestora_id', $unidade_gestora_id)->get();
+
+						$total_ploa = $ploas_gestoras->sum('valor');
+
+						$programas_ploa = Programa::whereHas(
+								'ploas', function ($query) use($unidade_gestora_id, $exercicio_id) {
+										$query->where('exercicio_id', $exercicio_id);
+										$query->whereHas('ploa_gestora', function($query) use ($unidade_gestora_id) {
+												$query->select('ploas_gestoras.valor');
+												$query->where('unidade_gestora_id', $unidade_gestora_id);
+										});
+								}
+						)->get();
+
+						foreach($programas_ploa as $programa) {
+							if(count($programa->ploas) > 0) {
+								$programa->valor_total = 0;
+								foreach($programa->ploas as $ploa) {
+									$programa->valor_total += isset($ploa->ploa_gestora) ? $ploa->ploa_gestora->valor : 0;
+								}
+							}
+						}
+
+            return view('ploa_gestora.index')->with([
+                'programas_ploa' => $programas_ploa,
+								'ploas_gestoras' => $ploas_gestoras,
+                'exercicios' => Exercicio::all(),
+                'programas' => Programa::all(),
+                'fontes' => FonteTipo::all(),
+                'acoes' => AcaoTipo::where('fav', 1)->get(),
+                'instituicoes' => Instituicao::all(),
+                'total_ploa' => $total_ploa,
+                'unidade_selecionada' => UnidadeGestora::find($unidade_gestora_id),
+								'unidades_gestoras' => UnidadeGestora::all(),
+								'exercicio_selecionado' => $exercicio_selecionado
+            ]);
+        } else {
+            return view('ploa_gestora.index')->with([
+							'unidades_gestoras' => UnidadeGestora::all(),
+							'exercicios' => Exercicio::all()						
+						]);
+        }
+		
+	}
+
+	public function index($exercicio_id = null) {
 		$valor_distribuido = 0;
 		$valor_a_distribuir = 0;
 		$total_ploa = 0;
@@ -46,8 +101,12 @@ class PloaController extends Controller
 			}
 		)->get();
 
-		return view('ploa.distribuicao')->with([
+		return view('ploa.index')->with([
 			'programas_ploa' => $programas_ploa,
+			'programas' => Programa::all(),
+			'fontes' => FonteTipo::all(),
+			'acoes' => AcaoTipo::where('fav', 1)->get(),
+			'instituicoes' => Instituicao::all(),
 			'exercicios' => Exercicio::all(),
 			'exercicio_selecionado' => $exercicio_selecionado,
 			'valor_distribuido' => $valor_distribuido,
@@ -59,34 +118,6 @@ class PloaController extends Controller
 	public function opcoes($dimensao_id)
 	{
 		return Ploa::select('id', 'nome as text')->where('dimensao_id', $dimensao_id)->where('ativo', 1)->get();
-	}
-
-	public function index($exercicio_id = null)
-	{
-		if(!isset($exercicio_id)) {
-			$exercicio_selecionado = Exercicio::all()->last();
-			$exercicio_id = $exercicio_selecionado->id;
-		}
-		else 
-			$exercicio_selecionado = Exercicio::find($exercicio_id);
-		
-
-		$total_ploa = Ploa::where('exercicio_id', $exercicio_id)->sum('valor');
-
-		return view('ploa.index')->with([
-			'programas_ploa' => Programa::whereHas(
-				'ploas', function ($query) use($exercicio_id) {
-					$query->where('exercicio_id', $exercicio_id);
-				}
-			)->get(),
-			'exercicios' => Exercicio::all(),
-			'programas' => Programa::all(),
-			'fontes' => FonteTipo::all(),
-			'acoes' => AcaoTipo::where('fav', 1)->get(),
-			'instituicoes' => Instituicao::all(),
-			'total_ploa' => $total_ploa,
-			'exercicio_selecionado' => $exercicio_selecionado
-		]);
 	}
 
 	public function create() {

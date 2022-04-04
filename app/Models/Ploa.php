@@ -48,6 +48,6 @@ class Ploa extends Model
 
     public function ploa_gestora()
     {
-        return $this->hasOnde(PloaGestora::class);
+        return $this->hasOne(PloaGestora::class);
     }
 }
