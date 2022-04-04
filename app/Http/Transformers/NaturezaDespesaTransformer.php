@@ -33,6 +33,9 @@ class NaturezaDespesaTransformer
         }
       }
 
+      if(!isset($input['fields']))
+        $natureza_despesa->fields = null;
+
       return $natureza_despesa;
     }
 }

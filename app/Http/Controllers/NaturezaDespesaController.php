@@ -69,7 +69,7 @@ class NaturezaDespesaController extends Controller
 		$invalido = $this->validation($request);
 
 		if($invalido) return $invalido;
-		
+
 		$natureza_despesa = NaturezaDespesa::find($id);
 
 		if(isset($natureza_despesa)) {
@@ -106,7 +106,8 @@ class NaturezaDespesaController extends Controller
 	{
 		$validator = Validator::make($request->all(), [
 			'codigo' => ['required'],
-			'nome' => ['required']
+			'nome' => ['required'],
+			'tipo' => ['required']
 		]);
 
 		if ($validator->fails()) {

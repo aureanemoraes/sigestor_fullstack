@@ -34,19 +34,26 @@
   </div>
 
   <div class="form-group mb-3">
-    <label for="tipo">Tipos</label>
-    <select class="form-select" aria-label="Tipo" id="tipo" name="tipo">
+    <label for="tipo">Tipo</label>
+    <select class="form-select @error('tipo') is-invalid @enderror" aria-label="Tipo" id="tipo" name="tipo">
       <option selected value="">-- selecione --</option>
-      <option value="custeio">Custeio</option>
-      <option value="investimento">Investimento</option>
+      <option value="custeio" {{ isset($natureza_despesa) && $natureza_despesa->tipo == 'custeio' ? 'selected' : '' }}>Custeio</option>
+      <option value="investimento" {{ isset($natureza_despesa) && $natureza_despesa->tipo == 'investimento' ? 'selected' : '' }}>Investimento</option>
     </select>
+    @error('tipo')
+    <div class="invalid-feedback">
+      {{ $message }}
+    </div>
+  @enderror
   </div>
 
   <div class="form-group mb-3">
-    <button type="button" class="btn btn-link" onClick='adicionarCampo({{ isset($natureza_despesa->fields) ? json_encode($natureza_despesa->fields) : json_encode([]) }})'><i class="bi bi-plus-circle-fill"></i> Adicionar campo</button>
+    <button type="button" class="btn btn-link" onClick="adicionarCampo('{{ isset($natureza_despesa->fields) ? json_encode($natureza_despesa->fields) : json_encode([]) }}')"><i class="bi bi-plus-circle-fill"></i> Adicionar campo</button>
   </div>
 
-  <div class="campos-container" id="campos-container">
+  <input type="hidden" id="campos" value="{{ json_encode($natureza_despesa->fields) }}">
+
+  <div class="fields-container" id="fields-container">
   </div>
 
   <button type="submit" class="btn btn-primary">Salvar</button>
