@@ -16,7 +16,8 @@ class SubnaturezaDespesa extends Model
     protected $fillable = [
         'nome',
         'codigo',
-        'natureza_despesa_id'
+        'natureza_despesa_id',
+        'fields'
     ];
 
     protected $casts = [

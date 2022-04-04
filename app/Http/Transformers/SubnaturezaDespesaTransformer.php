@@ -30,6 +30,9 @@ class SubnaturezaDespesaTransformer
         }
       }
 
+      if(!isset($input['fields']))
+        $subnatureza_despesa->fields = null;
+
       return $subnatureza_despesa;
     }
 }

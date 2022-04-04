@@ -6,8 +6,6 @@
 
 @section('js')
   <script>
-    let campos_banco_visualizados = false;
-
     function adicionarCampo(fields) {
       fields = JSON.parse(fields);
       let contador = $('.fields').length;
@@ -22,7 +20,6 @@
       if(contador > 0) contador++;
 
       $('#fields-container').append(html);
-    
     }
 
     function removerCampo(id) {

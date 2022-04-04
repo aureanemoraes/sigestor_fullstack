@@ -12,10 +12,9 @@
     let campos_banco_visualizados = false;
 
     function adicionarCampo(fields) {
-      fields = JSON.parse(fields);
-      let contador = $('.fields').length;
-
       if(fields) {
+        fields = JSON.parse(fields);
+        let contador = $('.fields').length;
         if(fields.length > 0 && !campos_banco_visualizados) {
           fields.map(field => {
             let html = `

@@ -16,7 +16,7 @@ class SubnaturezaDespesaController extends Controller
 	public function index()
 	{
 		return view('subnatureza_despesa.index')->with([
-			'subnaturezas_despesas' => SubnaturezaDespesa::orderBy('natureza_despesa_id')->get()
+			'subnaturezas_despesas' => SubnaturezaDespesa::orderBy('natureza_despesa_id')->orderBy('id')->get()
 		]);
 	}
 
