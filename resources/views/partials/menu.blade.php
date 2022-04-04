@@ -109,9 +109,11 @@
             <a href="{{ route('ploa.index') }}" class="nav_link nav_link_tertiary">
               <span class="nav_name">Matriz - Institucional</span>
             </a>
-            <a href="{{ route('ploa_gestora.index', ['tipo' => 'matriz']) }}" class="nav_link nav_link_tertiary">
+            <a href="{{ route('ploa_gestora.index') }}" class="nav_link nav_link_tertiary">
               <span class="nav_name">Matriz - Gestora</span>
             </a>
+            <a href="{{ route('ploa_administrativa.index') }}" class="nav_link nav_link_tertiary">
+              <span class="nav_name">Matriz - Administrativa</span>
           </div>
           <a class="nav_link nav_link_secondary" data-bs-toggle="collapse" href="#loa_planejamento" role="button" aria-expanded="false" aria-controls="loa_planejamento">
             <i class="bi bi-align-center"></i>

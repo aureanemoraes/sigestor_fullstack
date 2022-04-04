@@ -69,14 +69,14 @@ class PloaAdministrativaController extends Controller
 
             return view('ploa_administrativa.index')->with([
                 'programas_ploa' => $programas_ploa,
-								'ploas_gestoras' => $ploas_administrativas,
+				'ploas_administrativas' => $ploas_administrativas,
                 'exercicios' => Exercicio::all(),
                 'programas' => Programa::all(),
                 'fontes' => FonteTipo::all(),
                 'acoes' => AcaoTipo::where('fav', 1)->get(),
                 'instituicoes' => Instituicao::all(),
-                'unidade_selecionada' => UnidadeGestora::find($unidade_administrativa_id),
-				'unidades_gestoras' => UnidadeGestora::all(),
+                'unidade_selecionada' => UnidadeAdministrativa::find($unidade_administrativa_id),
+				'unidades_administrativas' => UnidadeAdministrativa::all(),
 				'exercicio_selecionado' => $exercicio_selecionado,
 				'tipo' => 'index',
 				'valor_distribuido' => $valor_distribuido,
@@ -85,7 +85,7 @@ class PloaAdministrativaController extends Controller
             ]);
         } else {
             return view('ploa_administrativa.index')->with([
-							'unidades_gestoras' => UnidadeGestora::all(),
+							'unidades_administrativas' => UnidadeAdministrativa::all(),
 							'exercicios' => Exercicio::all()						
 						]);
         }

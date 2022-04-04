@@ -39,9 +39,9 @@
   @endsection
 
   @section('content')
-    <h3>MATRIZ PLOA - GESTORA</h3>
+    <h3>MATRIZ PLOA - ADMINISTRATIVA</h3>
 
-    @include('ploa_gestora.filtro-unidade-gestora')
+    @include('ploa_administrativa.filtro-unidade-administrativa')
 
     <section class="distribuicao-resumo">
       <div class="table-responsive table-responsive-sm">
@@ -68,63 +68,63 @@
       </div>
     </section>
 
-    @include('ploa_gestora.tabela-dados')
+    @include('ploa_administrativa.tabela-dados')
   @endsection
 
   @section('js')
     <script>
 
-      let unidade_gestora_id = null;
+      let unidade_administrativa_id = null;
       let exercicio_id = null;
       
-      $('#unidade_gestora_id').select2();
+      $('#unidade_administrativa_id').select2();
       $('#exercicio_id').select2();
 
-      $('#unidade_gestora_id').on('change', () => {
-        unidade_gestora_id = $('#unidade_gestora_id').val();
+      $('#unidade_administrativa_id').on('change', () => {
+        unidade_administrativa_id = $('#unidade_administrativa_id').val();
         exercicio_id = $('#exercicio_id').val();
 
-        if(unidade_gestora_id && exercicio_id)
-          window.location.href = `/ploa_gestora/${unidade_gestora_id}/${exercicio_id}`;
+        if(unidade_administrativa_id && exercicio_id)
+          window.location.href = `/ploa_administrativa/${unidade_administrativa_id}/${exercicio_id}`;
       });
 
       $('#exercicio_id').on('change', () => {
-        unidade_gestora_id = $('#unidade_gestora_id').val();
+        unidade_administrativa_id = $('#unidade_administrativa_id').val();
         exercicio_id = $('#exercicio_id').val();
-        if(unidade_gestora_id && exercicio_id)
-          window.location.href = `/ploa_gestora/${unidade_gestora_id}/${exercicio_id}`;
+        if(unidade_administrativa_id && exercicio_id)
+          window.location.href = `/ploa_administrativa/${unidade_administrativa_id}/${exercicio_id}`;
       });
 
       $(document).ready(function() {
           $('#exercicio_id').select2();
-          $('#unidade_gestora_id').select2();
+          $('#unidade_administrativa_id').select2();
       });
     </script>
   @endsection
 @else
   @section('content')
-  <h3>MATRIZ PLOA - GESTORA</h3>
-  @include('ploa_gestora.filtro-unidade-gestora')
+  <h3>MATRIZ PLOA - ADMINISTRATIVA</h3>
+  @include('ploa_administrativa.filtro-unidade-administrativa')
   @endsection
 
   @section('js')
     <script>
-      let unidade_gestora_id = null;
+      let unidade_administrativa_id = null;
       let exercicio_id = null;
       
-      $('#unidade_gestora_id').select2();
+      $('#unidade_administrativa_id').select2();
       $('#exercicio_id').select2();
 
-      $('#unidade_gestora_id').on('change', () => {
-        unidade_gestora_id = $('#unidade_gestora_id').val();
-        if(unidade_gestora_id && exercicio_id)
-          window.location.href = `/ploa_gestora/${unidade_gestora_id}/${exercicio_id}`;
+      $('#unidade_administrativa_id').on('change', () => {
+        unidade_administrativa_id = $('#unidade_administrativa_id').val();
+        if(unidade_administrativa_id && exercicio_id)
+          window.location.href = `/ploa_administrativa/${unidade_administrativa_id}/${exercicio_id}`;
       });
 
       $('#exercicio_id').on('change', () => {
         exercicio_id = $('#exercicio_id').val();
-        if(unidade_gestora_id && exercicio_id)
-          window.location.href = `/ploa_gestora/${unidade_gestora_id}/${exercicio_id}`;
+        if(unidade_administrativa_id && exercicio_id)
+          window.location.href = `/ploa_administrativa/${unidade_administrativa_id}/${exercicio_id}`;
       });
     </script>
   @endsection
