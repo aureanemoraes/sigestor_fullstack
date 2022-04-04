@@ -107,7 +107,10 @@
               <span class="nav_name">Agenda</span>
             </a>
             <a href="{{ route('ploa.index') }}" class="nav_link nav_link_tertiary">
-              <span class="nav_name">Matriz</span>
+              <span class="nav_name">Matriz - Institucional</span>
+            </a>
+            <a href="{{ route('ploa_gestora.index', ['tipo' => 'matriz']) }}" class="nav_link nav_link_tertiary">
+              <span class="nav_name">Matriz - Gestora</span>
             </a>
           </div>
           <a class="nav_link nav_link_secondary" data-bs-toggle="collapse" href="#loa_planejamento" role="button" aria-expanded="false" aria-controls="loa_planejamento">
