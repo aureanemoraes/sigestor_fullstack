@@ -44,7 +44,7 @@
     @include('ploa_gestora.filtro-unidade-gestora')
 
     <div class="d-flex justify-content-end mb-2 col">
-      <a href="{{ route('ploa.distribuicao') }}" type="button" class="btn btn-primary">
+      <a href="{{ route('ploa_gestora.distribuicao') }}" type="button" class="btn btn-primary">
         Distribuir
       </a>
     </div>
