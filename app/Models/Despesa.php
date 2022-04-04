@@ -18,42 +18,35 @@ class Despesa extends Model
         'qtd',
         'qtd_pessoas',
         'tipo',
-        'fonte_acao_id',
+        'ploa_administrativa_id',
         'centro_custo_id',
         'natureza_despesa_id',
         'subnatureza_despesa_id',
         'unidade_administrativa_id',
+        'meta_id',
         'exercicio_id'
     ];
 
-    protected $with = [
-        // 'fonte_acao:',
-        'centro_custo:id,nome',
-        'natureza_despesa:id,nome',
-        'subnatureza_despesa:id,nome',
-        'unidade_administrativa:id,nome'
-    ];
-    
  
-    public function setValorTotalAttribute($value)
-    {
-        if(isset($value)) {
-            $this->attributes['valor_total'] = $value;
-            if(isset($this->attributes['qtd'])) {
-                $this->attributes['valor_total'] = $this->attributes['valor_total']  * $this->attributes['qtd'];
-                if(isset($this->attributes['qtd_pessoas'])) {
-                    $this->attributes['valor_total'] = $this->attributes['valor_total'] * $this->attributes['qtd_pessoas'];
-                }
-            }
-            $this->attributes['valor_total'];
-        } else {
-            $this->attributes['valor_total'];
-        }
-    }
+    // public function setValorTotalAttribute($value)
+    // {
+    //     if(isset($value)) {
+    //         $this->attributes['valor_total'] = $value;
+    //         if(isset($this->attributes['qtd'])) {
+    //             $this->attributes['valor_total'] = $this->attributes['valor_total']  * $this->attributes['qtd'];
+    //             if(isset($this->attributes['qtd_pessoas'])) {
+    //                 $this->attributes['valor_total'] = $this->attributes['valor_total'] * $this->attributes['qtd_pessoas'];
+    //             }
+    //         }
+    //         $this->attributes['valor_total'];
+    //     } else {
+    //         $this->attributes['valor_total'];
+    //     }
+    // }
 
-    public function fonte_acao()
+    public function ploa_administrativa()
     {
-        return $this->belongsTo(FonteAcao::class);
+        return $this->belongsTo(PloaAdministrativa::class);
     } 
 
     public function centro_custo()
@@ -79,5 +72,10 @@ class Despesa extends Model
     public function execicio()
     {
         return $this->belongsTo(Exercicio::class);
+    } 
+
+    public function meta()
+    {
+        return $this->belongsTo(Meta::class);
     } 
 }

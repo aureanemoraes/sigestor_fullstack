@@ -51,7 +51,7 @@
     <button type="button" class="btn btn-link" onClick="adicionarCampo('{{ isset($natureza_despesa->fields) ? json_encode($natureza_despesa->fields) : json_encode([]) }}')"><i class="bi bi-plus-circle-fill"></i> Adicionar campo</button>
   </div>
 
-  <input type="hidden" id="campos" value="{{ json_encode($natureza_despesa->fields) }}">
+  <input type="hidden" id="campos" value="{{ isset($natureza_despesa->fields) ? json_encode($natureza_despesa->fields) : null }}">
 
   <div class="fields-container" id="fields-container">
   </div>

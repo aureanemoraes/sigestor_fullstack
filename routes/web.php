@@ -22,6 +22,7 @@ use App\Http\Controllers\EventoController;
 use App\Http\Controllers\PloaController;
 use App\Http\Controllers\PloaGestoraController;
 use App\Http\Controllers\PloaAdministrativaController;
+use App\Http\Controllers\DespesaModeloController;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,5 +85,8 @@ Route::get('ploa_administrativa/{unidade_administrativa_id?}/{exercicio_id?}', [
 Route::resource('ploa_administrativa', PloaAdministrativaController::class)->except([
     'index'
 ]);
+
+Route::resource('despesa_modelo', DespesaModeloController::class);
+
 
 
