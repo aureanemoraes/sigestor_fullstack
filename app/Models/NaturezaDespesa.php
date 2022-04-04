@@ -17,11 +17,16 @@ class NaturezaDespesa extends Model
         'nome',
         'codigo',
         'tipo',
-        'fav'
+        'fav',
+        'fields'
     ];
 
     protected $with = [
         'subnaturezas_despesas'
+    ];
+
+    protected $casts = [
+        'fields' => 'array'
     ];
 
     public function subnaturezas_despesas()

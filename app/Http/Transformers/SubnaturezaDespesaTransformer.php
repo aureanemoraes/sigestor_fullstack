@@ -7,26 +7,29 @@ use App\Models\SubnaturezaDespesa;
 class SubnaturezaDespesaTransformer
 {
 
-    public static function toInstance(array $input, $subnatureza_despesa_tipo = null)
+    public static function toInstance(array $input, $subnatureza_despesa = null)
     {
-      if (empty($subnatureza_despesa_tipo)) {
-        $subnatureza_despesa_tipo = new SubnaturezaDespesa();
+      if (empty($subnatureza_despesa)) {
+        $subnatureza_despesa = new SubnaturezaDespesa();
       }
 
       foreach ($input as $key => $value) {
         switch ($key) {
           case 'codigo':
-            $subnatureza_despesa_tipo->codigo = $value;
+            $subnatureza_despesa->codigo = $value;
             break;
           case 'nome':
-            $subnatureza_despesa_tipo->nome = $value;
+            $subnatureza_despesa->nome = $value;
             break;
           case 'natureza_despesa_id':
-            $subnatureza_despesa_tipo->natureza_despesa_id = $value;
+            $subnatureza_despesa->natureza_despesa_id = $value;
+            break;
+          case 'fields':
+            $subnatureza_despesa->fields = $value;
             break;
         }
       }
 
-      return $subnatureza_despesa_tipo;
+      return $subnatureza_despesa;
     }
 }

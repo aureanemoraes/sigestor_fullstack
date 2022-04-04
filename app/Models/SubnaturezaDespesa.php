@@ -19,6 +19,10 @@ class SubnaturezaDespesa extends Model
         'natureza_despesa_id'
     ];
 
+    protected $casts = [
+        'fields' => 'array'
+    ];
+
     public function natureza_despesa() 
     {
         return $this->belongsTo(NaturezaDespesa::class);

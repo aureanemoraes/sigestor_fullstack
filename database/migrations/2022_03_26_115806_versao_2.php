@@ -44,6 +44,37 @@ class Versao2 extends Migration
             $table->float('valor');
             $table->timestamps();
         });
+
+        Schema::table('naturezas_despesas', function (Blueprint $table) {
+            $table->json('fields')->nullable();
+        });
+
+        Schema::table('subnaturezas_despesas', function (Blueprint $table) {
+            $table->json('fields')->nullable();
+        });
+
+        Schema::create('despesas_modelos', function (Blueprint $table) {
+            $table->id();
+            $table->string('descricao')->nullable();
+            $table->float('valor')->nullable();
+            $table->float('valor_total')->nullable();
+            $table->string('tipo')->nullable(); // fixa ou variável
+            $table->unsignedBigInteger('ploa_administrativa_id')->nullable();
+            $table->foreign('ploa_administrativa_id')->references('id')->on('ploas_administrativas');
+            $table->unsignedBigInteger('centro_custo_id')->nullable();
+            $table->foreign('centro_custo_id')->references('id')->on('centros_custos');
+            $table->unsignedBigInteger('natureza_despesa_id')->nullable();
+            $table->foreign('natureza_despesa_id')->references('id')->on('naturezas_despesas');
+            $table->unsignedBigInteger('subnatureza_despesa_id')->nullable()->nullable();
+            $table->foreign('subnatureza_despesa_id')->references('id')->on('subnaturezas_despesas');
+            $table->unsignedBigInteger('unidade_administrativa_id')->nullable()->nullable();
+            $table->foreign('unidade_administrativa_id')->references('id')->on('unidades_administrativas');
+            $table->unsignedBigInteger('exercicio_id')->nullable()->nullable();
+            $table->foreign('exercicio_id')->references('id')->on('exercicios')->nullable();
+            $table->timestamps();
+        });
+
+
         // Tabela de Despesas
         // Schema::create('despesas', function (Blueprint $table) {
         //     $table->id();

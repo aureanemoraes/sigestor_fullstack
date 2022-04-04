@@ -42,5 +42,12 @@
     </select>
   </div>
 
+  <div class="form-group mb-3">
+    <button type="button" class="btn btn-link" onClick='adicionarCampo({{ isset($natureza_despesa->fields) ? json_encode($natureza_despesa->fields) : json_encode([]) }})'><i class="bi bi-plus-circle-fill"></i> Adicionar campo</button>
+  </div>
+
+  <div class="campos-container" id="campos-container">
+  </div>
+
   <button type="submit" class="btn btn-primary">Salvar</button>
 </form>
