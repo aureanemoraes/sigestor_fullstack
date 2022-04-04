@@ -9,6 +9,7 @@ use App\Models\FonteTipo;
 use App\Models\AcaoTipo;
 use App\Models\Instituicao;
 use App\Models\UnidadeGestora;
+use App\Models\PloaGestora;
 use Illuminate\Http\Request;
 use App\Http\Transformers\PloaTransformer;
 use Illuminate\Support\Facades\DB;
@@ -49,7 +50,7 @@ class PloaController extends Controller
 							}
 						}
 
-            return view('ploa_gestora.index')->with([
+            return view('ploa.distribuicao')->with([
                 'programas_ploa' => $programas_ploa,
 								'ploas_gestoras' => $ploas_gestoras,
                 'exercicios' => Exercicio::all(),
@@ -63,7 +64,7 @@ class PloaController extends Controller
 								'exercicio_selecionado' => $exercicio_selecionado
             ]);
         } else {
-            return view('ploa_gestora.index')->with([
+            return view('ploa.distribuicao')->with([
 							'unidades_gestoras' => UnidadeGestora::all(),
 							'exercicios' => Exercicio::all()						
 						]);

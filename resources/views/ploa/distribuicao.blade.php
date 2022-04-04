@@ -104,7 +104,7 @@
 
         $('#cancel-button').show();
 
-        $('#form').attr('action', `/ploa_gestora/${id}`);
+        $('#form').attr('action', `/ploa/distribuicao/${id}`);
         $('#form').append('<input type="hidden" name="_method" value="PUT" id="method">');
 
         $("html, body").animate({ scrollTop: 0 }, "slow");
@@ -182,14 +182,14 @@
         exercicio_id = $('#exercicio_id').val();
 
         if(unidade_gestora_id && exercicio_id)
-          window.location.href = `/ploa_gestora/${unidade_gestora_id}/${exercicio_id}`;
+          window.location.href = `/ploa/distribuicao/${unidade_gestora_id}/${exercicio_id}`;
       });
 
       $('#exercicio_id').on('change', () => {
         unidade_gestora_id = $('#unidade_gestora_id').val();
         exercicio_id = $('#exercicio_id').val();
         if(unidade_gestora_id && exercicio_id)
-          window.location.href = `/ploa_gestora/${unidade_gestora_id}/${exercicio_id}`;
+          window.location.href = `/ploa/distribuicao/${unidade_gestora_id}/${exercicio_id}`;
       });
 
       $(document).ready(function() {
@@ -221,13 +221,13 @@
       $('#unidade_gestora_id').on('change', () => {
         unidade_gestora_id = $('#unidade_gestora_id').val();
         if(unidade_gestora_id && exercicio_id)
-          window.location.href = `/ploa_gestora/${unidade_gestora_id}/${exercicio_id}`;
+          window.location.href = `/ploa/distribuicao/${unidade_gestora_id}/${exercicio_id}`;
       });
 
       $('#exercicio_id').on('change', () => {
         exercicio_id = $('#exercicio_id').val();
         if(unidade_gestora_id && exercicio_id)
-          window.location.href = `/ploa_gestora/${unidade_gestora_id}/${exercicio_id}`;
+          window.location.href = `/ploa/distribuicao/${unidade_gestora_id}/${exercicio_id}`;
       });
     </script>
   @endsection

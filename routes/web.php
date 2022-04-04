@@ -72,6 +72,8 @@ Route::get('ploa/{exercicio_id?}', [PloaController::class, 'index'])->name('ploa
 Route::resource('ploa', PloaController::class)->except([
     'index'
 ]);
+
+Route::get('ploa_gestora/distribuicao/{unidade_administrativa_id?}/{exercicio_id?}', [PloaGestoraController::class, 'distribuicao'])->name('ploa_gestora.distribuicao');
 Route::get('ploa_gestora/{unidade_gestora_id?}/{exercicio_id?}', [PloaGestoraController::class, 'index'])->name('ploa_gestora.index');
 Route::resource('ploa_gestora', PloaGestoraController::class)->except([
     'index'
