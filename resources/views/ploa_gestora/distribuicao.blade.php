@@ -39,7 +39,7 @@
   @endsection
 
   @section('content')
-    <h3>MATRIZ PLOA - DISTRIBUIÇÃO</h3>
+    <h3>MATRIZ PLOA GESTORA - DISTRIBUIÇÃO</h3>
 
     @include('ploa_administrativa.filtro-unidade-administrativa')
 
@@ -104,7 +104,7 @@
 
         $('#cancel-button').show();
 
-        $('#form').attr('action', `/ploa_administrativa/${id}`);
+        $('#form').attr('action', `/ploa_gestora/distribuicao/${id}`);
         $('#form').append('<input type="hidden" name="_method" value="PUT" id="method">');
 
         $("html, body").animate({ scrollTop: 0 }, "slow");
@@ -182,14 +182,14 @@
         exercicio_id = $('#exercicio_id').val();
 
         if(unidade_administrativa_id && exercicio_id)
-          window.location.href = `/ploa_administrativa/${unidade_administrativa_id}/${exercicio_id}`;
+          window.location.href = `/ploa_gestora/distribuicao/${unidade_administrativa_id}/${exercicio_id}`;
       });
 
       $('#exercicio_id').on('change', () => {
         unidade_administrativa_id = $('#unidade_administrativa_id').val();
         exercicio_id = $('#exercicio_id').val();
         if(unidade_administrativa_id && exercicio_id)
-          window.location.href = `/ploa_administrativa/${unidade_administrativa_id}/${exercicio_id}`;
+          window.location.href = `/ploa_gestora/distribuicao/${unidade_administrativa_id}/${exercicio_id}`;
       });
 
       $(document).ready(function() {
@@ -221,13 +221,13 @@
       $('#unidade_administrativa_id').on('change', () => {
         unidade_administrativa_id = $('#unidade_administrativa_id').val();
         if(unidade_administrativa_id && exercicio_id)
-          window.location.href = `/ploa_administrativa/${unidade_administrativa_id}/${exercicio_id}`;
+          window.location.href = `/ploa_gestora/distribuicao/${unidade_administrativa_id}/${exercicio_id}`;
       });
 
       $('#exercicio_id').on('change', () => {
         exercicio_id = $('#exercicio_id').val();
         if(unidade_administrativa_id && exercicio_id)
-          window.location.href = `/ploa_administrativa/${unidade_administrativa_id}/${exercicio_id}`;
+          window.location.href = `/ploa_gestora/distribuicao/${unidade_administrativa_id}/${exercicio_id}`;
       });
     </script>
   @endsection

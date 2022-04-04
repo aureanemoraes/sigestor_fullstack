@@ -21,6 +21,7 @@ use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\PloaController;
 use App\Http\Controllers\PloaGestoraController;
+use App\Http\Controllers\PloaAdministrativaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,4 +79,10 @@ Route::get('ploa_gestora/{unidade_gestora_id?}/{exercicio_id?}', [PloaGestoraCon
 Route::resource('ploa_gestora', PloaGestoraController::class)->except([
     'index'
 ]);
+
+Route::get('ploa_administrativa/{unidade_administrativa_id?}/{exercicio_id?}', [PloaAdministrativaController::class, 'index'])->name('ploa_administrativa.index');
+Route::resource('ploa_administrativa', PloaAdministrativaController::class)->except([
+    'index'
+]);
+
 

@@ -9,6 +9,8 @@ use App\Models\FonteTipo;
 use App\Models\AcaoTipo;
 use App\Models\Instituicao;
 use App\Models\UnidadeGestora;
+use App\Models\UnidadeAdministrativa;
+use App\Models\PloaAdministrativa;
 use App\Models\Ploa;
 use Illuminate\Http\Request;
 use App\Http\Transformers\PloaGestoraTransformer;
@@ -54,7 +56,7 @@ class PloaGestoraController extends Controller
 							}
 						}
 
-            return view('ploa_gestora.index')->with([
+            return view('ploa_gestora.distribuicao')->with([
                 'programas_ploa' => $programas_ploa,
 								'ploas_administrativas' => $ploas_administrativas,
                 'exercicios' => Exercicio::all(),
@@ -64,12 +66,12 @@ class PloaGestoraController extends Controller
                 'instituicoes' => Instituicao::all(),
                 'total_ploa' => $total_ploa,
                 'unidade_selecionada' => UnidadeAdministrativa::find($unidade_administrativa_id),
-								'unidades_gestoras' => UnidadeAdministrativa::all(),
+								'unidades_administrativas' => UnidadeAdministrativa::all(),
 								'exercicio_selecionado' => $exercicio_selecionado
             ]);
         } else {
-            return view('ploa_gestora.index')->with([
-							'unidades_gestoras' => UnidadeAdministrativa::all(),
+            return view('ploa_gestora.distribuicao')->with([
+							'unidades_administrativas' => UnidadeAdministrativa::all(),
 							'exercicios' => Exercicio::all()						
 						]);
         }
@@ -170,7 +172,7 @@ class PloaGestoraController extends Controller
 			$ploa = $this->ploaValida($request->all());
 			if(!isset($ploa)) {
 				session(['error_ploa_gestora' => 'Recurso não configurado na matriz.']);
-				return redirect()->route('ploa_gestora.index', [$request->unidade_gestora_id, $request->exercicio_id]);
+				return redirect()->route('ploa.distribuicao', [$request->unidade_gestora_id, $request->exercicio_id]);
 			}else {
 				DB::beginTransaction();
 				$ploa_gestora = PloaGestoraTransformer::toInstance($request->all(), $ploa);
@@ -181,14 +183,14 @@ class PloaGestoraController extends Controller
 				} else 	{
 					DB::rollBack();
 					session(['error_ploa_gestora' => $rules['msg']]);
-					return redirect()->route('ploa_gestora.index', [$request->unidade_gestora_id, $request->exercicio_id]);
+					return redirect()->route('ploa.distribuicao', [$request->unidade_gestora_id, $request->exercicio_id]);
 				}
 			}
 		} catch (Exception $ex) {
 			DB::rollBack();
 		}
 
-		return redirect()->route('ploa_gestora.index', [$request->unidade_gestora_id, $request->exercicio_id]);
+		return redirect()->route('ploa.distribuicao', [$request->unidade_gestora_id, $request->exercicio_id]);
 	}
 
 	public function show($id)
@@ -219,7 +221,7 @@ class PloaGestoraController extends Controller
 				$ploa = $this->ploaValida($request->all());
 				if(!isset($ploa)) {
 					session(['error_ploa_gestora' => 'Recurso não configurado na matriz.']);
-					return redirect()->route('ploa_gestora.index', [$request->unidade_gestora_id, $request->exercicio_id]);
+					return redirect()->route('ploa.distribuicao', [$request->unidade_gestora_id, $request->exercicio_id]);
 				}else {
 					DB::beginTransaction();
 					$ploa_gestora = PloaGestoraTransformer::toInstance($request->all(), $ploa, $ploa_gestora);
@@ -230,7 +232,7 @@ class PloaGestoraController extends Controller
 					} else 	{
 						DB::rollBack();
 						session(['error_ploa_gestora' => $rules['msg']]);
-						return redirect()->route('ploa_gestora.index', [$request->unidade_gestora_id, $request->exercicio_id]);
+						return redirect()->route('ploa.distribuicao', [$request->unidade_gestora_id, $request->exercicio_id]);
 					}
 				}
 			} catch (Exception $ex) {
@@ -238,7 +240,7 @@ class PloaGestoraController extends Controller
 			}
 		}
 
-		return redirect()->route('ploa_gestora.index', [$request->unidade_gestora_id, $request->exercicio_id]);
+		return redirect()->route('ploa.distribuicao', [$request->unidade_gestora_id, $request->exercicio_id]);
 
 	}
 
