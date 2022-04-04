@@ -104,7 +104,7 @@
 
         $('#cancel-button').show();
 
-        $('#form').attr('action', `/ploa_gestora/distribuicao/${id}`);
+        $('#form').attr('action', `/ploa_administrativa/${id}`);
         $('#form').append('<input type="hidden" name="_method" value="PUT" id="method">');
 
         $("html, body").animate({ scrollTop: 0 }, "slow");

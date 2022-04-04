@@ -158,21 +158,21 @@ class PloaAdministrativaController extends Controller
 
 		if(isset($ploa_administrativa)) {
 			try {
-				$ploa = $this->ploaValida($request->all());
-				if(!isset($ploa)) {
+				$ploa_gestora = $this->ploaValida($request->all());
+				if(!isset($ploa_gestora)) {
 					session(['error_ploa_administrativa' => 'Recurso não configurado na matriz.']);
-					return redirect()->route('ploa_administrativa.index', [$request->unidade_administrativa_id, $request->exercicio_id]);
+					return redirect()->route('ploa_gestora.distribuicao', [$request->unidade_administrativa_id, $request->exercicio_id]);
 				}else {
 					DB::beginTransaction();
-					$ploa_administrativa = PloaAdministrativaTransformer::toInstance($request->all(), $ploa, $ploa_administrativa);
-					$rules = $this->rules($ploa_administrativa, $ploa);
+					$ploa_administrativa = PloaAdministrativaTransformer::toInstance($request->all(), $ploa_gestora, $ploa_administrativa);
+					$rules = $this->rules($ploa_administrativa, $ploa_gestora);
 					if($rules['status']) {
 						$ploa_administrativa->save();
 						DB::commit();
 					} else 	{
 						DB::rollBack();
 						session(['error_ploa_administrativa' => $rules['msg']]);
-						return redirect()->route('ploa_administrativa.index', [$request->unidade_administrativa_id, $request->exercicio_id]);
+						return redirect()->route('ploa_gestora.distribuicao', [$request->unidade_administrativa_id, $request->exercicio_id]);
 					}
 				}
 			} catch (Exception $ex) {
@@ -180,7 +180,7 @@ class PloaAdministrativaController extends Controller
 			}
 		}
 
-		return redirect()->route('ploa_administrativa.index', [$request->unidade_administrativa_id, $request->exercicio_id]);
+		return redirect()->route('ploa_gestora.distribuicao', [$request->unidade_administrativa_id, $request->exercicio_id]);
 
 	}
 
@@ -218,6 +218,7 @@ class PloaAdministrativaController extends Controller
 	}
 
 	protected function rules($ploa_administrativa, $ploa_gestora) {
+
 		$existe = PloaAdministrativa::where('ploa_gestora_id', $ploa_administrativa->ploa_gestora_id)
 					->where('unidade_administrativa_id', $ploa_administrativa->unidade_administrativa_id);
 
@@ -231,7 +232,12 @@ class PloaAdministrativaController extends Controller
 		} else {
 			$valor_recurso = $ploa_gestora->valor;
 
-			$valor_utilizado = PloaAdministrativa::where('ploa_gestora_id', $ploa_administrativa->ploa_gestora_id)->sum('valor');
+			$valor_utilizado = PloaAdministrativa::where('ploa_gestora_id', $ploa_administrativa->ploa_gestora_id);
+			
+			if(isset($ploa_administrativa->id))
+				$valor_utilizado = $valor_utilizado->where('id', '!=', $ploa_administrativa->id);
+
+			$valor_utilizado = $valor_utilizado->sum('valor');
 
 			$valor_disponivel = $valor_recurso - $valor_utilizado;
 

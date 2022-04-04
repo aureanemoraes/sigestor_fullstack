@@ -291,7 +291,12 @@ class PloaGestoraController extends Controller
 		} else {
 			$valor_recurso = $ploa->valor;
 
-			$valor_utilizado = PloaGestora::where('ploa_id', $ploa_gestora->ploa_id)->sum('valor');
+			$valor_utilizado = PloaGestora::where('ploa_id', $ploa_gestora->ploa_id);
+
+			if(isset($ploa_gestora->id))
+				$valor_utilizado = $valor_utilizado->where('id', '!=', $ploa_gestora->id);
+
+			$valor_utilizado = $valor_utilizado->sum('valor');
 
 			$valor_disponivel = $valor_recurso - $valor_utilizado;
 
