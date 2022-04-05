@@ -25,7 +25,12 @@ class SubnaturezaDespesaTransformer
             $subnatureza_despesa->natureza_despesa_id = $value;
             break;
           case 'fields':
-            $subnatureza_despesa->fields = $value;
+            $fields = [];
+            foreach($value as $key => $field) {
+              $fields[$key]['label'] = $field;
+              $fields[$key]['slug'] = slug($field);
+            }
+            $subnatureza_despesa->fields = $fields;
             break;
         }
       }

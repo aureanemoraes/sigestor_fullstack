@@ -73,6 +73,7 @@ class Versao2 extends Migration
             $table->foreign('exercicio_id')->references('id')->on('exercicios')->nullable();
             $table->unsignedBigInteger('meta_id')->nullable()->nullable();
             $table->foreign('meta_id')->references('id')->on('metas');
+            $table->json('fields')->nullable();
             $table->timestamps();
         });
 

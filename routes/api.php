@@ -7,7 +7,7 @@ use App\Http\Controllers\DimensaoController;
 use App\Http\Controllers\ObjetivoController;
 use App\Http\Controllers\MetaController;
 use App\Http\Controllers\AcaoTipoController;
-
+use App\Http\Controllers\SubnaturezaDespesaController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,6 +26,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('eixo_estrategico/opcoes/{plano_estrategico_id}', [EixoEstrategicoController::class, 'opcoes']);
 Route::get('dimensao/opcoes/{eixo_estrategico_id}', [DimensaoController::class, 'opcoes']);
 Route::get('objetivo/opcoes/{dimensao_id}', [ObjetivoController::class, 'opcoes']);
+Route::get('meta/opcoes/{plano_acao_id}', [MetaController::class, 'opcoes']);
+Route::get('subnatureza_despesa/opcoes/{natureza_despesa_id}', [SubnaturezaDespesaController::class, 'opcoes']);
 Route::get('meta/{meta_id}', [MetaController::class, 'dados']);
 Route::get('acao/tipos', [AcaoTipoController::class, 'tipos']);
 

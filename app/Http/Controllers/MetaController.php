@@ -17,6 +17,11 @@ use Illuminate\Support\Facades\Validator;
 
 class MetaController extends Controller
 {
+	public function opcoes($plano_acao_id)
+	{
+		return Meta::select('id', 'nome as text')->where('plano_acao_id', $plano_acao_id)->get();
+	}
+
 	public function destroy_checkin($meta_id, $checkin_id) {
 		$meta = Meta::find($meta_id);
 		Checkin::where('id', $checkin_id)->delete();

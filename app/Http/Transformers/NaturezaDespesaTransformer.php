@@ -28,7 +28,12 @@ class NaturezaDespesaTransformer
             $natureza_despesa->fav = $value;
             break;
           case 'fields':
-            $natureza_despesa->fields = $value;
+            $fields = [];
+            foreach($value as $key => $field) {
+              $fields[$key]['label'] = $field;
+              $fields[$key]['slug'] = slug($field);
+            }
+            $natureza_despesa->fields = $fields;
             break;
         }
       }

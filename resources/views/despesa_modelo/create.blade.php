@@ -1,33 +1,77 @@
 @extends('layouts.app')
 
 @section('content')
-  @include('meta.form')
+  @include('despesa_modelo.form')
 @endsection
 
 @section('js')
   <script>
-    $('#tipo').on('change', () => {
-      let tipo = $('#tipo').val();
-      switch (tipo) {
-        case 'porcentagem':
-          $('#tipo_dado').val('porcentagem');
-          break;
-        case 'valor':
-          $('#tipo_dado').val('moeda');
-          break;
-        case 'numero':
-          $('#tipo_dado').val('numeral');
-          break;
-        case 'maior_que':
-          break;
-        case 'menor_que':
-          break;
+    $('#plano_acao_id').on('change', () => {
+      $('#meta_id').empty().trigger("change");
+      $('#meta_id').select2({data: [
+        {id: '', text: '-- selecione --'}
+      ]});
+      let plano_acao_id = $('#plano_acao_id').val();
+      if(plano_acao_id) {
+        $.ajax({
+          method: "GET",
+          url: `/api/meta/opcoes/${plano_acao_id}`,
+        }).done(function(response) {
+          $('#meta_id').select2({data: response});
+        });
       }
     });
 
+    $('#natureza_despesa_id').on('change', () => {
+      let naturezas_despesas = JSON.parse($('#naturezas_despesas').val());
+      let natureza_despesa_id = $('#natureza_despesa_id').val();
+
+      let natureza_despesa_selecionada = naturezas_despesas.filter(natureza_despesa => {
+        return natureza_despesa.id == natureza_despesa_id;
+      })
+
+      console.log(natureza_despesa_selecionada);
+
+      if(natureza_despesa_selecionada[0].fields) {
+        natureza_despesa_selecionada[0].fields.map( field => {
+          console.log(field);
+          let html = `
+          <div class="input-group input-group-sm mb-3 col-4 fields" id="${field}">
+            <span class="input-group-text" id="field">${field.label}</span>
+            <input type="number" class="form-control" aria-label="Campo" aria-describedby="field" name="fields[${field.slug}]">
+          </div>
+          `;
+
+          $('#fields-container').append(html);
+        });
+      } else {
+        $('#fields-container').empty();
+      }
+
+      $('#subnatureza_despesa_id').empty().trigger("change");
+      $('#subnatureza_despesa_id').select2({data: [
+        {id: '', text: '-- selecione --'}
+      ]});
+      if(natureza_despesa_id) {
+        $.ajax({
+          method: "GET",
+          url: `/api/subnatureza_despesa/opcoes/${natureza_despesa_id}`,
+        }).done(function(response) {
+          if(response.length > 0) {
+            $('#subnatureza_despesa_id').removeAttr('disabled');
+            $('#subnatureza_despesa_id').select2({data: response});
+          }
+          else
+            $('#subnatureza_despesa_id').attr('disabled', true);
+        });
+      }
+    });
+    
     $(document).ready(function() {
-        $('#unidade_gestora_id').select2();
         $('#plano_acao_id').select2();
+        $('#meta_id').select2();
+        $('#natureza_despesa_id').select2();
+        $('#subnatureza_despesa_id').select2();
     });
   </script>
 @endsection

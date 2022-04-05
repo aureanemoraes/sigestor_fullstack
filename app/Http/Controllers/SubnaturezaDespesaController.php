@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Validator;
 
 class SubnaturezaDespesaController extends Controller
 {
+	public function opcoes($natureza_despesa_id)
+	{
+		return SubnaturezaDespesa::select('id', 'nome as text')->where('natureza_despesa_id', $natureza_despesa_id)->get();
+	}
+
 	public function index()
 	{
 		return view('subnatureza_despesa.index')->with([

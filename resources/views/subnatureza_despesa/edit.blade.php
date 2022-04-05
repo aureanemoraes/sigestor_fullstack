@@ -20,7 +20,7 @@
           fields.map(field => {
             let html = `
               <div class="input-group input-group-sm mb-3 col-4 fields" id="field-${contador}">
-                <input type="text" class="form-control" aria-label="Campo" aria-describedby="field" name="fields[]" value="${field}">
+                <input type="text" class="form-control" aria-label="Campo" aria-describedby="field" name="fields[]" value="${field.label}">
                 <span class="input-group-text" id="field"><button type="button" class="btn btn-link btn-sm" onClick="removerCampo('field-${contador}')"><i class="bi bi-x-circle-fill"></i> Remover</button></span>
               </div>
             `;

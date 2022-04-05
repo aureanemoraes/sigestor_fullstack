@@ -29,7 +29,7 @@ class Meta extends Model
     {
         $valor_inicial = isset($this->attributes['valor_inicial']) ? $this->attributes['valor_inicial'] : 0;
 
-        if(isset($this->valor_atingido)) {
+        if($this->valor_atingido > 0) {
             $porcentagem_atual = ($this->valor_atingido * 100)/$this->valor_final;
             return $porcentagem_atual;
         } elseif($valor_inicial > 0) {

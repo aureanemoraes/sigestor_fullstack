@@ -53,6 +53,9 @@
             <a href="{{ route('centro_custo.index') }}" class="nav_link nav_link_tertiary">
               <span class="nav_name">Centros de Custo</span>
             </a>
+            <a href="{{ route('despesa_modelo.index') }}" class="nav_link nav_link_tertiary">
+              <span class="nav_name">Despesas Modelos</span>
+            </a>
             <a href="#" class="nav_link nav_link_tertiary">
               <span class="nav_name">Usuários</span>
             </a>
