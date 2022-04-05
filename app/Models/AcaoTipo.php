@@ -21,4 +21,11 @@ class AcaoTipo extends Model
         'custeio',
         'investimento'
     ];
+
+    protected $appends = ['nome_completo'];
+
+    public function getNomeCompletoAttribute()
+    {
+        return $this->attributes['codigo'] . ' - ' . $this->attributes['nome'];
+    }
 }

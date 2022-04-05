@@ -59,19 +59,13 @@ class Versao2 extends Migration
             $table->float('valor')->nullable();
             $table->float('valor_total')->nullable();
             $table->string('tipo')->nullable(); // fixa ou variável
-            $table->unsignedBigInteger('ploa_administrativa_id')->nullable();
-            $table->foreign('ploa_administrativa_id')->references('id')->on('ploas_administrativas');
             $table->unsignedBigInteger('centro_custo_id')->nullable();
             $table->foreign('centro_custo_id')->references('id')->on('centros_custos');
             $table->unsignedBigInteger('natureza_despesa_id')->nullable();
             $table->foreign('natureza_despesa_id')->references('id')->on('naturezas_despesas');
-            $table->unsignedBigInteger('subnatureza_despesa_id')->nullable()->nullable();
+            $table->unsignedBigInteger('subnatureza_despesa_id')->nullable();
             $table->foreign('subnatureza_despesa_id')->references('id')->on('subnaturezas_despesas');
-            $table->unsignedBigInteger('unidade_administrativa_id')->nullable()->nullable();
-            $table->foreign('unidade_administrativa_id')->references('id')->on('unidades_administrativas');
-            $table->unsignedBigInteger('exercicio_id')->nullable()->nullable();
-            $table->foreign('exercicio_id')->references('id')->on('exercicios')->nullable();
-            $table->unsignedBigInteger('meta_id')->nullable()->nullable();
+            $table->unsignedBigInteger('meta_id')->nullable();
             $table->foreign('meta_id')->references('id')->on('metas');
             $table->json('fields')->nullable();
             $table->timestamps();
@@ -79,28 +73,28 @@ class Versao2 extends Migration
 
 
         // Tabela de Despesas
-        // Schema::create('despesas', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->string('descricao');
-        //     $table->float('valor');
-        //     $table->float('valor_total');
-        //     $table->integer('qtd')->default(1);
-        //     $table->integer('qtd_pessoas')->default(1);
-        //     $table->string('tipo'); // fixa ou variável
-        //     $table->unsignedBigInteger('fonte_acao_id');
-        //     $table->foreign('fonte_acao_id')->references('id')->on('fontes_acoes');
-        //     $table->unsignedBigInteger('centro_custo_id');
-        //     $table->foreign('centro_custo_id')->references('id')->on('centros_custos');
-        //     $table->unsignedBigInteger('natureza_despesa_id');
-        //     $table->foreign('natureza_despesa_id')->references('id')->on('naturezas_despesas');
-        //     $table->unsignedBigInteger('subnatureza_despesa_id')->nullable();
-        //     $table->foreign('subnatureza_despesa_id')->references('id')->on('subnaturezas_despesas');
-        //     $table->unsignedBigInteger('unidade_administrativa_id')->nullable();
-        //     $table->foreign('unidade_administrativa_id')->references('id')->on('unidades_administrativas');
-        //     $table->unsignedBigInteger('exercicio_id')->nullable();
-        //     $table->foreign('exercicio_id')->references('id')->on('exercicios');
-        //     $table->timestamps();
-        // });
+        Schema::create('despesas', function (Blueprint $table) {
+            $table->id();
+            $table->string('descricao');
+            $table->float('valor');
+            $table->float('valor_total')->nullable();
+            $table->string('tipo')->nullable(); // fixa ou variável
+            $table->unsignedBigInteger('ploa_administrativa_id');
+            $table->foreign('ploa_administrativa_id')->references('id')->on('ploas_administrativas');
+            $table->unsignedBigInteger('centro_custo_id');
+            $table->foreign('centro_custo_id')->references('id')->on('centros_custos');
+            $table->unsignedBigInteger('natureza_despesa_id');
+            $table->foreign('natureza_despesa_id')->references('id')->on('naturezas_despesas');
+            $table->unsignedBigInteger('subnatureza_despesa_id');
+            $table->foreign('subnatureza_despesa_id')->references('id')->on('subnaturezas_despesas');
+            $table->unsignedBigInteger('meta_id');
+            $table->foreign('meta_id')->references('id')->on('metas');
+            $table->unsignedBigInteger('despesa_modelo_id')->nullable();
+            $table->foreign('despesa_modelo_id')->references('id')->on('despesas_modelos');
+            $table->json('fields')->nullable();
+            $table->timestamps();
+        });
+
         // Schema::create('movimentos', function (Blueprint $table) {
         //     $table->id();
         //     $table->longText('descricao');

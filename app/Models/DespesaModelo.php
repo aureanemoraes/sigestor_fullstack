@@ -16,13 +16,10 @@ class DespesaModelo extends Model
         'valor',
         'valor_total',
         'tipo',
-        'ploa_administrativa_id',
         'centro_custo_id',
         'natureza_despesa_id',
         'subnatureza_despesa_id',
-        'unidade_administrativa_id',
         'meta_id',
-        'exercicio_id',
         'fields'
     ];
 
@@ -45,6 +42,11 @@ class DespesaModelo extends Model
                 }
                 $this->attributes['valor_total'] = $valor;
             }
+            else {
+                $this->attributes['valor_total'] = $this->valor;
+            }
+        } else {
+            $this->attributes['valor_total'] = $this->valor;
         }
     }
 

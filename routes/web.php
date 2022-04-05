@@ -23,6 +23,7 @@ use App\Http\Controllers\PloaController;
 use App\Http\Controllers\PloaGestoraController;
 use App\Http\Controllers\PloaAdministrativaController;
 use App\Http\Controllers\DespesaModeloController;
+use App\Http\Controllers\DespesaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,6 +88,7 @@ Route::resource('ploa_administrativa', PloaAdministrativaController::class)->exc
 ]);
 
 Route::resource('despesa_modelo', DespesaModeloController::class);
+Route::resource('despesa', DespesaController::class);
 
 
 

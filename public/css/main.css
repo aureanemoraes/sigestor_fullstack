@@ -20,6 +20,9 @@
 ::after {
     box-sizing: border-box;
 }
+.card {
+    margin-bottom: 1rem;
+}
 
 body {
     position: relative;

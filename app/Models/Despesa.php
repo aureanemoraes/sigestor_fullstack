@@ -15,34 +15,15 @@ class Despesa extends Model
         'descricao',
         'valor',
         'valor_total',
-        'qtd',
-        'qtd_pessoas',
         'tipo',
         'ploa_administrativa_id',
         'centro_custo_id',
         'natureza_despesa_id',
         'subnatureza_despesa_id',
-        'unidade_administrativa_id',
         'meta_id',
-        'exercicio_id'
+        'fields',
+        'despesa_modelo_id'
     ];
-
- 
-    // public function setValorTotalAttribute($value)
-    // {
-    //     if(isset($value)) {
-    //         $this->attributes['valor_total'] = $value;
-    //         if(isset($this->attributes['qtd'])) {
-    //             $this->attributes['valor_total'] = $this->attributes['valor_total']  * $this->attributes['qtd'];
-    //             if(isset($this->attributes['qtd_pessoas'])) {
-    //                 $this->attributes['valor_total'] = $this->attributes['valor_total'] * $this->attributes['qtd_pessoas'];
-    //             }
-    //         }
-    //         $this->attributes['valor_total'];
-    //     } else {
-    //         $this->attributes['valor_total'];
-    //     }
-    // }
 
     public function ploa_administrativa()
     {
@@ -62,16 +43,6 @@ class Despesa extends Model
     public function subnatureza_despesa()
     {
         return $this->belongsTo(SubnaturezaDespesa::class);
-    } 
-
-    public function unidade_administrativa()
-    {
-        return $this->belongsTo(UnidadeAdministrativa::class);
-    } 
-
-    public function execicio()
-    {
-        return $this->belongsTo(Exercicio::class);
     } 
 
     public function meta()
