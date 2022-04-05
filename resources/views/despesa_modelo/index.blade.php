@@ -20,6 +20,7 @@
         <th>Subnatureza de Despesa</th>
         <th>Meta</th>
         <th>Campos</th>
+        <th></th>
       </thead>
       <tbody>
         @foreach($despesas_modelos as $despesa_modelo)
@@ -35,11 +36,21 @@
           <td>
             @if(isset($despesa_modelo->fields))
               @foreach($despesa_modelo->fields as $key => $field)
-                <span class="badge bg-secondary">{{ $key . ': '. $field }}</span>
+                <span class="badge bg-secondary">{{ $field['nome'] . ': '. $field['valor'] }}</span>
               @endforeach
             @else
               -
             @endif
+          </td>
+          <td>
+            <form action="{{ route('despesa_modelo.destroy', $despesa_modelo->id) }}" method="post" id="form-delete">
+              @csrf
+              @method('delete')
+              <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
+                <a type="button" href="{{ route('despesa_modelo.edit', $despesa_modelo->id) }}" class="btn btn-primary" ><i class="bi bi-pen-fill"></i></a>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-trash3-fill"></i></button>
+              </div>
+            </form>
           </td>
         </tr>
         @endforeach

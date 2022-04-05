@@ -38,9 +38,9 @@ class DespesaModelo extends Model
                 foreach($fields as $key => $value) {
                     if(isset($value)) {
                         if($valor > 0) 
-                            $valor += ($this->valor * floatval($value));
+                            $valor += ($this->valor * floatval($value['valor']));
                         else
-                            $valor = $this->valor * floatval($value);
+                            $valor = $this->valor * floatval($value['valor']);
                     }
                 }
                 $this->attributes['valor_total'] = $valor;

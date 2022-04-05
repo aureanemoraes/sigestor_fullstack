@@ -18,7 +18,7 @@
       <select class="form-select @error('plano_acao_id') is-invalid @enderror" id="plano_acao_id" name="plano_acao_id" aria-label="Selecione o grupo">
         <option value="" selected>-- selecione --</option>
         @foreach($planos_acoes as $plano_acao)
-          <option value="{{ $plano_acao->id }}" {{ isset($despesa_modelo) && $despesa_modelo->meta->plano_acao_id == $plano_acao->id ? 'selected' : '' }}>{{ $plano_acao->nome }}</option>
+          <option value="{{ $plano_acao->id }}" {{ isset($despesa_modelo->meta) && $despesa_modelo->meta->plano_acao_id == $plano_acao->id ? 'selected' : '' }}>{{ $plano_acao->nome }}</option>
         @endforeach
       </select>
       @error('plano_acao_id')
@@ -64,6 +64,8 @@
 
     <input type="hidden" id="naturezas_despesas" value="{{ json_encode($naturezas_despesas) }}">
 
+    <input type="hidden" id="despesa_modelo" value="{{ isset($despesa_modelo) ? json_encode($despesa_modelo) : null }}">
+
     <div class="mb-3 col-md-6">
       <label for="subnatureza_despesa_id">Subnatureza de Despesa</label>
       <select class="form-select @error('subnatureza_despesa_id') is-invalid @enderror" id="subnatureza_despesa_id" name="subnatureza_despesa_id" aria-label="Selecione o grupo" disabled>
@@ -100,20 +102,20 @@
 
     <div class="mb-3 col-md-6">
       <span>A despesa é obrigatória para a Instituição?</span>
-      <div class="form-check @error('centro_custo_id') is-invalid @enderror">
-        <input class="form-check-input" type="radio" name="centro_custo_id" id="despesa_fixa" value="despesa_fixa">
+      <div class="form-check @error('tipo') is-invalid @enderror">
+        <input class="form-check-input" type="radio" name="tipo" id="despesa_fixa" value="despesa_fixa">
         <label class="form-check-label" for="despesa_fixa">
           Sim
         </label>
       </div>
 
-      <div class="form-check @error('centro_custo_id') is-invalid @enderror">
-        <input class="form-check-input" type="radio" name="centro_custo_id" id="despesa_variavel" value="despesa_variavel">
+      <div class="form-check @error('tipo') is-invalid @enderror">
+        <input class="form-check-input" type="radio" name="tipo" id="despesa_variavel" value="despesa_variavel">
         <label class="form-check-label" for="despesa_variavel">
           Não
         </label>
       </div>
-      @error('centro_custo_id')
+      @error('tipo')
         <div class="invalid-feedback">
           {{ $message }}
         </div>

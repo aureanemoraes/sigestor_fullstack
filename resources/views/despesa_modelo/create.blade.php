@@ -38,8 +38,9 @@
           let html = `
           <div class="input-group input-group-sm mb-3 col-4 fields" id="${field}">
             <span class="input-group-text" id="field">${field.label}</span>
-            <input type="number" class="form-control" aria-label="Campo" aria-describedby="field" name="fields[${field.slug}]">
+            <input type="number" class="form-control" aria-label="Campo" aria-describedby="field" name="fields[${field.slug}][valor]">
           </div>
+          <input type="hidden" name="fields[${field.slug}][nome]" value="${field.label}">
           `;
 
           $('#fields-container').append(html);
