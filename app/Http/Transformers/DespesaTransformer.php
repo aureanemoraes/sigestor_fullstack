@@ -48,6 +48,9 @@ class DespesaTransformer
             case 'valor':
                 $despesa->valor = $value;
                 break;
+            case 'despesa_modelo_id':
+                $despesa->despesa_modelo_id = $value;
+                break;
         }
       }
 

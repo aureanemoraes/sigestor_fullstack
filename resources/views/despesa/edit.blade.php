@@ -67,6 +67,27 @@
       }
     }
 
+    $('#despesa_modelo_id').on('change', () => {
+      let despesa_modelo_id = $('#despesa_modelo_id').val();
+      let despesas_modelos = JSON.parse($('#despesas_modelos').val());
+      let despesa_modelo_selecionada = null;
+
+      if(despesas_modelos.length > 0) {
+        despesa_modelo_selecionada = despesas_modelos.filter(despesa_modelo => {
+          return despesa_modelo.id == despesa_modelo_id;
+        });
+
+        if(despesa_modelo_selecionada[0]) {
+          $('#valor').val(despesa_modelo_selecionada[0].valor);
+          $('#valor').attr('readonly', true);
+        } else {
+          $('#valor').val(0);
+          $('#valor').removeAttr('readonly');
+        }
+          
+      }
+    });
+
     $('#plano_acao_id').on('change', () => {
       $('#meta_id').empty().trigger("change");
       $('#meta_id').select2({data: [

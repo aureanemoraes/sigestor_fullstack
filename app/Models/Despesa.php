@@ -25,6 +25,33 @@ class Despesa extends Model
         'despesa_modelo_id'
     ];
 
+    protected $casts = [
+        'fields' => 'array'
+    ];
+
+    public function setValorTotalAttribute($valor)
+    {
+        $fields = $this->fields;
+        if(isset($fields)) {
+            if(count($fields) > 0) {
+                foreach($fields as $key => $value) {
+                    if(isset($value)) {
+                        if($valor > 0) 
+                            $valor += ($this->valor * floatval($value['valor']));
+                        else
+                            $valor = $this->valor * floatval($value['valor']);
+                    }
+                }
+                $this->attributes['valor_total'] = $valor;
+            }
+            else {
+                $this->attributes['valor_total'] = $this->valor;
+            }
+        } else {
+            $this->attributes['valor_total'] = $this->valor;
+        }
+    }
+
     public function ploa_administrativa()
     {
         return $this->belongsTo(PloaAdministrativa::class);

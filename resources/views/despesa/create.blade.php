@@ -18,10 +18,10 @@
 
         if(despesa_modelo_selecionada[0]) {
           $('#valor').val(despesa_modelo_selecionada[0].valor);
-          $('#valor').attr('disabled', true);
+          $('#valor').attr('readonly', true);
         } else {
           $('#valor').val(0);
-          $('#valor').removeAttr('disabled');
+          $('#valor').removeAttr('readonly');
         }
           
       }
@@ -88,7 +88,7 @@
         });
       }
     });
-    
+
     $(document).ready(function() {
         $('#plano_acao_id').select2();
         $('#meta_id').select2();

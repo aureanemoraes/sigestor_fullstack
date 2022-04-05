@@ -35,14 +35,15 @@
 
   <div class="mb-3">
     <label for="despesa_modelo_id">Modelo de Despesa</label>
-    <select class="form-select @error('despesa_modelo_id') is-invalid @enderror" id="despesa_modelo_id" aria-label="Selecione o grupo">
+    <select class="form-select @error('despesa_modelo_id') is-invalid @enderror" id="despesa_modelo_id" name="despesa_modelo_id" aria-label="Selecione o grupo">
       <option value="" selected>-- selecione --</option>
       @foreach($despesas_modelos as $despesa_modelo)
-        <option value="{{ $despesa_modelo->id }}" {{ isset($despesa->meta) && $despesa->despesa_modelo_id == $despesa_modelo->id ? 'selected' : '' }}>{{ $despesa_modelo->descricao }}</option>
+        <option value="{{ $despesa_modelo->id }}" {{ isset($despesa) && $despesa->despesa_modelo_id == $despesa_modelo->id ? 'selected' : '' }}>{{ $despesa_modelo->descricao }}</option>
       @endforeach
     </select>
 
     <input type="hidden" id="despesas_modelos" value="{{ isset($despesas_modelos) ? json_encode($despesas_modelos) : null }}">
+    <input type="hidden" id="ploa_administrativa_id" name="ploa_administrativa_id" value="{{ isset($despesa) ? json_encode($despesa->ploa_administrativa_id) : $ploa_administrativa_id }}">
   </div>
 
   <div class="row g-3">
@@ -136,14 +137,14 @@
     <div class="mb-3 col-md-6">
       <span>A despesa é obrigatória para a Instituição?</span>
       <div class="form-check @error('tipo') is-invalid @enderror">
-        <input class="form-check-input" type="radio" name="tipo" id="despesa_fixa" value="despesa_fixa">
+        <input class="form-check-input" type="radio" name="tipo" id="despesa_fixa" value="despesa_fixa" {{ isset($despesa) && $despesa->tipo == 'despesa_fixa' ? 'checked' : '' }}>
         <label class="form-check-label" for="despesa_fixa">
           Sim
         </label>
       </div>
 
       <div class="form-check @error('tipo') is-invalid @enderror">
-        <input class="form-check-input" type="radio" name="tipo" id="despesa_variavel" value="despesa_variavel">
+        <input class="form-check-input" type="radio" name="tipo" id="despesa_variavel" value="despesa_variavel" {{ isset($despesa) && $despesa->tipo == 'despesa_variavel' ? 'checked' : '' }}>
         <label class="form-check-label" for="despesa_variavel">
           Não
         </label>
@@ -168,7 +169,7 @@
     </div>
 
     <div class="form-floating mb-3 col-md-6">
-      <input type="number" class="form-control @error('valor') is-invalid @enderror" id="valor" name="valor" value="{{ isset($despesa->valor) ? $despesa->valor : 0}}" placeholder="Nome...">
+      <input type="number" class="form-control @error('valor') is-invalid @enderror" id="valor" name="valor" value="{{ isset($despesa->valor) ? $despesa->valor : 0}}" placeholder="Nome..." {{ isset($despesa->despesa_modelo_id) ? 'readonly' : '' }}>
       <label for="valor">Valor Unitário</label>
       @error('valor')
         <div class="invalid-feedback">
