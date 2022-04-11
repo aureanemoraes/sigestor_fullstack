@@ -67,6 +67,25 @@ class Programa extends Model
                 $dados['valor_a_distribuir'] = $ploa_gestora->valor - $dados['valor_distribuido'];
                 $dados['valor_a_planejar'] = $dados['valor_distribuido'] - $dados['valor_planejado'];
             break;
+            case 'ploa_administrativa':
+                $ploas_administrativas = PloaAdministrativa::whereHas(
+                    'ploa_gestora', function ($query) use ($programa){
+                        $query->whereHas(
+                            'ploa', function ($query) use ($programa) {
+                                $query->where('programa_id', $programa->id);
+                            }
+                        );
+                    }
+                )->where('unidade_administrativa_id', $id)->get();
+
+                $dados['valor_total'] = $ploas_administrativas->sum('valor');
+
+                foreach($ploas_administrativas as $ploa_administrativa) {
+                    $dados['valor_planejado'] += $ploa_administrativa->despesas()->sum('valor_total');
+                }
+
+                $dados['valor_a_planejar'] = $dados['valor_total'] - $dados['valor_planejado'];
+            break;
         }
 
         return $dados;

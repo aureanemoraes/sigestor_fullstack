@@ -27,8 +27,8 @@ class PloaAdministrativaController extends Controller
 
 	public function index($unidade_administrativa_id = null, $exercicio_id = null)
 	{
-		$valor_distribuido = 0;
-		$valor_a_distribuir = 0;
+		$valor_planejado = 0;
+		$valor_a_planejar = 0;
 		$total_ploa = 0;
 
         if(isset($unidade_administrativa_id) && isset($exercicio_id)) {
@@ -46,26 +46,35 @@ class PloaAdministrativaController extends Controller
 
 			$total_ploa = $ploas_administrativas->sum('valor');
 
+			foreach($ploas_administrativas as $ploa_administrativa) {
+				if(count($ploa_administrativa->despesas) > 0) {
+					$valor_planejado += $ploa_administrativa->despesas()->sum('valor_total');
+				} 
+			}
+
+			$valor_a_planejar = $total_ploa - $valor_planejado;
 
 			$programas_ploa = Programa::whereHas(
 					'ploas', function ($query) use($unidade_administrativa_id, $exercicio_id) {
 						$query->where('exercicio_id', $exercicio_id);
-						$query->whereHas('ploa_gestora', function($query) use ($unidade_administrativa_id) {
-							$query->whereHas('ploa_administrativa', function($query) use ($unidade_administrativa_id) {
+						$query->whereHas('ploas_gestoras', function($query) use ($unidade_administrativa_id) {
+							$query->whereHas('ploas_administrativas', function($query) use ($unidade_administrativa_id) {
 								$query->where('unidade_administrativa_id', $unidade_administrativa_id);
 							});
 						});
 					}
 			)->get();
 
-			foreach($programas_ploa as $programa) {
-				if(count($programa->ploas) > 0) {
-					$programa->valor_total = 0;
-					foreach($programa->ploas as $ploa) {
-						$programa->valor_total += isset($ploa->ploa_gestora) ? $ploa->ploa_gestora->valor : 0;
-					}
-				}
-			}
+			// foreach($programas_ploa as $programa) {
+			// 	if(count($programa->ploas) > 0) {
+			// 		$programa->valor_total = 0;
+			// 		foreach($programa->ploas as $ploa) {
+			// 			if(count($ploa->ploas_gestoras) > 0) {
+			// 				$programa->valor_total += $ploa->ploas_gestoras()->sum('valor');
+			// 			}
+			// 		}
+			// 	}
+			// }
 
             return view('ploa_administrativa.index')->with([
                 'programas_ploa' => $programas_ploa,
@@ -79,8 +88,8 @@ class PloaAdministrativaController extends Controller
 				'unidades_administrativas' => UnidadeAdministrativa::all(),
 				'exercicio_selecionado' => $exercicio_selecionado,
 				'tipo' => 'index',
-				'valor_distribuido' => $valor_distribuido,
-				'valor_a_distribuir' => $valor_a_distribuir,
+				'valor_planejado' => $valor_planejado,
+				'valor_a_planejar' => $valor_a_planejar,
 				'total_ploa' => $total_ploa
             ]);
         } else {

@@ -49,8 +49,6 @@
           <thead>
             <tr>
               <th>VALOR PLOA</th>
-              <th>DISTRIBUÍDO</th>
-              <th>A DISTRIBUIR</th>
               <th>PLANEJADA</th>
               <th>A PLANEJAR</th>
             </tr>
@@ -58,10 +56,8 @@
           <tbody>
             <tr>
               <td>{{ formatCurrency($total_ploa) }}</td>
-              <td>{{ formatCurrency($valor_distribuido) }}</td>
-              <td>{{ formatCurrency($valor_a_distribuir) }}</td>
-              <td>R$ 00,00</td>
-              <td>R$ 00,00</td>
+              <td>{{ formatCurrency($valor_planejado) }}</td>
+              <td>{{ formatCurrency($valor_a_planejar) }}</td>
             </tr>
           </tbody>
         </table>
