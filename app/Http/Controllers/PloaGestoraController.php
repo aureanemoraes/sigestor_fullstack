@@ -87,6 +87,8 @@ class PloaGestoraController extends Controller
 	{
 		$valor_distribuido = 0;
 		$valor_a_distribuir = 0;
+		$valor_planejado = 0;
+		$valor_a_planejar = 0;
 		$total_ploa = 0;
 
         if(isset($unidade_gestora_id) && isset($exercicio_id)) {
@@ -103,11 +105,16 @@ class PloaGestoraController extends Controller
 			if(count($ploas_gestoras) > 0) {
 				foreach($ploas_gestoras as $ploa_gestora) {
 					if(count($ploa_gestora->ploas_administrativas) > 0)
-						$valor_distribuido += $ploa_gestora->ploas_administrativas->sum('valor');
+						$valor_distribuido += $ploa_gestora->ploas_administrativas()->sum('valor');
+						foreach($ploa_gestora->ploas_administrativas as $ploa_administrativa) {
+							$valor_planejado += $ploa_administrativa->despesas()->sum('valor_total');
+						}
 				}
 			}
 
 			$valor_a_distribuir = $total_ploa - $valor_distribuido;
+
+			$valor_a_planejar = $valor_distribuido - $valor_planejado;
 
 			$programas_ploa = Programa::whereHas(
 					'ploas', function ($query) use($unidade_gestora_id, $exercicio_id) {
@@ -119,15 +126,15 @@ class PloaGestoraController extends Controller
 					}
 			)->get();
 
-			foreach($programas_ploa as $programa) {
-				if(count($programa->ploas) > 0) {
-					$programa->valor_total = 0;
-					foreach($programa->ploas as $ploa) {
-						if(count($ploa->ploas_gestoras) > 0)
-							$programa->valor_total += $ploa->ploas_gestoras->sum('valor');
-					}
-				}
-			}
+			// foreach($programas_ploa as $programa) {
+			// 	if(count($programa->ploas) > 0) {
+			// 		$programa->valor_total = 0;
+			// 		foreach($programa->ploas as $ploa) {
+			// 			if(count($ploa->ploas_gestoras) > 0)
+			// 				$programa->valor_total += $ploa->ploas_gestoras()->sum('valor');
+			// 		}
+			// 	}
+			// }
 
             return view('ploa_gestora.index')->with([
                 'programas_ploa' => $programas_ploa,
@@ -143,6 +150,8 @@ class PloaGestoraController extends Controller
 				'tipo' => 'index',
 				'valor_distribuido' => $valor_distribuido,
 				'valor_a_distribuir' => $valor_a_distribuir,
+				'valor_planejado' => $valor_planejado,
+				'valor_a_planejar' => $valor_a_planejar,
 				'total_ploa' => $total_ploa
             ]);
         } else {

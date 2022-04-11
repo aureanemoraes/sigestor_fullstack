@@ -13,7 +13,7 @@
         <table class="table table-sm">
             @if(count($programa->ploas) > 0)
               @php
-                $valores_programa = Programa::valores($programa);
+                $valores_programa = Programa::valores($programa, 'ploa');
               @endphp
               <tbody>
                 <tr>

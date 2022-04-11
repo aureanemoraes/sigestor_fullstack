@@ -1,8 +1,15 @@
+@php
+  use App\Models\PloaGestora;
+  use App\Models\Programa;
+@endphp
 <section>
   <div class="d-flex justify-content-end ">
     <p class="btn-primary total-matriz">VALOR TOTAL: {{ formatCurrency($total_ploa) }}</p>
   </div>
   @foreach($programas_ploa as $programa)
+  @php
+    $valores_programa = Programa::valores($programa, 'ploa_gestora', $unidade_selecionada->id);
+  @endphp
   <div class="card">
     <div class="card-body">
       <div class="table-responsive-sm table-loa">
@@ -10,33 +17,62 @@
             @if(count($programa->ploas) > 0)
               <tbody>
                 <tr>
-                  <td colspan="5">Programa: <strong>{{ Str::upper($programa->nome) }}</strong></td>
+                  <td colspan="3">Programa: <strong>{{ Str::upper($programa->nome) }}</strong></td>
+                  <th>VALOR PLOA</th>
+                  <th>DISTRIBUIDO</th>
+                  <th>A DISTRIBUIR</th>
+                  <th>PLANEJADA</th>
+                  <th>A PLANEJAR</th>
+                  <th></th>
                 </tr>
                 <tr>
                   <td colspan="3">Total estimado</td>
-                  <th>{{ formatCurrency($programa->valor_total) }}</th>
+                  <th>{{ formatCurrency($valores_programa['valor_total']) }}</th>
+                  <th>{{ formatCurrency($valores_programa['valor_distribuido']) }}</th>
+                  <th>{{ formatCurrency($valores_programa['valor_a_distribuir']) }}</th>
+                  <th>{{ formatCurrency($valores_programa['valor_planejado']) }}</th>
+                  <th>{{ formatCurrency($valores_programa['valor_a_planejar']) }}</th>
                   <td></td>
                 </tr>
                 <tr>
-                  <td colspan="5">
+                  <td colspan="9">
                     <table class="table mb-0 table-sm">
                       <thead>
                         <tr>
                           <th>Ação</th>
                           <th>Tipo</th>
                           <th>Fonte</th>
-                          <th>Valor</th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
                           <th></th>
                         </tr>
                       </thead>
                       <tbody>
                         @foreach($ploas_gestoras as $ploa_gestora)
                           @if($ploa_gestora->ploa->programa_id == $programa->id)
+                            @php
+                              $valores_ploa_gestora = PloaGestora::valores($ploa_gestora);
+                            @endphp
                           <tr>
                             <td>{{ $ploa_gestora->ploa->acao_tipo->codigo . ' - ' . $ploa_gestora->ploa->acao_tipo->nome }}</td>
                             <td>{{ ucfirst($ploa_gestora->ploa->tipo_acao) }}</td>
                             <td>{{ $ploa_gestora->ploa->fonte_tipo->codigo }}</td>
                             <td>{{ formatCurrency($ploa_gestora->valor) }}</td>
+                            <td>
+                              {{ formatCurrency($valores_ploa_gestora['valor_distribuido']) }}
+                            </td>
+                            <td>
+                              {{ formatCurrency($valores_ploa_gestora['valor_a_distribuir']) }}
+                            </td>
+                            <td>
+                              {{ formatCurrency($valores_ploa_gestora['valor_planejado']) }}
+                            </td>
+                            <td>
+                              {{ formatCurrency($valores_ploa_gestora['valor_a_planejar']) }}
+                            </td>
                             <td>
                               @if(!isset($tipo))
                                 <form action="{{ route('ploa_gestora.destroy', $ploa_gestora->id) }}" method="post" id="form-delete">
