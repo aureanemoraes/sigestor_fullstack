@@ -17,7 +17,7 @@ class Programa extends Model
         'fav'
     ];
 
-    public static function valores($programa, $tipo, $id=null) {
+    public static function valores($programa, $tipo, $id=null, $exercicio_id=null) {
         $dados['valor_total'] = 0;
         $dados['valor_distribuido'] = 0;
         $dados['valor_a_distribuir'] = 0;
@@ -47,8 +47,9 @@ class Programa extends Model
             break;
             case 'ploa_gestora':
                 $ploas_gestoras = PloaGestora::whereHas(
-                    'ploa', function ($query) use ($programa) {
+                    'ploa', function ($query) use ($programa, $exercicio_id) {
                         $query->where('programa_id', $programa->id);
+                        $query->where('exercicio_id', $exercicio_id);
                     }
                 )->where('unidade_gestora_id', $id)->get();
 
@@ -69,10 +70,11 @@ class Programa extends Model
             break;
             case 'ploa_administrativa':
                 $ploas_administrativas = PloaAdministrativa::whereHas(
-                    'ploa_gestora', function ($query) use ($programa){
+                    'ploa_gestora', function ($query) use ($programa, $exercicio_id) {
                         $query->whereHas(
-                            'ploa', function ($query) use ($programa) {
+                            'ploa', function ($query) use ($programa, $exercicio_id) {
                                 $query->where('programa_id', $programa->id);
+                                $query->where('exercicio_id', $exercicio_id);
                             }
                         );
                     }

@@ -8,7 +8,7 @@
   </div>
   @foreach($programas_ploa as $programa)
   @php
-    $valores_programa = Programa::valores($programa, 'ploa_gestora', $unidade_selecionada->id);
+    $valores_programa = Programa::valores($programa, 'ploa_gestora', $unidade_selecionada->id, $exercicio_selecionado->id);
   @endphp
   <div class="card">
     <div class="card-body">

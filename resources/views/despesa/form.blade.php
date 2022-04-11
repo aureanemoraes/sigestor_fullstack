@@ -34,7 +34,7 @@
   </div>
 
   <div class="mb-3">
-    <label for="despesa_modelo_id">Modelo de Despesa</label>
+    {{-- <label for="despesa_modelo_id">Modelo de Despesa</label>
     <select class="form-select @error('despesa_modelo_id') is-invalid @enderror" id="despesa_modelo_id" name="despesa_modelo_id" aria-label="Selecione o grupo">
       <option value="" selected>-- selecione --</option>
       @foreach($despesas_modelos as $despesa_modelo)
@@ -42,7 +42,7 @@
       @endforeach
     </select>
 
-    <input type="hidden" id="despesas_modelos" value="{{ isset($despesas_modelos) ? json_encode($despesas_modelos) : null }}">
+    <input type="hidden" id="despesas_modelos" value="{{ isset($despesas_modelos) ? json_encode($despesas_modelos) : null }}"> --}}
     <input type="hidden" id="ploa_administrativa_id" name="ploa_administrativa_id" value="{{ isset($despesa) ? json_encode($despesa->ploa_administrativa_id) : $ploa_administrativa_id }}">
   </div>
 
