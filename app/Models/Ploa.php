@@ -46,7 +46,9 @@ class Ploa extends Model
             $dados['valor_distribuido'] = $ploa->ploas_gestoras->sum('valor');
             foreach($ploa->ploas_gestoras as $ploa_gestora) {
                 if(count($ploa_gestora->ploas_administrativas) > 0) {
-                    $dados['valor_planejado'] += $ploa_gestora->ploas_administrativas->sum('valor');
+                    foreach($ploa_gestora->ploas_administrativas as $ploa_administrativa) {
+                        $dados['valor_planejado'] += $ploa_administrativa->despesas()->sum('valor_total');
+                    }
                 }
             }
         } 

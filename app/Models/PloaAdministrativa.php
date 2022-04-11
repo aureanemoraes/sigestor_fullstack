@@ -21,4 +21,9 @@ class PloaAdministrativa extends Model
     {
         return $this->belongsTo(PloaGestora::class);
     }
+
+    public function despesas()
+    {
+        return $this->hasMany(Despesa::class);
+    }
 }
