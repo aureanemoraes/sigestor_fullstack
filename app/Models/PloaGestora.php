@@ -22,9 +22,9 @@ class PloaGestora extends Model
         return $this->belongsTo(Ploa::class);
     }
 
-    public function ploa_administrativa()
+    public function ploas_administrativas()
     {
-        return $this->hasOne(PloaAdministrativa::class);
+        return $this->hasMany(PloaAdministrativa::class);
     }
 
 }

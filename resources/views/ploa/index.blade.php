@@ -80,8 +80,8 @@
           <td>{{ formatCurrency($total_ploa) }}</td>
           <td>{{ formatCurrency($valor_distribuido) }}</td>
           <td>{{ formatCurrency($valor_a_distribuir) }}</td>
-          <td>R$ 00,00</td>
-          <td>R$ 00,00</td>
+          <td>{{ formatCurrency($valor_planejado) }}</td>
+          <td>{{ formatCurrency($valor_a_planejar) }}</td>
         </tr>
       </tbody>
     </table>

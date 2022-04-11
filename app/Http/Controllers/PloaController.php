@@ -75,6 +75,8 @@ class PloaController extends Controller
 	public function index($exercicio_id = null) {
 		$valor_distribuido = 0;
 		$valor_a_distribuir = 0;
+		$valor_planejado = 0;
+		$valor_a_planejar = 0;
 		$total_ploa = 0;
 
 		if(!isset($exercicio_id)) {
@@ -88,13 +90,22 @@ class PloaController extends Controller
 
 		if(count($ploas) > 0) {
 			foreach($ploas as $ploa) {
-				$valor_distribuido += isset($ploa->ploa_gestora) ? $ploa->ploa_gestora->valor : 0;
+				if(count($ploa->ploas_gestoras) > 0) {
+					$valor_distribuido += $ploa->ploas_gestoras->sum('valor');
+					foreach($ploa->ploas_gestoras as $ploa_gestora) {
+						if(count($ploa_gestora->ploas_administrativas) > 0) {
+							$valor_planejado += $ploa_gestora->ploas_administrativas->sum('valor');
+						}
+					}
+				}
 			}
 		}
 
 		$total_ploa = $ploas->sum('valor');
 
 		$valor_a_distribuir = $total_ploa - $valor_distribuido;
+
+		$valor_a_planejar = $valor_distribuido - $valor_planejado;
 
 		$programas_ploa = Programa::whereHas(
 			'ploas', function ($query) use($exercicio_id) {
@@ -112,6 +123,8 @@ class PloaController extends Controller
 			'exercicio_selecionado' => $exercicio_selecionado,
 			'valor_distribuido' => $valor_distribuido,
 			'valor_a_distribuir' => $valor_a_distribuir,
+			'valor_planejado' => $valor_planejado,
+			'valor_a_planejar' => $valor_a_planejar,
 			'total_ploa' => $total_ploa
 		]);
 	}
