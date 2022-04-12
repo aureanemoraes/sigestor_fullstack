@@ -39,4 +39,9 @@ class FonteTipo extends Model
     {
         return $this->belongsTo(Especificacao::class, 'especificacao_id', 'id');
     }
+
+    public function ploas()
+    {
+        return $this->hasMany(Ploa::class);
+    }
 }

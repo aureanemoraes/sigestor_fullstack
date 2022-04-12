@@ -24,6 +24,7 @@ use App\Http\Controllers\PloaGestoraController;
 use App\Http\Controllers\PloaAdministrativaController;
 use App\Http\Controllers\DespesaModeloController;
 use App\Http\Controllers\DespesaController;
+use App\Http\Controllers\RelatorioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -89,6 +90,11 @@ Route::resource('ploa_administrativa', PloaAdministrativaController::class)->exc
 
 Route::resource('despesa_modelo', DespesaModeloController::class);
 Route::resource('despesa', DespesaController::class);
+
+Route::get('relatorio', [RelatorioController::class, 'index'])->name('relatorio.index');
+Route::get('relatorio/{instituicao_id}/{exercicio_id}', [RelatorioController::class, 'relatorio_matriz'])->name('relatorio.ploa');
+
+
 
 
 

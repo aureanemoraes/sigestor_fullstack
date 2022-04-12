@@ -28,4 +28,9 @@ class AcaoTipo extends Model
     {
         return $this->attributes['codigo'] . ' - ' . $this->attributes['nome'];
     }
+
+    public function ploas()
+    {
+        return $this->hasMany(Ploa::class);
+    }
 }

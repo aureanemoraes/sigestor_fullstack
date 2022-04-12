@@ -21,43 +21,61 @@ class PloaController extends Controller
 	public function distribuicao($unidade_gestora_id = null, $exercicio_id = null)
 	{
         if(isset($unidade_gestora_id) && isset($exercicio_id)) {
-						$exercicio_selecionado = Exercicio::find($exercicio_id);
+			$exercicio_selecionado = Exercicio::find($exercicio_id);
 
             $ploas_gestoras = PloaGestora::whereHas(
-							'ploa', function ($query) use ($exercicio_id) {
-								$query->where('exercicio_id', $exercicio_id);
-							}
-						)->where('unidade_gestora_id', $unidade_gestora_id)->get();
+				'ploa', function ($query) use ($exercicio_id) {
+					$query->where('exercicio_id', $exercicio_id);
+				}
+			)->where('unidade_gestora_id', $unidade_gestora_id)->get();
 
-						$total_ploa = $ploas_gestoras->sum('valor');
+			$total_ploa = $ploas_gestoras->sum('valor');
 
-						$programas_ploa = Programa::whereHas(
-								'ploas', function ($query) use($unidade_gestora_id, $exercicio_id) {
-										$query->where('exercicio_id', $exercicio_id);
-										$query->whereHas('ploas_gestoras', function($query) use ($unidade_gestora_id) {
-												$query->select('ploas_gestoras.valor');
-												$query->where('unidade_gestora_id', $unidade_gestora_id);
-										});
-								}
-						)->get();
+			$programas_ploa = Programa::whereHas(
+					'ploas', function ($query) use($unidade_gestora_id, $exercicio_id) {
+						$query->where('exercicio_id', $exercicio_id);
+						$query->whereHas('ploas_gestoras', function($query) use ($unidade_gestora_id) {
+							$query->select('ploas_gestoras.valor');
+							$query->where('unidade_gestora_id', $unidade_gestora_id);
+						});
+					}
+			)->get();
 
-						foreach($programas_ploa as $programa) {
-							if(count($programa->ploas) > 0) {
-								$programa->valor_total = 0;
-								foreach($programa->ploas as $ploa) {
-									if(count($ploa->ploas_gestoras) > 0)
-										$programa->valor_total += $ploa->ploas_gestoras->sum('valor');
-								}
-							}
-						}
+			$programas = Programa::whereHas(
+				'ploas', function ($query) use($unidade_gestora_id, $exercicio_id) {
+					$query->where('exercicio_id', $exercicio_id);
+				}
+			)->get();
+
+			$fontes = FonteTipo::whereHas(
+				'ploas', function ($query) use($unidade_gestora_id, $exercicio_id) {
+					$query->where('exercicio_id', $exercicio_id);
+				}
+			)->get();
+
+			$acoes = AcaoTipo::whereHas(
+				'ploas', function ($query) use($unidade_gestora_id, $exercicio_id) {
+					$query->where('exercicio_id', $exercicio_id);
+				}
+			)->get();
+
+			// foreach($programas_ploa as $programa) {
+			// 	if(count($programa->ploas) > 0) {
+			// 		$programa->valor_total = 0;
+			// 		foreach($programa->ploas as $ploa) {
+			// 			if(count($ploa->ploas_gestoras) > 0)
+			// 				$programa->valor_total += $ploa->ploas_gestoras->sum('valor');
+			// 		}
+			// 	}
+			// }
 
             return view('ploa.distribuicao')->with([
                 'programas_ploa' => $programas_ploa,
-								'ploas_gestoras' => $ploas_gestoras,
+				'ploas_gestoras' => $ploas_gestoras,
                 'exercicios' => Exercicio::all(),
-                'programas' => Programa::all(),
-                'fontes' => FonteTipo::all(),
-                'acoes' => AcaoTipo::where('fav', 1)->get(),
+                'programas' => $programas,
+                'fontes' => $fontes,
+                'acoes' => $acoes,
                 'instituicoes' => Instituicao::all(),
                 'total_ploa' => $total_ploa,
                 'unidade_selecionada' => UnidadeGestora::find($unidade_gestora_id),
