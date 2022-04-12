@@ -92,7 +92,8 @@ Route::resource('despesa_modelo', DespesaModeloController::class);
 Route::resource('despesa', DespesaController::class);
 
 Route::get('relatorio', [RelatorioController::class, 'index'])->name('relatorio.index');
-Route::get('relatorio/{instituicao_id}/{exercicio_id}', [RelatorioController::class, 'relatorio_matriz'])->name('relatorio.ploa');
+Route::get('relatorio/matriz/{instituicao_id?}/{exercicio_id?}', [RelatorioController::class, 'relatorio_matriz'])->name('relatorio.ploa');
+Route::get('relatorio/planejamento/{unidade_administrativa_id?}/{exercicio_id?}', [RelatorioController::class, 'relatorio_planejamento'])->name('relatorio.ploa.planejamento');
 
 
 

@@ -45,4 +45,9 @@ class UnidadeAdministrativa extends Model
     {
         return $this->belongsTo(UnidadeGestora::class);
     } 
+
+    public function ploas_administrativas()
+    {
+        return $this->hasMany(PloaAdministrativa::class);
+    } 
 }

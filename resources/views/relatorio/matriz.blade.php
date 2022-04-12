@@ -13,224 +13,132 @@
         th.blank {
             border: none;
         }
+
+        .table-ploa {
+            font-size: 0.75rem;
+        }
    
     </style>
 @endsection
 
 @section('content')
     <h3>DISTRIBUIÇÃO MATRIZ PLOA</h3>
+    <p>DISTRIBUIÇÃO PLOA {{ Str::upper($instituicao->nome) }} {{ $exercicio->nome }}</p>
     <div class="table-responsive table-responsive-sm">
-        <p>DISTRIBUIÇÃO PLOA {{ Str::upper($instituicao->nome) }} {{ $exercicio->nome }}</p>
-        <div class="row">
-            <div class="col">
-                <table class="table table-sm table-bordered">
-                    <thead>
-                        <tr>
-                            <th rowspan="2" class="title">UASG</th>
-                            <th rowspan="2" class="title">UNIDADE GESTORA</th>
-                            @foreach($acoes as $acao)
-                                @php
-                                    if($acao->investimento && $acao->custeio)
-                                        $colspan = 2;
-                                    else
-                                        $colspan = 1;
-                                @endphp
-                                <th class="acao-title" colspan="{{ $colspan }}">{{ isset($acao->nome_simplificado) ? $acao->nome_simplificado : $acao->codigo }}</th>
-                            @endforeach
-                        </tr>
-                        <tr>
-                            @foreach($acoes as $acao)
-                                @if($acao->custeio)
-                                    @php
-                                        $valor_total_custeio[$acao->id] = 0;
-                                    @endphp
-                                    <th class="acao-title" width="10%">Custeio</th>
-                                @endif
-                                @if($acao->investimento)
-                                    @php
-                                        $valor_total_investimento[$acao->id] = 0;
-                                    @endphp
-                                    <th class="acao-title" width="10%">Investimento</th>
-                                @endif
-                                @if(!$acao->investimento && !$acao->custeio)
-                                    <th></th>
-                                @endif
-                            @endforeach
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($unidades_gestoras as $unidade_gestora)
-                            @php
-                                $valor_total_unidade_gestora[$unidade_gestora->id] = 0;
-                            @endphp
-                        <tr>
-                            <td>{{ $unidade_gestora->uasg }}</td>
-                            <td>{{ $unidade_gestora->nome }}</td>
-                            @foreach($acoes as $acao)
-                                @php
-                                    $valor_custeio = 0;
-                                    $valor_investimento = 0;
-                                @endphp
-                                @foreach($acao->ploas as $ploa)
-                                    @if($ploa->tipo_acao == 'custeio')
-                                        @foreach($ploa->ploas_gestoras as $ploa_gestora)
-                                            @if($ploa_gestora->unidade_gestora_id == $unidade_gestora->id)
-                                                @php
-                                                    $valor_custeio += $ploa_gestora->valor;
-                                                @endphp
-                                            @endif
-                                        @endforeach
-                                    @endif
-                                    @if($ploa->tipo_acao == 'investimento')
-                                        $investimento = true;
-                                        @foreach($ploa->ploas_gestoras as $ploa_gestora)
-                                            @if($ploa_gestora->unidade_gestora_id == $unidade_gestora->id)
-                                                @php
-                                                    $valor_investimento += $ploa_gestora->valor;
-                                                @endphp
-                                            @endif
-                                        @endforeach
-                                    @endif
-                                @endforeach
-                                @if($acao->custeio)
-                                    @php
-                                        $valor_total_custeio[$acao->id] += $valor_custeio;
-                                    @endphp
-                                    <td>{{ $valor_custeio > 0 ? formatCurrency($valor_custeio) : '' }} </td>
-                                @endif
-                                @if($acao->investimento)
-                                    @php
-                                        $valor_total_investimento[$acao->id] += $valor_investimento;
-                                    @endphp
-                                    <td>{{ $valor_investimento > 0 ? formatCurrency($valor_investimento) : ''}} </td>
-                                @endif
-        
-                            @endforeach
-                        </tr>
+        <table class="table table-sm table-bordered table-ploa">
+            <thead>
+                <tr>
+                    <th rowspan="2">UASG</th>
+                    <th rowspan="2">UNIDADE GESTORA</th>
+                    @foreach($acoes as $acao)
+                        <th colspan="{{ count($acao->tipos) }}">{{ isset($acao->nome_simplificado) ? $acao->nome_simplificado : $acao->codigo }}</th>
+                    @endforeach
+                    <th rowspan="2">TOTAL</th>
+                </tr>
+                <tr>
+                    @foreach($acoes as $acao)
+                        @foreach($acao->tipos as $key => $tipo)
+                            <th>{{ Str::upper($tipo) }}</th>
                         @endforeach
-                        <tfoot>
+                    @endforeach
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($dados as $i => $dado)
+                    @if($i == 'unidades_gestoras')
+                        @foreach($dado as $j => $item)
                             <tr>
-                                <td></td>
-                                <td></td>
-                                @foreach($acoes as $acao)
-                                    @if(isset($valor_total_custeio[$acao->id]))
-                                        @php
-                                            $valor_total_unidade_gestora[$unidade_gestora->id] += $valor_total_custeio[$acao->id];
-                                        @endphp
-                                        <td>{{ $valor_total_custeio[$acao->id] > 0 ? formatCurrency($valor_total_custeio[$acao->id]) : ''  }}</td>
+                                <td>{{ $item['uasg'] }}</td>
+                                <td>{{ $item['nome'] }}</td>
+                                @foreach($item['acoes'] as $k => $acao)
+                                    @if(isset($acao['custeio']))
+                                        <td>{{ formatCurrency($acao['custeio']) }}</td>
                                     @endif
-                                    @if(isset($valor_total_investimento[$acao->id]))
-                                        @php
-                                            $valor_total_unidade_gestora[$unidade_gestora->id] += $valor_total_investimento[$acao->id];
-                                        @endphp
-                                        <td>{{ $valor_total_investimento[$acao->id] > 0 ? formatCurrency($valor_total_investimento[$acao->id]) : ''  }}</td>
+                                    @if(isset($acao['investimento']))
+                                        <td>{{ formatCurrency($acao['investimento']) }}</td>
                                     @endif
                                 @endforeach
+                                <td>{{ formatCurrency($item['valor_total']) }}</td>
                             </tr>
-                        </tfoot>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-1">
-                <table class="table table-sm table-bordered">
+                        @endforeach
+                    @endif
+                @endforeach
+            </tbody>
+            {{-- <tfoot>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    @foreach($dados_acoes_gestoras as $key => $dado_acao_gestora)
+                        @if(isset($dado_acao_gestora['valor_total_custeio']))
+                            <th>{{ formatCurrency($dado_acao_gestora['valor_total_custeio']) }}</th>
+                        @endif
+                        @if(isset($dado_acao_gestora['valor_total_investimento']))
+                            <th>{{ formatCurrency($dado_acao_gestora['valor_total_investimento']) }}</th>
+                        @endif
+                    @endforeach
+                    <th>{{ formatCurrency($dados['valor_ploa']) }}</th>
+                </tr>
+            </tfoot> --}}
+        </table>
+    </div>
+    @foreach($dados as $i => $dado)
+        @if($i == 'unidades_gestoras')
+            @foreach($dado as $j => $item)
+            <p>{{ $item['uasg'] . ' - ' . $item['nome']}}</p>
+            <div class="table-responsive table-responsive-sm">
+                <table class="table table-sm table-bordered table-ploa">
                     <thead>
                         <tr>
-                            <th class="blank">&nbsp</th>
-                        </tr>
-                        <tr>
+                            <th rowspan="2">UASG</th>
+                            <th rowspan="2">UNIDADE ADMINISTRATIVA</th>
+                            @foreach($acoes as $acao)
+                                <th colspan="{{ count($acao->tipos) }}">{{ isset($acao->nome_simplificado) ? $acao->nome_simplificado : $acao->codigo }}</th>
+                            @endforeach
                             <th rowspan="2">TOTAL</th>
                         </tr>
+                        <tr>
+                            @foreach($acoes as $acao)
+                                @foreach($acao->tipos as $key => $tipo)
+                                    <th>{{ Str::upper($tipo) }}</th>
+                                @endforeach
+                            @endforeach
+                        </tr>
                     </thead>
                     <tbody>
-                        @foreach($unidades_gestoras as $unidade_gestora)
+                        @foreach($item['unidades_administrativas'] as $k => $info)
                             <tr>
-                                <td>{{ $valor_total_unidade_gestora[$unidade_gestora->id] }}</td>
+                                <td>{{ $info['uasg'] }}</td>
+                                <td>{{ $info['nome'] }}</td>
+                                @foreach($info['acoes'] as $k => $acao)
+                                    @if(isset($acao['custeio']))
+                                        <td>{{ formatCurrency($acao['custeio']) }}</td>
+                                    @endif
+                                    @if(isset($acao['investimento']))
+                                        <td>{{ formatCurrency($acao['investimento']) }}</td>
+                                    @endif
+                                @endforeach
+                                <td>{{ formatCurrency($info['valor_total']) }}</td>
                             </tr>
                         @endforeach
                     </tbody>
+                    {{-- <tfoot>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            @foreach($dados_acoes_gestoras as $key => $dado_acao_gestora)
+                                @if(isset($dado_acao_gestora['valor_total_custeio']))
+                                    <th>{{ formatCurrency($dado_acao_gestora['valor_total_custeio']) }}</th>
+                                @endif
+                                @if(isset($dado_acao_gestora['valor_total_investimento']))
+                                    <th>{{ formatCurrency($dado_acao_gestora['valor_total_investimento']) }}</th>
+                                @endif
+                            @endforeach
+                            <th>{{ formatCurrency($dados['valor_ploa']) }}</th>
+                        </tr>
+                    </tfoot> --}}
                 </table>
             </div>
-        </div>
-        
-        @foreach($unidades_gestoras as $unidade_gestora)
-            @if(count($unidade_gestora->unidades_administrativas) > 0)
-                <p>DISTRIBUIÇÃO PLOA {{ Str::upper($unidade_gestora->nome) }} {{ $exercicio->nome }}</p>
-                <table class="table table-sm table-bordered">
-                    <thead>
-                        <tr>
-                            <th rowspan="2" class="title">UASG</th>
-                            <th rowspan="2" class="title">UNIDADE ADMINISTRATIVA</th>
-                            @foreach($acoes as $acao)
-                                @php
-                                    if($acao->investimento && $acao->custeio)
-                                        $colspan = 2;
-                                    else
-                                        $colspan = 1;
-                                @endphp
-                                <th class="acao-title" colspan="{{ $colspan }}">{{ isset($acao->nome_simplificado) ? $acao->nome_simplificado : $acao->codigo }}</th>
-                            @endforeach
-                        </tr>
-                        <tr>
-                            @foreach($acoes as $acao)
-                                @if($acao->custeio)
-                                    <th class="acao-title" width="10%">Custeio</th>
-                                @endif
-                                @if($acao->investimento)
-                                    <th class="acao-title" width="10%">Investimento</th>
-                                @endif
-                                @if(!$acao->investimento && !$acao->custeio)
-                                    <th></th>
-                                @endif
-                            @endforeach
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($unidade_gestora->unidades_administrativas as $unidade_administrativa)
-                        <tr>
-                            <td>{{ $unidade_administrativa->uasg }}</td>
-                            <td>{{ $unidade_administrativa->nome }}</td>
-                            @foreach($acoes as $acao)
-                                @php
-                                    $valor_custeio = 0;
-                                    $valor_investimento = 0;
-                                @endphp
-                                @foreach($acao->ploas as $ploa)
-                                    @if($ploa->tipo_acao == 'custeio')
-                                        @foreach($ploa->ploas_gestoras as $ploa_gestora)
-                                            @foreach($ploa_gestora->ploas_administrativas as $ploa_administrativa)
-                                                @if($ploa_administrativa->unidade_administrativa_id == $unidade_administrativa->id)
-                                                    @php
-                                                        $valor_custeio += $ploa_administrativa->valor;
-                                                    @endphp
-                                                @endif
-                                            @endforeach
-                                        @endforeach
-                                    @endif
-                                    @if($ploa->tipo_acao == 'investimento')
-                                        @foreach($ploa->ploas_gestoras as $ploa_gestora)
-                                            @foreach($ploa_gestora->ploas_administrativas as $ploa_administrativa)
-                                                @if($ploa_administrativa->unidade_administrativa_id == $unidade_administrativa->id)
-                                                    @php
-                                                        $valor_investimento += $ploa_administrativa->valor;
-                                                    @endphp
-                                                @endif
-                                            @endforeach
-                                        @endforeach
-                                    @endif
-                                @endforeach
-                                @if($acao->custeio)
-                                    <td>{{ $valor_custeio > 0 ? formatCurrency($valor_custeio) : '' }} </td>
-                                @endif
-                                @if($acao->investimento)
-                                    <td>{{ $valor_investimento > 0 ? formatCurrency($valor_investimento) : ''}} </td>
-                                @endif
-
-                            @endforeach
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            @endif
-        @endforeach
-    </div>
+            @endforeach
+        @endif
+    @endforeach
 @endsection

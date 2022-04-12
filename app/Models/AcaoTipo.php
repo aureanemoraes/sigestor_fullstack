@@ -22,11 +22,25 @@ class AcaoTipo extends Model
         'investimento'
     ];
 
-    protected $appends = ['nome_completo'];
+    protected $appends = ['nome_completo', 'tipos'];
+
+    protected $casts = ['tipos' => 'array'];
 
     public function getNomeCompletoAttribute()
     {
         return $this->attributes['codigo'] . ' - ' . $this->attributes['nome'];
+    }
+
+    public function getTiposAttribute()
+    {
+        $tipos = [];
+        if($this->custeio)
+            $tipos[] = 'custeio';
+
+        if($this->investimento)
+            $tipos[] = 'investimento';
+
+        return $tipos;
     }
 
     public function ploas()

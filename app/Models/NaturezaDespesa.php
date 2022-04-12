@@ -38,4 +38,9 @@ class NaturezaDespesa extends Model
     {
         return $this->hasMany(DespesaModelo::class);
     }
+
+    public function despesas()
+    {
+        return $this->hasMany(Despesa::class);
+    }
 }
