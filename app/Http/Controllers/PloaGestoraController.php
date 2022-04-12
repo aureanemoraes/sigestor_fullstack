@@ -23,51 +23,80 @@ class PloaGestoraController extends Controller
 	public function distribuicao($unidade_administrativa_id = null, $exercicio_id = null)
 	{
         if(isset($unidade_administrativa_id) && isset($exercicio_id)) {
-						$exercicio_selecionado = Exercicio::find($exercicio_id);
+			$exercicio_selecionado = Exercicio::find($exercicio_id);
+			$unidade_administrativa = UnidadeAdministrativa::find($unidade_administrativa_id);
+			$unidade_gestora_id = $unidade_administrativa->unidade_gestora_id;
 
             $ploas_administrativas = PloaAdministrativa::whereHas(
-							'ploa_gestora', function ($query) use ($exercicio_id) {
-								$query->whereHas(
-                                'ploa', function ($query) use ($exercicio_id) {
-                                    $query->where('exercicio_id', $exercicio_id);
-                                });
-							}
-						)->where('unidade_administrativa_id', $unidade_administrativa_id)->get();
+				'ploa_gestora', function ($query) use ($exercicio_id) {
+					$query->whereHas(
+					'ploa', function ($query) use ($exercicio_id) {
+						$query->where('exercicio_id', $exercicio_id);
+					});
+				}
+			)->where('unidade_administrativa_id', $unidade_administrativa_id)->get();
 
-						$total_ploa = $ploas_administrativas->sum('valor');
+			$total_ploa = $ploas_administrativas->sum('valor');
 
-						$programas_ploa = Programa::whereHas(
-								'ploas', function ($query) use($unidade_administrativa_id, $exercicio_id) {
-										$query->where('exercicio_id', $exercicio_id);
-										$query->whereHas('ploa_gestora', function($query) use ($unidade_administrativa_id) {
-                                            $query->whereHas('ploa_administrativa', function($query) use ($unidade_administrativa_id) {
-                                                $query->where('unidade_administrativa_id', $unidade_administrativa_id);
-                                            });
-										});
-								}
-						)->get();
+			$programas_ploa = Programa::whereHas(
+				'ploas', function ($query) use($unidade_administrativa_id, $exercicio_id) {
+						$query->where('exercicio_id', $exercicio_id);
+						$query->whereHas('ploas_gestoras', function($query) use ($unidade_administrativa_id) {
+							$query->whereHas('ploas_administrativas', function($query) use ($unidade_administrativa_id) {
+								$query->where('unidade_administrativa_id', $unidade_administrativa_id);
+							});
+						});
+				}
+			)->get();
 
-						foreach($programas_ploa as $programa) {
-							if(count($programa->ploas) > 0) {
-								$programa->valor_total = 0;
-								foreach($programa->ploas as $ploa) {
-									$programa->valor_total += isset($ploa->ploa_gestora->ploa_administrativa) ? $ploa->ploa_gestora->ploa_administrativa->valor : 0;
-								}
-							}
-						}
+			$programas = Programa::whereHas(
+				'ploas', function ($query) use($unidade_gestora_id, $exercicio_id) {
+					$query->where('exercicio_id', $exercicio_id);
+					$query->whereHas('ploas_gestoras', function($query) use ($unidade_gestora_id) {
+						$query->where('unidade_gestora_id', $unidade_gestora_id);
+					});
+				}
+			)->get();
+
+			$fontes = FonteTipo::whereHas(
+				'ploas', function ($query) use($unidade_gestora_id, $exercicio_id) {
+					$query->where('exercicio_id', $exercicio_id);
+					$query->whereHas('ploas_gestoras', function($query) use ($unidade_gestora_id) {
+						$query->where('unidade_gestora_id', $unidade_gestora_id);
+					});
+				}
+			)->get();
+
+			$acoes = AcaoTipo::whereHas(
+				'ploas', function ($query) use($unidade_gestora_id, $exercicio_id) {
+					$query->where('exercicio_id', $exercicio_id);
+					$query->whereHas('ploas_gestoras', function($query) use ($unidade_gestora_id) {
+						$query->where('unidade_gestora_id', $unidade_gestora_id);
+					});
+				}
+			)->get();
+
+			// foreach($programas_ploa as $programa) {
+			// 	if(count($programa->ploas) > 0) {
+			// 		$programa->valor_total = 0;
+			// 		foreach($programa->ploas as $ploa) {
+			// 			$programa->valor_total += isset($ploa->ploa_gestora->ploa_administrativa) ? $ploa->ploa_gestora->ploa_administrativa->valor : 0;
+			// 		}
+			// 	}
+			// }
 
             return view('ploa_gestora.distribuicao')->with([
                 'programas_ploa' => $programas_ploa,
-								'ploas_administrativas' => $ploas_administrativas,
+				'ploas_administrativas' => $ploas_administrativas,
                 'exercicios' => Exercicio::all(),
-                'programas' => Programa::all(),
-                'fontes' => FonteTipo::all(),
-                'acoes' => AcaoTipo::where('fav', 1)->get(),
+                'programas' => $programas,
+                'fontes' => $fontes,
+                'acoes' => $acoes,
                 'instituicoes' => Instituicao::all(),
                 'total_ploa' => $total_ploa,
-                'unidade_selecionada' => UnidadeAdministrativa::find($unidade_administrativa_id),
-								'unidades_administrativas' => UnidadeAdministrativa::all(),
-								'exercicio_selecionado' => $exercicio_selecionado
+                'unidade_selecionada' => $unidade_administrativa,
+				'unidades_administrativas' => UnidadeAdministrativa::all(),
+				'exercicio_selecionado' => $exercicio_selecionado
             ]);
         } else {
             return view('ploa_gestora.distribuicao')->with([
