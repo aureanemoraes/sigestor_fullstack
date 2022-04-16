@@ -1,13 +1,33 @@
 @extends('layouts.app')
 
 @section('content')
-<h3>Despesas Modelos</h3>
-<section class="d-flex justify-content-end mb-2">
-  <a href="{{ route('despesa.create') }}" type="button" class="btn btn-primary">
-    Novo
-  </a>
-</section>
+<h3>Despesas</h3>
 <section>
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive table-responsive-sm">
+        <table class="table table-sm">
+          <thead>
+            <th>EXERCÍCIO</th>
+            <th>PROGRAMA</th>
+            <th>AÇÃO</th>
+            <th>TIPO</th>
+            <th>FONTE</th>
+            <th></th>
+          </thead>
+          <tbody>
+            <td>{{ $ploa_administrativa->ploa_gestora->ploa->exercicio->nome }}</td>
+            <td>{{ $ploa_administrativa->ploa_gestora->ploa->programa->nome }}</td>
+            <td>{{ $ploa_administrativa->ploa_gestora->ploa->acao_tipo->nome_completo }}</td>
+            <td>{{ $ploa_administrativa->ploa_gestora->ploa->tipo_acao }}</td>
+            <td>{{ $ploa_administrativa->ploa_gestora->ploa->fonte_tipo->codigo }}</td>
+            <td>{{ formatCurrency($ploa_administrativa->valor) }}</td>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
   <div class="table-responsive">
     <table class="table" id="despesas">
       <thead>
@@ -59,9 +79,6 @@
   </div>
 </section>
 @endsection
-
-
-{{-- {{ dd($errors->any()) }} --}}
 
 @section('js')
   <script>

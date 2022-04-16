@@ -18,11 +18,15 @@ class DespesaController extends Controller
 {
 	public function index(Request $request)
 	{
-        $despesas = Despesa::all();
+		$ploa_administrativa = isset($request->ploa_administrativa) ? PloaAdministrativa::find($request->ploa_administrativa) : null;
+		if (isset($ploa_administrativa)) {
+			$despesas = Despesa::where('ploa_administrativa_id', $ploa_administrativa->id)->get();
 
-		return view('despesa.index')->with([
-            'despesas' => $despesas,
-        ]);
+			return view('despesa.index')->with([
+				'despesas' => $despesas,
+				'ploa_administrativa' => $ploa_administrativa
+			]);
+		}
 	}
 		
 

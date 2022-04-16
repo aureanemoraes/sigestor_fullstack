@@ -63,7 +63,8 @@
                             </td>
                             <td>
                                 <div class="btn-group btn-group-sm float-end" role="group" aria-label="acoes">
-                                  <a href="{{ route('despesa.create', ['ploa_administrativa' => $ploa_administrativa->id]) }}" type="button"  class="btn btn-primary"><i class="bi bi-list-ul"></i> Planejar</a>
+                                  <a href="{{ route('despesa.index', ['ploa_administrativa' => $ploa_administrativa->id]) }}" type="button"  class="btn btn-primary" title="Despesas"><i class="bi bi-list-ul"></i></a>
+                                  <a href="{{ route('despesa.create', ['ploa_administrativa' => $ploa_administrativa->id]) }}" type="button"  class="btn btn-primary" title="Nova despesa"><i class="bi bi-plus-circle-fill"></i></i></a>
                                 </div>
                             </td>
                           </tr>
