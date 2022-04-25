@@ -29,8 +29,22 @@ class Exercicio extends Model
         'instituicao:id,nome'
     ];
 
+    public function getStatusAttribute()
+    {
+        if($this->data_fim <= date('Y-m-d'))
+            return 'FINALIZADA';
+        else
+            return 'EM VIGÊNCIA';
+
+    }
+
     public function instituicao()
     {
         return $this->belongsTo(Instituicao::class);
+    }
+
+    public function ploas()
+    {
+        return $this->hasMany(Ploa::class);
     }
 }

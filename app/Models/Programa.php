@@ -23,6 +23,9 @@ class Programa extends Model
         $dados['valor_a_distribuir'] = 0;
         $dados['valor_planejado'] = 0;
         $dados['valor_a_planejar'] = 0;
+        $dados['valor_recebido'] = 0;
+        $dados['valor_a_receber'] = 0;
+        $valor_total_programa = 0;
 
         switch($tipo) {
             case 'ploa':
@@ -30,7 +33,8 @@ class Programa extends Model
                     $dados['valor_total'] = $programa->ploas()->sum('valor');
                     foreach($programa->ploas as $ploa) {
                         if(count($ploa->ploas_gestoras) > 0) {
-                            $dados['valor_distribuido'] = $ploa->ploas_gestoras()->sum('valor');
+                            $dados['valor_recebido'] += $ploa->loas()->sum('valor');
+                            $dados['valor_distribuido'] += $ploa->ploas_gestoras()->sum('valor');
                             foreach($ploa->ploas_gestoras as $ploa_gestora) {
                                 if(count($ploa_gestora->ploas_administrativas) > 0) {
                                     foreach($ploa_gestora->ploas_administrativas as $ploa_administrativa) {
@@ -39,10 +43,12 @@ class Programa extends Model
                                 }
                             }
                         } 
-                
-                        $dados['valor_a_distribuir'] = $ploa->valor - $dados['valor_distribuido'];
-                        $dados['valor_a_planejar'] = $dados['valor_distribuido'] - $dados['valor_planejado'];
+                        $valor_total_programa += $ploa->valor;
                     }
+
+                    $dados['valor_a_distribuir'] = $valor_total_programa - $dados['valor_distribuido'];
+                    $dados['valor_a_planejar'] = $dados['valor_distribuido'] - $dados['valor_planejado'];
+                    $dados['valor_a_receber'] = $valor_total_programa - $dados['valor_recebido'];
                 }
             break;
             case 'ploa_gestora':

@@ -95,15 +95,6 @@ class Versao2 extends Migration
             $table->timestamps();
         });
 
-        // Schema::create('movimentos', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->longText('descricao');
-        //     $table->float('valor');
-        //     $table->unsignedBigInteger('exercicio_id')->nullable();
-        //     $table->foreign('exercicio_id')->references('id')->on('exercicios');
-        //     $table->string('tipo'); // 'entrada' ou 'bloqueio' (contigenciamento)
-        //     $table->timestamps();
-        // });
         // Schema::create('metas_orcamentarias', function (Blueprint $table) {
         //     $table->id();
         //     $table->string('nome');

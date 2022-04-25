@@ -127,8 +127,8 @@
             LOA
           </a>
           <div class="collapse" id="loa_planejamento">
-            <a href="#" class="nav_link nav_link_tertiary">
-              <span class="nav_name">Movimentação</span>
+            <a href="{{ route('loa.lista') }}" class="nav_link nav_link_tertiary">
+              <span class="nav_name">LOA - Institucional</span>
             </a>
           </div>
         </div>

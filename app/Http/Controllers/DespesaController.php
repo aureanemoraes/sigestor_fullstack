@@ -150,4 +150,8 @@ class DespesaController extends Controller
                     ->withInput();
 		}
 	}
+
+	protected function rules($despesa) {
+		
+	}
 }
