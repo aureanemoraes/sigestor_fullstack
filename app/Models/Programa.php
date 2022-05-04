@@ -67,12 +67,20 @@ class Programa extends Model
 
                         foreach($ploa_gestora->ploas_administrativas as $ploa_administrativa) {
                             $dados['valor_planejado'] += $ploa_administrativa->despesas()->sum('valor_total');
+                            if(count($ploa_administrativa->despesas) > 0) {
+                                foreach($ploa_administrativa->despesas as $despesa) {
+                                    $credito_planejado = $despesa->creditos_planejados()->where('unidade_gestora', 'deferido')->where('instituicao', 'deferido')->first(); 
+                                    $dados['valor_recebido'] += isset($credito_planejado) ? $credito_planejado->valor_total : 0;
+                                }
+                            }
                         }
                     }
+                    $valor_total_programa += $ploa_gestora->valor;
                 }
 
-                $dados['valor_a_distribuir'] = $ploa_gestora->valor - $dados['valor_distribuido'];
+                $dados['valor_a_distribuir'] = $valor_total_programa - $dados['valor_distribuido'];
                 $dados['valor_a_planejar'] = $dados['valor_distribuido'] - $dados['valor_planejado'];
+                $dados['valor_a_receber'] = $valor_total_programa - $dados['valor_recebido'];
             break;
             case 'ploa_administrativa':
                 $ploas_administrativas = PloaAdministrativa::whereHas(

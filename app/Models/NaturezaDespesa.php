@@ -29,6 +29,30 @@ class NaturezaDespesa extends Model
         'fields' => 'array'
     ];
 
+    protected $appends = ['nome_completo'];
+
+    public static function valores($natureza_despesa, $exercicio_id, $unidade_administrativa_id) {
+        $dados['valor_total'] = 0;
+        $dados['total_limite_recebido'] = 0;
+        $dados['a_receber'] = 0;
+
+        $dados['valor_total'] = $natureza_despesa->despesas()->whereHas('ploa_administrativa', function($query) use($unidade_administrativa_id, $exercicio_id) {
+            $query->where('unidade_administrativa_id', $unidade_administrativa_id);
+            $query->whereHas('ploa_gestora', function($query) use($unidade_administrativa_id, $exercicio_id) {
+                $query->whereHas('ploa', function($query) use($unidade_administrativa_id, $exercicio_id) {
+                    $query->where('exercicio_id', $exercicio_id);
+                });
+            });
+        })->sum('valor_total');
+
+        return $dados;
+    }
+
+    public function getNomeCompletoAttribute()
+    {
+        return $this->attributes['codigo'] . ' - ' . $this->attributes['nome'];
+    }
+
     public function subnaturezas_despesas()
     {
         return $this->hasMany(SubnaturezaDespesa::class);

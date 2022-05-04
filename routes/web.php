@@ -26,6 +26,9 @@ use App\Http\Controllers\DespesaModeloController;
 use App\Http\Controllers\DespesaController;
 use App\Http\Controllers\RelatorioController;
 use App\Http\Controllers\LoaController;
+use App\Http\Controllers\LoaAdministrativaController;
+use App\Http\Controllers\CreditoPlanejadoController;
+use App\Http\Controllers\LoaGestoraController;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,6 +102,14 @@ Route::get('relatorio/planejamento/{unidade_administrativa_id?}/{exercicio_id?}'
 Route::get('loa/loas/{ploa_id}', [LoaController::class, 'loas'])->name('loa.loas');
 Route::get('loa/lista', [LoaController::class, 'lista'])->name('loa.lista');
 Route::resource('loa', LoaController::class);
+Route::get('loa_administrativa/lista', [LoaAdministrativaController::class, 'lista'])->name('loa-administrativa.lista');
+Route::resource('loa_administrativa', LoaAdministrativaController::class);
+
+Route::get('loa_gestora/lista', [LoaGestoraController::class, 'lista'])->name('loa-gestora.lista');
+Route::resource('loa_gestora', LoaGestoraController::class);
+
+Route::resource('credito_planejado', CreditoPlanejadoController::class);
+
 
 
 

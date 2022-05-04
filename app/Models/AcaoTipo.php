@@ -47,4 +47,9 @@ class AcaoTipo extends Model
     {
         return $this->hasMany(Ploa::class);
     }
+
+    public function ploas_administrativas()
+    {
+        return $this->hasMany(PloaAdministrativa::class);
+    }
 }

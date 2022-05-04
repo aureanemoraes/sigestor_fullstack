@@ -15,20 +15,20 @@ class CreditoPlanejadoTransformer
 
       foreach ($input as $key => $value) {
         switch ($key) {
-          case 'descricao':
-            $credito_planejado->descricao = $value;
-            break;
-          case 'valor_solicitado':
-            $credito_planejado->valor_solicitado = $value;
-            break;
-          case 'valor_disponivel':
-            $credito_planejado->valor_disponivel = $value;
+          case 'codigo_processo':
+            $credito_planejado->codigo_processo = $value;
             break;
           case 'despesa_id':
             $credito_planejado->despesa_id = $value;
             break;
-          case 'unidade_administrativa_id':
-            $credito_planejado->unidade_administrativa_id = $value;
+          case 'unidade_gestora':
+            $credito_planejado->unidade_gestora = $value;
+            break;
+          case 'instituicao':
+            $credito_planejado->instituicao = $value;
+            break;
+          case 'solicitado':
+            $credito_planejado->solicitado = $value;
             break;
         }
       }

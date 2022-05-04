@@ -18,6 +18,17 @@ class Versao3 extends Migration
             $table->date('data_recebimento'); // 'entrada' ou 'bloqueio' (contigenciamento)
             $table->timestamps();
         });
+
+        Schema::create('creditos_planejados', function (Blueprint $table) {
+            $table->id();
+            $table->string('codigo_processo');
+            $table->string('unidade_gestora')->default('pendente'); // pendente; deferido; indeferido
+            $table->string('instituicao')->default('pendente'); //  pendente; deferido; indeferido
+            $table->tinyInteger('solicitado')->default(1);
+            $table->unsignedBigInteger('despesa_id');
+            $table->foreign('despesa_id')->references('id')->on('despesas');
+            $table->timestamps();
+        });
     }
 
     public function down()

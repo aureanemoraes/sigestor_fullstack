@@ -130,6 +130,12 @@
             <a href="{{ route('loa.lista') }}" class="nav_link nav_link_tertiary">
               <span class="nav_name">LOA - Institucional</span>
             </a>
+            <a href="{{ route('loa-gestora.lista') }}" class="nav_link nav_link_tertiary">
+              <span class="nav_name">LOA - Gestora</span>
+            </a>
+            <a href="{{ route('loa-administrativa.lista') }}" class="nav_link nav_link_tertiary">
+              <span class="nav_name">LOA - Administrativa</span>
+            </a>
           </div>
         </div>
       </div>

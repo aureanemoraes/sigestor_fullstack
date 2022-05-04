@@ -41,4 +41,9 @@ class PloaAdministrativa extends Model
     {
         return $this->hasMany(Despesa::class);
     }
+
+    public function unidade_administrativa()
+    {
+        return $this->belongsTo(UnidadeAdministrativa::class);
+    }
 }

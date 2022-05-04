@@ -17,6 +17,29 @@ class PloaGestora extends Model
         'valor'
     ];
 
+    protected $appends = ['solicitacao_credito_planejado'];
+
+    public function getSolicitacaoCreditoPlanejadoAttribute()
+    {
+        $credito_planejado_id = null;
+
+        if(count($this->ploas_administrativas) > 0) {
+            foreach($this->ploas_administrativas as $ploa_administrativa) {
+                if(count($ploa_administrativa->despesas) > 0) {
+                    foreach($ploa_administrativa->despesas as $despesa) {
+                        $solicitacao_credito_planejado = $despesa->creditos_planejados()->where('unidade_gestora', 'pendente')->first();
+
+                        if(isset($solicitacao_credito_planejado))
+                            $credito_planejado_id = $solicitacao_credito_planejado->id;
+                    }
+                }
+            }
+        }
+
+        return $credito_planejado_id;
+
+    }
+
     public static function valores($ploa_gestora) {
         $dados['valor_distribuido'] = 0;
         $dados['valor_a_distribuir'] = 0;
@@ -41,6 +64,11 @@ class PloaGestora extends Model
     public function ploa()
     {
         return $this->belongsTo(Ploa::class);
+    }
+
+    public function unidade_gestora()
+    {
+        return $this->belongsTo(UnidadeGestora::class);
     }
 
     public function ploas_administrativas()

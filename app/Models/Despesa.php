@@ -29,6 +29,18 @@ class Despesa extends Model
         'fields' => 'array'
     ];
 
+    protected $appends = ['fonte', 'acao'];
+
+    public function getFonteAttribute()
+    {
+        return $this->ploa_administrativa->ploa_gestora->ploa->fonte_tipo->codigo;
+    }
+
+    public function getAcaoAttribute()
+    {
+        return $this->ploa_administrativa->ploa_gestora->ploa->acao_tipo->nome_completo;
+    }
+
     public function setValorTotalAttribute($valor)
     {
         $fields = $this->fields;
@@ -75,5 +87,10 @@ class Despesa extends Model
     public function meta()
     {
         return $this->belongsTo(Meta::class);
+    } 
+
+    public function creditos_planejados()
+    {
+        return $this->hasMany(CreditoPlanejado::class);
     } 
 }
