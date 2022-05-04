@@ -129,7 +129,7 @@
                                       </td>
                                       <td>
                                         <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
-                                          <a type="button" href="{{ route('credito_planejado.index', ['ploa_gestora' => $ploa_gestora->id]) }}" class="btn btn-primary" ><i class="bi bi-list-nested"></i></a>
+                                          <a type="button" href="{{ route('credito_planejado.index', ['ploa_gestora' => $ploa_gestora->id, 'tipo' => 1]) }}" class="btn btn-primary" ><i class="bi bi-list-task"></i></a>
                                           @if(isset($ploa_gestora->solicitacao_credito_planejado))
                                             {{-- {{ $ploa_gestora->solicitacao_credito_planejado }} --}}
                                           @endif

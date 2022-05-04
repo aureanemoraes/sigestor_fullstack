@@ -23,7 +23,7 @@
                     <td>{{ $credito_planejado->unidade_gestora }}</td>
                     <td>
                       <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
-                        <a type="button" href="{{ route('credito_planejado.show', $credito_planejado->id) }}" class="btn btn-primary" ><i class="bi bi-eye-fill"></i></a>
+                        <a type="button" href="{{ route('credito_planejado.show', [$credito_planejado->id, 'tipo' => $tipo]) }}" class="btn btn-primary" ><i class="bi bi-eye-fill"></i></a>
                       </div>
                     </td>
                   </tr>

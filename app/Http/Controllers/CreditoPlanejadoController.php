@@ -11,6 +11,7 @@ use App\Models\CreditoPlanejadoModelo;
 use App\Models\Meta;
 use App\Models\Despesa;
 use App\Models\PloaGestora;
+use App\Models\Ploa;
 use Illuminate\Http\Request;
 use App\Http\Transformers\CreditoPlanejadoTransformer;
 use Illuminate\Support\Facades\DB;
@@ -18,9 +19,35 @@ use Illuminate\Support\Facades\Validator;
 
 class CreditoPlanejadoController extends Controller
 {
+
+	public function autorizaGestora($id, Request $request) {
+		$credito_planejado = CreditoPlanejado::find($id);
+		$credito_planejado->unidade_gestora = $request->unidade_gestora;
+		$credito_planejado->save();
+
+		return view('credito_planejado.show')->with([
+			'credito_planejado' => $credito_planejado,
+			'tipo' => 1
+		]); 
+	}
+
+	public function autorizaInstituicao($id, Request $request) {
+		$credito_planejado = CreditoPlanejado::find($id);
+		$credito_planejado->instituicao = $request->instituicao;
+		$credito_planejado->save();
+
+		return view('credito_planejado.show')->with([
+			'credito_planejado' => $credito_planejado,
+			'tipo' => 2
+		]); 
+	}
+
 	public function index(Request $request)
 	{
 		$ploa_gestora = isset($request->ploa_gestora) ? PloaGestora::find($request->ploa_gestora) : null;
+
+		$ploa = isset($request->ploa) ? Ploa::find($request->ploa) : null;
+
 		if (isset($ploa_gestora)) {
 			$credito_planejados = CreditoPlanejado::whereHas(
 				'despesa', function ($query) use($ploa_gestora) {
@@ -31,7 +58,23 @@ class CreditoPlanejadoController extends Controller
 			)->get();
 
 			return view('credito_planejado.index')->with([
-				'creditos_planejados' => $credito_planejados
+				'creditos_planejados' => $credito_planejados,
+				'tipo' => $request->tipo
+			]);
+		} else if (isset($ploa)) {
+			$credito_planejados = CreditoPlanejado::whereHas(
+				'despesa', function ($query) use($ploa) {
+					$query->whereHas('ploa_administrativa', function($query) use($ploa) {
+						$query->whereHas('ploa_gestora', function($query) use($ploa)  {
+							$query->where('ploa_id', $ploa->id);
+						});
+					});
+				}
+			)->get();
+
+			return view('credito_planejado.index')->with([
+				'creditos_planejados' => $credito_planejados,
+				'tipo' => $request->tipo
 			]);
 		}
 	}
@@ -67,13 +110,18 @@ class CreditoPlanejadoController extends Controller
 		return redirect()->route('loa_administrativa.index', ['ploa' => $credito_planejado->despesa->ploa_administrativa->ploa_gestora->ploa->exercicio_id, 'unidade_administrativa' => $credito_planejado->despesa->ploa_administrativa->unidade_administrativa_id]);
 	}
 
-	public function show($id)
+	public function show($id, Request $request)
 	{
-		$credito_planejado = CreditoPlanejado::find($id);
-		if(isset($credito_planejado))
-			return view('credito_planejado.show')->with([
-				'credito_planejado' => $credito_planejado
-			]);
+		// tipo 1: unidade gestora
+		// tipo 2: instituição
+		if(isset($request->tipo)) {
+			$credito_planejado = CreditoPlanejado::find($id);
+			if(isset($credito_planejado))
+				return view('credito_planejado.show')->with([
+					'credito_planejado' => $credito_planejado,
+					'tipo' => $request->tipo
+				]);
+		}
 	}
 
 	public function edit($id, Request $request) {

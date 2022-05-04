@@ -121,6 +121,7 @@
                                           <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
                                               <a type="button" href="{{ route('loa.create', ['ploa' => $ploa->id]) }}" class="btn btn-primary" ><i class="bi bi-plus-circle-fill"></i></a>
                                               <a type="button" href="{{ route('loa.loas', $ploa->id) }}" class="btn btn-primary" ><i class="bi bi-list-nested"></i></a>
+                                              <a type="button" href="{{ route('credito_planejado.index', ['ploa' => $ploa->id, 'tipo' => '2']) }}" class="btn btn-primary" ><i class="bi bi-list-task"></i></a>
                                           </div>
                                       </td>
                                   </tr>

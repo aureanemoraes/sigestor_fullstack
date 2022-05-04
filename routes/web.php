@@ -108,6 +108,8 @@ Route::resource('loa_administrativa', LoaAdministrativaController::class);
 Route::get('loa_gestora/lista', [LoaGestoraController::class, 'lista'])->name('loa-gestora.lista');
 Route::resource('loa_gestora', LoaGestoraController::class);
 
+Route::patch('credito_planejado/autorizacao_gestora/{id}', [CreditoPlanejadoController::class, 'autorizaGestora'])->name('credito_planejado.autoriza_gestora');
+Route::patch('credito_planejado/autorizacao_instituicao/{id}', [CreditoPlanejadoController::class, 'autorizaInstituicao'])->name('credito_planejado.autoriza_instituicao');
 Route::resource('credito_planejado', CreditoPlanejadoController::class);
 
 
