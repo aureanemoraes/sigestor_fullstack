@@ -26,9 +26,11 @@ class Ploa extends Model
         $dados['valor_a_distribuir'] = 0;
         $dados['valor_planejado'] = 0;
         $dados['valor_a_planejar'] = 0;
+        $dados['valor_recebido'] = 0;
+        $dados['valor_a_receber'] = 0;
 
         if(count($ploa->ploas_gestoras) > 0) {
-            $dados['valor_distribuido'] = $ploa->ploas_gestoras()->sum('valor');
+            $dados['valor_distribuido'] += $ploa->ploas_gestoras()->sum('valor');
             foreach($ploa->ploas_gestoras as $ploa_gestora) {
                 if(count($ploa_gestora->ploas_administrativas) > 0) {
                     foreach($ploa_gestora->ploas_administrativas as $ploa_administrativa) {
@@ -38,8 +40,10 @@ class Ploa extends Model
             }
         } 
 
+        $dados['valor_recebido'] = $ploa->loas()->sum('valor');
         $dados['valor_a_distribuir'] = $ploa->valor - $dados['valor_distribuido'];
         $dados['valor_a_planejar'] = $dados['valor_distribuido'] - $dados['valor_planejado'];
+        $dados['valor_a_receber'] = $ploa->valor - $dados['valor_recebido'];
 
         return $dados;
     }

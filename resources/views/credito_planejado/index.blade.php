@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<h3>Créditos Planejados</h3>
-<section>
+@if($tipo == 2)
+  <h3>PLOA - {{ $exercicio->nome }}</h3>
+  @include('loa.navbar')
+  <section>
     <div class="table-responsive table-responsive-sm">
         <table class="table table-sm" id="creditos_planejados">
             <thead>
@@ -20,7 +22,14 @@
                     <td>{{ $credito_planejado->numero_solicitacao }}</td>
                     <td>{{ $credito_planejado->codigo_processo }}</td>
                     <td>{{ $credito_planejado->despesa->ploa_administrativa->unidade_administrativa->sigla }}</td>
-                    <td>{{ $credito_planejado->unidade_gestora }}</td>
+                    <td>
+                        <span class="badge {{ $credito_planejado->status_gestora['class'] }}">
+                          {{ $credito_planejado->status_gestora['texto'] }}
+                        </span>
+                        <span class="badge {{ $credito_planejado->status_instituicao['class'] }}">
+                          {{ $credito_planejado->status_instituicao['texto'] }}
+                        </span>
+                    </td>
                     <td>
                       <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
                         <a type="button" href="{{ route('credito_planejado.show', [$credito_planejado->id, 'tipo' => $tipo]) }}" class="btn btn-primary" ><i class="bi bi-eye-fill"></i></a>
@@ -31,7 +40,8 @@
             </tbody>
         </table>
     </div>
-</section>
+  </section>
+@endif
 @endsection
 
 @section('js')

@@ -12,6 +12,7 @@ use App\Models\Meta;
 use App\Models\Despesa;
 use App\Models\PloaGestora;
 use App\Models\Ploa;
+use App\Models\Exercicio;
 use Illuminate\Http\Request;
 use App\Http\Transformers\CreditoPlanejadoTransformer;
 use Illuminate\Support\Facades\DB;
@@ -44,39 +45,64 @@ class CreditoPlanejadoController extends Controller
 
 	public function index(Request $request)
 	{
-		$ploa_gestora = isset($request->ploa_gestora) ? PloaGestora::find($request->ploa_gestora) : null;
+		if(isset($request->tipo) && isset($request->ploa)) {
+			$tipo = $request->tipo;
+			$exercicio_id = $request->ploa;
+			$exercicio = Exercicio::find($exercicio_id);
 
-		$ploa = isset($request->ploa) ? Ploa::find($request->ploa) : null;
-
-		if (isset($ploa_gestora)) {
-			$credito_planejados = CreditoPlanejado::whereHas(
-				'despesa', function ($query) use($ploa_gestora) {
-					$query->whereHas('ploa_administrativa', function($query) use($ploa_gestora) {
-						$query->where('ploa_gestora_id', $ploa_gestora->id);
-					});
-				}
-			)->get();
-
-			return view('credito_planejado.index')->with([
-				'creditos_planejados' => $credito_planejados,
-				'tipo' => $request->tipo
-			]);
-		} else if (isset($ploa)) {
-			$credito_planejados = CreditoPlanejado::whereHas(
-				'despesa', function ($query) use($ploa) {
-					$query->whereHas('ploa_administrativa', function($query) use($ploa) {
-						$query->whereHas('ploa_gestora', function($query) use($ploa)  {
-							$query->where('ploa_id', $ploa->id);
+			if($tipo == 2) {
+				$credito_planejados = CreditoPlanejado::whereHas(
+					'despesa', function ($query) use($exercicio_id) {
+						$query->whereHas('ploa_administrativa', function($query) use($exercicio_id) {
+							$query->whereHas('ploa_gestora', function($query) use($exercicio_id)  {
+								$query->whereHas('ploa', function($query) use($exercicio_id) {
+									$query->where('exercicio_id', $exercicio_id);
+								});
+							});
 						});
-					});
-				}
-			)->get();
+					}
+				)->get();
+			}
 
 			return view('credito_planejado.index')->with([
 				'creditos_planejados' => $credito_planejados,
-				'tipo' => $request->tipo
+				'tipo' => $request->tipo,
+				'exercicio' => $exercicio
 			]);
 		}
+		// $ploa_gestora = isset($request->ploa_gestora) ? PloaGestora::find($request->ploa_gestora) : null;
+
+		// $ploa = isset($request->ploa) ? Ploa::find($request->ploa) : null;
+
+		// if (isset($ploa_gestora)) {
+		// 	$credito_planejados = CreditoPlanejado::whereHas(
+		// 		'despesa', function ($query) use($ploa_gestora) {
+		// 			$query->whereHas('ploa_administrativa', function($query) use($ploa_gestora) {
+		// 				$query->where('ploa_gestora_id', $ploa_gestora->id);
+		// 			});
+		// 		}
+		// 	)->get();
+
+		// 	return view('credito_planejado.index')->with([
+		// 		'creditos_planejados' => $credito_planejados,
+		// 		'tipo' => $request->tipo
+		// 	]);
+		// } else if (isset($ploa)) {
+		// 	$credito_planejados = CreditoPlanejado::whereHas(
+		// 		'despesa', function ($query) use($ploa) {
+		// 			$query->whereHas('ploa_administrativa', function($query) use($ploa) {
+		// 				$query->whereHas('ploa_gestora', function($query) use($ploa)  {
+		// 					$query->where('ploa_id', $ploa->id);
+		// 				});
+		// 			});
+		// 		}
+		// 	)->get();
+
+		// 	return view('credito_planejado.index')->with([
+		// 		'creditos_planejados' => $credito_planejados,
+		// 		'tipo' => $request->tipo
+		// 	]);
+		// }
 	}
 		
 

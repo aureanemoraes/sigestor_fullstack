@@ -37,9 +37,6 @@
 </section>
 @endsection
 
-
-{{-- {{ dd($errors->any()) }} --}}
-
 @section('js')
   <script>
     $(document).ready( function () {

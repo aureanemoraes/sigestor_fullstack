@@ -43,6 +43,9 @@
     use App\Models\Programa;
     @endphp
     <h3>PLOA - {{ $exercicio->nome }}</h3>
+    
+    @include('loa.navbar')
+
     <section class="distribuicao-resumo">
       <div class="table-responsive table-responsive-sm">
         <table class="table table-sm">
@@ -115,13 +118,13 @@
                                       <td>{{ ucfirst($ploa->tipo_acao) }}</td>
                                       <td>{{ $ploa->fonte_tipo->codigo }}</td>
                                       <td>{{ formatCurrency($ploa->valor) }}</td>
-                                      <td>R$ 00,00</td>
-                                      <td>R$ 00,00</td>
+                                      <td>{{ formatCurrency($valores_ploa['valor_recebido']) }}</td>
+                                      <td>{{ formatCurrency($valores_ploa['valor_a_receber']) }}</td>
                                       <td>
                                           <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
-                                              <a type="button" href="{{ route('loa.create', ['ploa' => $ploa->id]) }}" class="btn btn-primary" ><i class="bi bi-plus-circle-fill"></i></a>
-                                              <a type="button" href="{{ route('loa.loas', $ploa->id) }}" class="btn btn-primary" ><i class="bi bi-list-nested"></i></a>
-                                              <a type="button" href="{{ route('credito_planejado.index', ['ploa' => $ploa->id, 'tipo' => '2']) }}" class="btn btn-primary" ><i class="bi bi-list-task"></i></a>
+                                              <a type="button" href="{{ route('loa.create', ['ploa' => $ploa->id]) }}" class="btn btn-primary" ><i class="bi bi-plus-circle-fill"></i> Novo</a>
+                                              <a type="button" href="{{ route('loa.loas', $ploa->id) }}" class="btn btn-primary" ><i class="bi bi-list-nested"></i> Recebimentos</a>
+                                              {{-- <a type="button" href="{{ route('credito_planejado.index', ['ploa' => $ploa->id, 'tipo' => '2']) }}" class="btn btn-primary" ><i class="bi bi-list-task"></i></a> --}}
                                           </div>
                                       </td>
                                   </tr>
