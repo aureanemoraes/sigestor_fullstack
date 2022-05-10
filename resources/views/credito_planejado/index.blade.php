@@ -4,6 +4,12 @@
 @if($tipo == 2)
   <h3>PLOA - {{ $exercicio->nome }}</h3>
   @include('loa.navbar')
+@elseif($tipo==1)
+  <h3>PLOA - {{ $exercicio->nome }} - UNIDADES GESTORAS</h3>
+  <input type="hidden" id="exercicio_id" value="{{ $exercicio->id }}">
+  @include('loa_gestora.filtro-unidade-gestora')
+  @include('loa_gestora.navbar')
+@endif
   <section>
     <div class="table-responsive table-responsive-sm">
         <table class="table table-sm" id="creditos_planejados">
@@ -41,7 +47,7 @@
         </table>
     </div>
   </section>
-@endif
+  
 @endsection
 
 @section('js')
@@ -49,5 +55,15 @@
     $(document).ready( function () {
       $('#creditos_planejados').DataTable();
     });
+
+    $('#unidade_gestora_id').on('change', () => {
+        let exercicio_id = $('#exercicio_id').val();
+        let unidade_gestora_id = $('#unidade_gestora_id').val();
+        if(unidade_gestora_id)
+            window.location.href = `/credito_planejado?tipo=1&ploa=${exercicio_id}&unidade_gestora=${unidade_gestora_id}`;
+    });
+    $(function() {
+        $('#unidade_gestora_id').select2();
+    })
   </script>
 @endsection

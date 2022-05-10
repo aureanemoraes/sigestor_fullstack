@@ -45,16 +45,24 @@ class PloaGestora extends Model
         $dados['valor_a_distribuir'] = 0;
         $dados['valor_planejado'] = 0;
         $dados['valor_a_planejar'] = 0;
+        $dados['valor_recebido'] = 0;
+        $dados['valor_a_receber'] = 0;
 
         if(count($ploa_gestora->ploas_administrativas) > 0) {
             $dados['valor_distribuido'] = $ploa_gestora->ploas_administrativas()->sum('valor');
             foreach($ploa_gestora->ploas_administrativas as $ploa_administrativa) {
                 foreach($ploa_gestora->ploas_administrativas as $ploa_administrativa) {
                     $dados['valor_planejado'] += $ploa_administrativa->despesas()->sum('valor_total');
+                    if(count($ploa_administrativa->despesas) > 0) {
+                        foreach($ploa_administrativa->despesas as $despesa) {
+                            $dados['valor_recebido'] += $despesa->valor_recebido;
+                        }
+                    }
                 }
             }
         } 
 
+        $dados['valor_a_receber'] = $ploa_gestora->valor - $dados['valor_recebido'];
         $dados['valor_a_distribuir'] = $ploa_gestora->valor - $dados['valor_distribuido'];
         $dados['valor_a_planejar'] = $dados['valor_distribuido'] - $dados['valor_planejado'];
 

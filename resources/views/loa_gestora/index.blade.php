@@ -39,7 +39,7 @@
 
 @section('content')
     @php
-    use App\Models\Ploa;
+    use App\Models\PloaGestora;
     use App\Models\Programa;
     @endphp
     <h3>PLOA - {{ $exercicio->nome }} - UNIDADES GESTORAS</h3>
@@ -48,6 +48,7 @@
     @include('loa_gestora.filtro-unidade-gestora')
 
     @if(isset($unidade_selecionada))
+      @include('loa_gestora.navbar')
       <section class="distribuicao-resumo">
         <div class="table-responsive table-responsive-sm">
           <table class="table table-sm">
@@ -87,17 +88,15 @@
                               <th>VALOR PLOA</th>
                               <th>TOTAL LIMITE RECEBIDO</th>
                               <th>A RECEBER</th>
-                              <th></th>
                           </tr>
                           <tr>
                               <td colspan="3">Total estimado</td>
                               <th>{{ formatCurrency($valores_programa['valor_total']) }} </th>
                               <th>{{ formatCurrency($valores_programa['valor_recebido']) }}</th>
                               <th>{{ formatCurrency($valores_programa['valor_a_receber']) }}</th>
-                              <th></th>
                           </tr>
                           <tr>
-                          <td colspan="7">
+                          <td colspan="6">
                               <table class="table mb-0 table-sm">
                                   <thead>
                                       <tr>
@@ -107,14 +106,13 @@
                                           <th></th>
                                           <th></th>
                                           <th></th>
-                                          <th></th>
                                       </tr>
                                   </thead>
                                   <tbody>
                                     @foreach($ploas_gestoras as $ploa_gestora)
                                     @if($ploa_gestora->ploa->programa_id == $programa->id)
                                       @php
-                                        // $valores_ploa_gestora = PloaGestora::valores($ploa_gestora);
+                                        $valores_ploa_gestora = PloaGestora::valores($ploa_gestora);
                                       @endphp
                                     <tr>
                                       <td>{{ $ploa_gestora->ploa->acao_tipo->codigo . ' - ' . $ploa_gestora->ploa->acao_tipo->nome }}</td>
@@ -122,18 +120,10 @@
                                       <td>{{ $ploa_gestora->ploa->fonte_tipo->codigo }}</td>
                                       <td>{{ formatCurrency($ploa_gestora->valor) }}</td>
                                       <td>
-                                        aa
+                                        {{ formatCurrency($valores_ploa_gestora['valor_recebido']) }}
                                       </td>
                                       <td>
-                                        bb
-                                      </td>
-                                      <td>
-                                        <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
-                                          <a type="button" href="{{ route('credito_planejado.index', ['ploa_gestora' => $ploa_gestora->id, 'tipo' => 1]) }}" class="btn btn-primary" ><i class="bi bi-list-task"></i></a>
-                                          @if(isset($ploa_gestora->solicitacao_credito_planejado))
-                                            {{-- {{ $ploa_gestora->solicitacao_credito_planejado }} --}}
-                                          @endif
-                                        </div>
+                                        {{ formatCurrency($valores_ploa_gestora['valor_a_receber']) }}
                                       </td>
                                     </tr>
                                     @endif
