@@ -69,7 +69,7 @@
     </section>
     <section>
         <div class="d-flex justify-content-end ">
-            <p class="btn-primary total-matriz">VALOR TOTAL: </p>
+            <p class="btn-primary total-matriz">VALOR TOTAL: {{ formatCurrency($limite_planejado) }}</p>
         </div>
           @foreach($acoes as $acao)
             <h6>{{ $acao->nome_completo }}</h6>
