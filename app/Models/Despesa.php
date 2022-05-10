@@ -29,7 +29,7 @@ class Despesa extends Model
         'fields' => 'array'
     ];
 
-    protected $appends = ['fonte', 'acao'];
+    protected $appends = ['fonte', 'acao', 'valor_disponivel', 'possui_solicitacao_credito_pendente', 'valor_recebido'];
 
     public function getFonteAttribute()
     {
@@ -39,6 +39,32 @@ class Despesa extends Model
     public function getAcaoAttribute()
     {
         return $this->ploa_administrativa->ploa_gestora->ploa->acao_tipo->nome_completo;
+    }
+
+    public function getValorDisponivelAttribute()
+    {
+        if(count($this->creditos_planejados) > 0) {
+            $valor_recebido = $this->creditos_planejados->where('unidade_gestora', 'deferido')->where('instituicao', 'deferido')->sum('valor_solicitado');
+            return $this->valor_total - $valor_recebido;
+        } else 
+            return $this->valor_total;
+    }
+
+    public function getValorRecebidoAttribute()
+    {
+        if(count($this->creditos_planejados) > 0) {
+            $valor_recebido = $this->creditos_planejados->where('unidade_gestora', 'deferido')->where('instituicao', 'deferido')->sum('valor_solicitado');
+            return $valor_recebido;
+        } else 
+            return 0;
+    }
+
+    public function getPossuiSolicitacaoCreditoPendenteAttribute()
+    {
+        if(count($this->creditos_planejados) > 0) {
+            return $this->creditos_planejados()->where('unidade_gestora', 'pendente')->where('instituicao', 'pendente')->exists();
+        } else 
+            return false;
     }
 
     public function setValorTotalAttribute($valor)

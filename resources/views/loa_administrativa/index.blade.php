@@ -8,6 +8,7 @@
 
     .table {
       table-layout:fixed;
+      vertical-align: middle;
     }
 
     .collapse {
@@ -39,7 +40,7 @@
 
 @section('content')
     @php
-        use App\Models\Ploa;
+        use App\Models\NaturezaDespesa;
         use App\Models\Programa;
     @endphp
     <h3>PLOA - {{ $exercicio->nome }} - UNIDADES ADMINISTRATIVAS</h3>
@@ -58,9 +59,9 @@
             </thead>
             <tbody>
               <tr>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{{ formatCurrency($limite_planejado) }}</td>
+                <td>{{ formatCurrency($limite_recebido) }}</td>
+                <td>{{ formatCurrency($limite_a_receber) }}</td>
               </tr>
             </tbody>
           </table>
@@ -70,77 +71,79 @@
         <div class="d-flex justify-content-end ">
             <p class="btn-primary total-matriz">VALOR TOTAL: </p>
         </div>
-          @foreach($naturezas_despesas as $natureza_despesa)
-              <div class="card">
-                  <div class="card-body">
-                    <div class="table-responsive-sm table-loa">
-                        <table class="table table-sm">
-                            @if(count($natureza_despesa->despesas) > 0)
-                                {{-- @php
-                                    $valores_programa = Programa::valores($programa, 'ploa');
-                                @endphp --}}
-                                <tbody>
-                                    <tr>
-                                        <td colspan="3">NATUREZA DE DESPESA: <strong>{{ $natureza_despesa->nome_completo }}</strong></td>
-                                        <th>VALOR PLOA</th>
-                                        <th>TOTAL LIMITE RECEBIDO</th>
-                                        <th>A RECEBER</th>
-                                        <th></th>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3">Total estimado</td>
-                                        <th>valor total</th>
-                                        <th>total limite recebido</th>
-                                        <th>a receber</th>
-                                        <th></th>
-                                    </tr>
-                                    <tr>
-                                    <td colspan="7">
-                                        <table class="table mb-0 table-sm">
-                                            <thead>
-                                                <tr>
-                                                    <th>DESPESA</th>
-                                                    <th>AÇÃO</th>
-                                                    <th>FONTE</th>
-                                                    <th>VALOR TOTAL</th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach($natureza_despesa->despesas as $despesa)
-                                                {{-- @php
-                                                    $valores_ploa = Ploa::valores($ploa);
-                                                @endphp --}}
-                                                    <tr>
+          @foreach($acoes as $acao)
+            <h6>{{ $acao->nome_completo }}</h6>
+            @foreach($naturezas_despesas as $natureza_despesa)
+                <div class="card">
+                    <div class="card-body">
+                      <div class="table-responsive-sm table-loa">
+                          <table class="table table-sm">
+                              @if(count($natureza_despesa->despesas) > 0)
+                                  @php
+                                      $valores_natureza = NaturezaDespesa::valores($natureza_despesa, $acao->id, $exercicio->id, $unidade_selecionada->id);
+                                  @endphp
+                                  <tbody>
+                                      <tr>
+                                          <td colspan="2">NATUREZA DE DESPESA: <strong>{{ $natureza_despesa->nome_completo }}</strong></td>
+                                          <th>VALOR PLOA</th>
+                                          <th>TOTAL LIMITE RECEBIDO</th>
+                                          <th>A RECEBER</th>
+                                          <th></th>
+                                      </tr>
+                                      <tr>
+                                          <td colspan="2">Total estimado</td>
+                                          <th>{{ formatCurrency($valores_natureza['valor_total']) }}</th>
+                                          <th>{{ formatCurrency($valores_natureza['total_limite_recebido']) }}</th>
+                                          <th>{{ formatCurrency($valores_natureza['a_receber']) }}</th>
+                                          <th></th>
+                                      </tr>
+                                      <tr>
+                                      <td colspan="6">
+                                          <table class="table mb-0 table-sm">
+                                              <thead>
+                                                  <tr>
+                                                      <th>DESPESA</th>
+                                                      <th>FONTE</th>
+                                                      <th>VALOR TOTAL</th>
+                                                      <th></th>
+                                                      <th></th>
+                                                      <th></th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
+                                                  @foreach($natureza_despesa->despesas as $despesa)
+                                                      @if($despesa->ploa_administrativa->ploa_gestora->ploa->acao_tipo_id == $acao->id)
+                                                      <tr>
                                                         <td>{{ $despesa->descricao }}</td>
-                                                        <td>{{ $despesa->acao }}</td>
                                                         <td>{{ $despesa->fonte }}</td>
                                                         <td>{{ formatCurrency($despesa->valor_total) }}</td>
-                                                        <td></td>
-                                                        <td></td>
+                                                        <td>{{ formatCurrency($despesa->valor_recebido) }}</td>
+                                                        <td>{{ formatCurrency($despesa->valor_disponivel) }}</td>
                                                         <td>
                                                           <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
-                                                            @if(count($despesa->creditos_planejados) == 0)
-                                                                <a type="button" href="{{ route('credito_planejado.create', ['despesa' => $despesa->id]) }}" class="btn btn-primary" ><i class="bi bi-plus-circle-fill"></i></a>
+                                                            @if($despesa->possui_solicitacao_credito_pendente)
+                                                              <button type="button" disabled class="btn btn-primary" >Solicitar cerditão de crédito</button>
                                                             @else
-                                                              <a type="button" disabled class="btn btn-primary" title="Aguardando retorno"><i class="bi bi-hourglass-split"></i></a>
+                                                              <a type="button" href="{{ route('credito_planejado.create', ['despesa' => $despesa->id]) }}" class="btn btn-primary" >Solicitar cerditão de crédito</a>
                                                             @endif
+                                                            
+                                                            <a type="button" href="{{ route('credito_planejado.lista', $despesa->id) }}" class="btn btn-primary" >Ver solicitações de crédito</a>
                                                           </div>
                                                         </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                    </tr>
-                                </tbody>
-                            @endif
-                        </table>
+                                                      </tr>
+                                                      @endif
+                                                  @endforeach
+                                              </tbody>
+                                          </table>
+                                      </td>
+                                      </tr>
+                                  </tbody>
+                              @endif
+                          </table>
+                      </div>
                     </div>
-                  </div>
-              </div>
+                </div>
+            @endforeach
           @endforeach
     </section>
     @endif

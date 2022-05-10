@@ -22,6 +22,8 @@ class Versao3 extends Migration
         Schema::create('creditos_planejados', function (Blueprint $table) {
             $table->id();
             $table->string('codigo_processo');
+            $table->float('valor_solicitado');
+            $table->longText('comentarios')->nullable();
             $table->string('unidade_gestora')->default('pendente'); // pendente; deferido; indeferido
             $table->string('instituicao')->default('pendente'); //  pendente; deferido; indeferido
             $table->tinyInteger('solicitado')->default(1);

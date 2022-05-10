@@ -17,16 +17,16 @@
         <div class="table-responsive table-responsive-sm">
             <table class="table table-sm">
             <thead>
-                <th>AÇÃO</th>
-                <th>TIPO</th>
+                <th>NATUREZA DE DESPESA</th>
+                <th>DESPESA</th>
                 <th>FONTE</th>
-                <th></th>
+                <th>VALOR DISPONÍVEL</th>
             </thead>
             <tbody>
-                <td>{{ $despesa->ploa_administrativa->ploa_gestora->ploa->acao_tipo->nome_completo }}</td>
-                <td>{{ $despesa->ploa_administrativa->ploa_gestora->ploa->tipo_acao }}</td>
+                <td>{{ $despesa->natureza_despesa->nome_completo }}</td>
+                <td>{{ $despesa->descricao }}</td>
                 <td>{{ $despesa->ploa_administrativa->ploa_gestora->ploa->fonte_tipo->codigo }}</td>
-                <td>{{ formatCurrency($despesa->ploa_administrativa->valor) }}</td>
+                <td>{{ formatCurrency($despesa->valor_disponivel) }}</td>
             </tbody>
             </table>
         </div>
@@ -44,6 +44,16 @@
         </div>
         @enderror
     </div>
+
+    <div class="form-floating mb-3">
+      <input type="number" class="form-control @error('valor_solicitado') is-invalid @enderror" id="valor_solicitado" name="valor_solicitado" value="{{ isset($credito_planejado->valor_solicitado) ? $credito_planejado->valor_solicitado : null}}" placeholder="Nome..." {{ isset($credito_planejado->credito_planejado_modelo_id) ? 'readonly' : '' }}>
+      <label for="valor_solicitado">Valor solicitado</label>
+      @error('valor_solicitado')
+      <div class="invalid-feedback">
+          {{ $message }}
+      </div>
+      @enderror
+  </div>
 
   <div class="fields-container" id="fields-container">
   </div>

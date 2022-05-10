@@ -30,6 +30,12 @@ class CreditoPlanejadoTransformer
           case 'solicitado':
             $credito_planejado->solicitado = $value;
             break;
+          case 'valor_solicitado':
+            $credito_planejado->valor_solicitado = $value;
+            break;
+          case 'comentarios':
+            $credito_planejado->comentarios = $value;
+            break;
         }
       }
 

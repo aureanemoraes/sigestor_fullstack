@@ -21,6 +21,16 @@ use Illuminate\Support\Facades\Validator;
 class CreditoPlanejadoController extends Controller
 {
 
+	public function lista($despesa_id) {
+		$despesa = Despesa::find($despesa_id);
+		$creditos_planejados = CreditoPlanejado::where('despesa_id', $despesa_id)->get();
+
+		return view('credito_planejado.lista')->with([
+			'creditos_planejados' => $creditos_planejados,
+			'despesa' => $despesa
+		]);
+	}
+
 	public function autorizaGestora($id, Request $request) {
 		$credito_planejado = CreditoPlanejado::find($id);
 		$credito_planejado->unidade_gestora = $request->unidade_gestora;
@@ -199,6 +209,7 @@ class CreditoPlanejadoController extends Controller
 	public function destroy($id)
 	{
 		$credito_planejado = CreditoPlanejado::find($id);
+		$despesa_id = $credito_planejado->despesa_id;
 		try {
 			if(isset($credito_planejado)) {
 				$credito_planejado->delete();
@@ -206,14 +217,16 @@ class CreditoPlanejadoController extends Controller
 		} catch(Exception $ex) {
 		}
 
-		return redirect()->route('credito_planejado.index');
+		return redirect()->route('credito_planejado.lista',  $despesa_id);
 	}
 
 	protected function validation($request) 
 	{
 		$validator = Validator::make($request->all(), [
 			'codigo_processo' => ['required'],
-			'despesa_id' => ['required', 'exists:despesas,id']
+			'despesa_id' => ['required', 'exists:despesas,id'],
+			'valor_solicitado' => ['required'],
+			'comentarios' => ['nullable']
 			// 'unique:creditos_planejados,despesa_id'
 		]);
 

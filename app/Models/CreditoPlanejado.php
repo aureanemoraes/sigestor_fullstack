@@ -16,7 +16,9 @@ class CreditoPlanejado extends Model
         'despesa_id',
         'unidade_gestora',
         'instituicao',
-        'solicitado'
+        'solicitado',
+        'valor_solicitado',
+        'comentarios'
     ];
 
     protected $appends = [

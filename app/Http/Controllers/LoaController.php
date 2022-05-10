@@ -60,13 +60,6 @@ class LoaController extends Controller
                     foreach($ploas as $ploa) {
                         if(count($ploa->ploas_gestoras) > 0) {
                             $limite_recebido += $ploa->loas()->sum('valor');
-                            // foreach($ploa->ploas_gestoras as $ploa_gestora) {
-                            //     if(count($ploa_gestora->ploas_administrativas) > 0) {
-                            //         foreach($ploa_gestora->ploas_administrativas as $ploa_administrativa) {
-                            //             // $valor_planejado += $ploa_administrativa->despesas()->sum('valor_total');
-                            //         }
-                            //     }
-                            // }
                         }
                     }
                 }
