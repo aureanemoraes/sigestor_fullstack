@@ -35,6 +35,7 @@ class CreditoPlanejadoController extends Controller
 	public function autorizaGestora($id, Request $request) {
 		$credito_planejado = CreditoPlanejado::find($id);
 		$credito_planejado->unidade_gestora = $request->unidade_gestora;
+		$credito_planejado->comentarios = $request->comentarios;
 		$credito_planejado->save();
 
 		return view('credito_planejado.show')->with([
@@ -46,6 +47,7 @@ class CreditoPlanejadoController extends Controller
 	public function autorizaInstituicao($id, Request $request) {
 		$credito_planejado = CreditoPlanejado::find($id);
 		$credito_planejado->instituicao = $request->instituicao;
+		$credito_planejado->comentarios = $request->comentarios;
 		$credito_planejado->save();
 
 		return view('credito_planejado.show')->with([

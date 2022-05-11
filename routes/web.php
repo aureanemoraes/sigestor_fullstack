@@ -29,6 +29,7 @@ use App\Http\Controllers\LoaController;
 use App\Http\Controllers\LoaAdministrativaController;
 use App\Http\Controllers\CreditoPlanejadoController;
 use App\Http\Controllers\LoaGestoraController;
+use App\Http\Controllers\CertidaoCreditoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -112,6 +113,9 @@ Route::patch('credito_planejado/autorizacao_gestora/{id}', [CreditoPlanejadoCont
 Route::patch('credito_planejado/autorizacao_instituicao/{id}', [CreditoPlanejadoController::class, 'autorizaInstituicao'])->name('credito_planejado.autoriza_instituicao');
 Route::get('credito_planejado/lista/{despesa_id}', [CreditoPlanejadoController::class, 'lista'])->name('credito_planejado.lista');
 Route::resource('credito_planejado', CreditoPlanejadoController::class);
+
+Route::resource('certidao_credito', CertidaoCreditoController::class);
+
 
 
 

@@ -155,16 +155,6 @@ class PloaGestoraController extends Controller
 					}
 			)->get();
 
-			// foreach($programas_ploa as $programa) {
-			// 	if(count($programa->ploas) > 0) {
-			// 		$programa->valor_total = 0;
-			// 		foreach($programa->ploas as $ploa) {
-			// 			if(count($ploa->ploas_gestoras) > 0)
-			// 				$programa->valor_total += $ploa->ploas_gestoras()->sum('valor');
-			// 		}
-			// 	}
-			// }
-
             return view('ploa_gestora.index')->with([
                 'programas_ploa' => $programas_ploa,
 				'ploas_gestoras' => $ploas_gestoras,

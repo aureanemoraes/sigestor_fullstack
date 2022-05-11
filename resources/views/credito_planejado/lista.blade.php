@@ -56,7 +56,11 @@
                             @csrf
                             @method('delete')
                             <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
-                              <a type="button" href="#" class="btn btn-primary" >Comentários</a>
+                              <a type="button" href="#" class="btn btn-primary" onClick="modalComentario(
+                                '{{$credito_planejado->numero_solicitacao }}',
+                                '{{$credito_planejado->codigo_processo }}',
+                                '{{$credito_planejado->comentarios }}'
+                              )">Comentários</a>
                               <a type="button" href="#" class="btn btn-primary" >Certidão</a>
                               <button type="submit" class="btn btn-primary"><i class="bi bi-trash3-fill"></i></button>
                             </div>
@@ -67,10 +71,19 @@
             </tbody>
         </table>
     </div>
+
+    @include('partials.modal')
 @endsection
 
 @section('js')
   <script>
+
+    function modalComentario(numero_solicitacao, codigo_processo, comentarios) {
+      $('#modal-title').text(`Solicitação certidão de crédito - ${numero_solicitacao}`);
+      $('#modal-body').text(`${comentarios}`);
+      $('#modal').modal('show');
+    }
+
     $(document).ready( function () {
       $('#creditos_planejados').DataTable();
     });

@@ -37,9 +37,30 @@
                         </span>
                     </td>
                     <td>
-                      <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
-                        <a type="button" href="{{ route('credito_planejado.show', [$credito_planejado->id, 'tipo' => $tipo]) }}" class="btn btn-primary" ><i class="bi bi-eye-fill"></i></a>
-                      </div>
+                        
+                        @if($tipo == 2)
+                          
+                            <form action="{{ route('certidao_credito.store') }}" method="post" id="form-store">
+                              @csrf
+                              <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
+                                <a type="button" href="{{ route('credito_planejado.show', [$credito_planejado->id, 'tipo' => $tipo]) }}" class="btn btn-primary" ><i class="bi bi-eye-fill"></i></a>
+
+                                <input type="hidden" name="credito_planejado_id" value="{{ $credito_planejado->id }}">
+                                <input type="hidden" name="exercicio_id" value="{{ $exercicio->id }}">
+                                
+                                @if($credito_planejado->unidade_gestora == 'deferido' && $credito_planejado->instituicao == 'deferido' &&!isset($credito_planejado->certidao_credito))
+                                  <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
+                                    <button type="submit" class="btn btn-primary">Gerar certidão</button>
+                                  </div>
+                                @elseif($credito_planejado->unidade_gestora == 'deferido' && $credito_planejado->instituicao == 'deferido' && isset($credito_planejado->certidao_credito))
+                                  <a type="button" href="#" class="btn btn-primary" >Ver certidão</a>
+                                @else
+                                  <button disabled type="button" href="#" class="btn btn-primary" >Gerar certidão</button>
+                                @endif
+                              </div>
+                            </form>
+                          
+                        @endif
                     </td>
                   </tr>
                 @endforeach

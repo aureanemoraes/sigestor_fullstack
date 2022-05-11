@@ -66,4 +66,9 @@ class CreditoPlanejado extends Model
     {
         return $this->belongsTo(Despesa::class);
     } 
+
+    public function certidao_credito()
+    {
+        return $this->hasOne(CertidaoCredito::class);
+    } 
 }

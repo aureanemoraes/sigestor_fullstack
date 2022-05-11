@@ -71,7 +71,7 @@ class LoaGestoraController extends Controller
                                 if(count($ploa_administrativa->despesas) > 0) {
                                     foreach($ploa_administrativa->despesas as $despesa) {
                                         $credito_planejado = $despesa->creditos_planejados()->where('unidade_gestora', 'deferido')->where('instituicao', 'deferido')->first(); 
-                                        $limite_recebido += isset($credito_planejado) ? $credito_planejado->valor_total : 0;
+                                        $limite_recebido += isset($credito_planejado) ? $credito_planejado->valor_solicitado : 0;
                                     }
                                 }
                             }

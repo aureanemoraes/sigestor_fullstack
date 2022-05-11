@@ -31,6 +31,14 @@ class Versao3 extends Migration
             $table->foreign('despesa_id')->references('id')->on('despesas');
             $table->timestamps();
         });
+
+        Schema::create('certidoes_creditos', function (Blueprint $table) {
+            $table->id();
+            $table->string('codigo_certidao');
+            $table->unsignedBigInteger('credito_planejado_id');
+            $table->foreign('credito_planejado_id')->references('id')->on('creditos_planejados');
+            $table->timestamps();
+        });
     }
 
     public function down()
