@@ -30,7 +30,9 @@ class CertidaoCredito extends Model
 
         $last_id = isset($query) ? $query->id + 1 : 1;
 
-        $this->attributes['codigo_certidao'] = str_pad($last_id, '0', STR_PAD_LEFT); 
+        $exercicio = $this->credito_planejado->despesa->ploa_administrativa->ploa_gestora->ploa->exercicio->nome;
+
+        $this->attributes['codigo_certidao'] = str_pad($last_id, 4, '0', STR_PAD_LEFT) . '/' . $exercicio; 
     }
 
     public function getUnidadeAttribute()
@@ -56,5 +58,10 @@ class CertidaoCredito extends Model
     public function credito_planejado()
     {
         return $this->belongsTo(CreditoPlanejado::class);
+    } 
+
+    public function empenho()
+    {
+        return $this->hasOne(Empenho::class);
     } 
 }

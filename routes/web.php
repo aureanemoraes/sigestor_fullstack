@@ -30,6 +30,7 @@ use App\Http\Controllers\LoaAdministrativaController;
 use App\Http\Controllers\CreditoPlanejadoController;
 use App\Http\Controllers\LoaGestoraController;
 use App\Http\Controllers\CertidaoCreditoController;
+use App\Http\Controllers\EmpenhoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -115,6 +116,8 @@ Route::get('credito_planejado/lista/{despesa_id}', [CreditoPlanejadoController::
 Route::resource('credito_planejado', CreditoPlanejadoController::class);
 
 Route::resource('certidao_credito', CertidaoCreditoController::class);
+Route::resource('empenho', EmpenhoController::class);
+
 
 
 

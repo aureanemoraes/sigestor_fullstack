@@ -12,23 +12,32 @@ class Empenho extends Model
     use HasFactory;
 
     protected $fillable = [
-        'valor_empenhado',
-        'data_empenho',
-        'credito_disponivel_id',
-        'unidade_administrativa_id'
+        'notas_fiscais',
+        'certidao_credito_id'
+    ];
+
+    protected $appends = [
+        'exercicio_id',
+        'unidade_gestora_id'
     ];
 
     protected $casts = [
-        'data_empenho' => 'datetime:Y-m-d',
+        'notas_fiscais' => 'array',
     ];
 
-    public function unidade_administrativa()
+
+    public function getExercicioIdAttribute()
     {
-        return $this->belongsTo(UnidadeAdministrativa::class);
+        return $this->certidao_credito->credito_planejado->despesa->ploa_administrativa->ploa_gestora->ploa->exercicio_id;
     }
 
-    public function credito_disponivel()
+    public function getUnidadeGestoraIdAttribute()
     {
-        return $this->belongsTo(CreditoDisponivel::class);
+        return $this->certidao_credito->credito_planejado->despesa->ploa_administrativa->ploa_gestora->unidade_gestora_id;
+    }
+    
+    public function certidao_credito()
+    {
+        return $this->belongsTo(CertidaoCredito::class);
     }
 }

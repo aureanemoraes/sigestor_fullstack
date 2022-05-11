@@ -59,10 +59,17 @@
                                 @endif
                               </div>
                             </form>
-                        @elseif($tipo == 1 && $credito_planejado->unidade_gestora == 'deferido' && $credito_planejado->instituicao == 'deferido' && isset($credito_planejado->certidao_credito))
+                        @endif
+                        @if($tipo == 1 && $credito_planejado->unidade_gestora == 'deferido' && $credito_planejado->instituicao == 'deferido' && isset($credito_planejado->certidao_credito))
                         <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
+                          <a type="button" href="{{ route('credito_planejado.show', [$credito_planejado->id, 'tipo' => $tipo]) }}" class="btn btn-primary" ><i class="bi bi-eye-fill"></i></a>
                           <a type="button" href="{{ route('certidao_credito.show', $credito_planejado->certidao_credito->id) }}" class="btn btn-primary" target="_blank">Ver certidão</a>
                         </div>
+                        @elseif($tipo == 1)
+                          <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
+                            <a type="button" href="{{ route('credito_planejado.show', [$credito_planejado->id, 'tipo' => $tipo]) }}" class="btn btn-primary" ><i class="bi bi-eye-fill"></i></a>
+                            <button type="button" disabled class="btn btn-primary" target="_blank">Ver certidão</button>
+                          </div>
                         @endif
                     </td>
                   </tr>

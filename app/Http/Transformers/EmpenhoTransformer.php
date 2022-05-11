@@ -15,20 +15,17 @@ class EmpenhoTransformer
 
       foreach ($input as $key => $value) {
         switch ($key) {
-          case 'valor_empenhado':
-            $empenho->valor_empenhado = $value;
+          case 'notas_fiscais':
+            $empenho->notas_fiscais = $value;
             break;
-          case 'data_empenho':
-            $empenho->data_empenho = $value;
-            break;
-          case 'credito_disponivel_id':
-            $empenho->credito_disponivel_id = $value;
-            break;
-          case 'unidade_administrativa_id':
-            $empenho->unidade_administrativa_id = $value;
+          case 'certidao_credito_id':
+            $empenho->certidao_credito_id = $value;
             break;
         }
       }
+
+      if(!isset($input['notas_fiscais']))
+        $empenho->notas_fiscais = null;
 
       return $empenho;
     }
