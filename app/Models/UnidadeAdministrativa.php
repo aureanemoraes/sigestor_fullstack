@@ -31,9 +31,16 @@ class UnidadeAdministrativa extends Model
         'unidade_gestora:id,nome'
     ];
 
+    protected $appends = ['nome_completo'];
+
     public function setNomeAttribute($value)
     {
         $this->attributes['nome'] = strtoupper($value);
+    }
+
+    public function getNomeCompletoAttribute()
+    {
+        return "$this->sigla - $this->nome";
     }
 
     public function instituicao()

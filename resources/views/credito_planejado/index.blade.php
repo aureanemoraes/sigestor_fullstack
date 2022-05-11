@@ -53,13 +53,16 @@
                                     <button type="submit" class="btn btn-primary">Gerar certidão</button>
                                   </div>
                                 @elseif($credito_planejado->unidade_gestora == 'deferido' && $credito_planejado->instituicao == 'deferido' && isset($credito_planejado->certidao_credito))
-                                  <a type="button" href="#" class="btn btn-primary" >Ver certidão</a>
+                                  <a type="button" href="{{ route('certidao_credito.show', $credito_planejado->certidao_credito->id) }}" class="btn btn-primary" target="_blank">Ver certidão</a>
                                 @else
                                   <button disabled type="button" href="#" class="btn btn-primary" >Gerar certidão</button>
                                 @endif
                               </div>
                             </form>
-                          
+                        @elseif($tipo == 1 && $credito_planejado->unidade_gestora == 'deferido' && $credito_planejado->instituicao == 'deferido' && isset($credito_planejado->certidao_credito))
+                        <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
+                          <a type="button" href="{{ route('certidao_credito.show', $credito_planejado->certidao_credito->id) }}" class="btn btn-primary" target="_blank">Ver certidão</a>
+                        </div>
                         @endif
                     </td>
                   </tr>

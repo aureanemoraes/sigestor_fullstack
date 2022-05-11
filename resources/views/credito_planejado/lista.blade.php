@@ -61,7 +61,13 @@
                                 '{{$credito_planejado->codigo_processo }}',
                                 '{{$credito_planejado->comentarios }}'
                               )">Comentários</a>
-                              <a type="button" href="#" class="btn btn-primary" >Certidão</a>
+                              @if($credito_planejado->unidade_gestora == 'deferido' && $credito_planejado->instituicao == 'deferido' && isset($credito_planejado->certidao_credito))
+                                <div class="btn-group btn-group-sm" role="group" aria-label="acoes">
+                                  <a type="button" href="{{ route('certidao_credito.show', $credito_planejado->certidao_credito->id) }}" class="btn btn-primary" target="_blank">Ver certidão</a>
+                                </div>
+                              @else
+                                <button disabled type="button" href="#" class="btn btn-primary" >Ver certidão</button>
+                              @endif
                               <button type="submit" class="btn btn-primary"><i class="bi bi-trash3-fill"></i></button>
                             </div>
                           </form>

@@ -58,9 +58,15 @@ class CertidaoCreditoController extends Controller
      * @param  \App\Models\CertidaoCredito  $certidaoCredito
      * @return \Illuminate\Http\Response
      */
-    public function show(CertidaoCredito $certidaoCredito)
+    public function show($id)
     {
-        //
+        $certidao_credito = CertidaoCredito::find($id);
+
+        if(isset($certidao_credito)) {
+            return view('certidao_credito.show')->with([
+                'certidao_credito' => $certidao_credito
+            ]);
+        }
     }
 
     /**
