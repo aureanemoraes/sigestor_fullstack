@@ -31,6 +31,7 @@ use App\Http\Controllers\CreditoPlanejadoController;
 use App\Http\Controllers\LoaGestoraController;
 use App\Http\Controllers\CertidaoCreditoController;
 use App\Http\Controllers\EmpenhoController;
+use App\Http\Controllers\RemanejamentoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -117,6 +118,7 @@ Route::resource('credito_planejado', CreditoPlanejadoController::class);
 
 Route::resource('certidao_credito', CertidaoCreditoController::class);
 Route::resource('empenho', EmpenhoController::class);
+Route::resource('remanejamento', RemanejamentoController::class);
 
 
 

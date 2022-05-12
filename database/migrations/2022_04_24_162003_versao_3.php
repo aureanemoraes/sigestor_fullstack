@@ -48,6 +48,7 @@ class Versao3 extends Migration
         });
         Schema::create('remanejamentos', function (Blueprint $table) {
             $table->id();
+            $table->integer('qtd');
             $table->float('valor');
             $table->float('numero_oficio');
             $table->date('data');
