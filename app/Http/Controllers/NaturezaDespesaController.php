@@ -12,6 +12,34 @@ use Illuminate\Support\Facades\Validator;
 
 class NaturezaDespesaController extends Controller
 {
+	public function getOptions($id, $acao_id, $tipo, $ploa_id) {
+		$options = [];
+
+		switch($tipo) {
+			case 'unidade_administrativa':
+				$naturezas_despesas = NaturezaDespesa::whereHas('despesas', function($query) use($id, $ploa_id, $acao_id){
+					$query->whereHas('ploa_administrativa', function($query) use($id, $ploa_id, $acao_id) {
+						$query->where('unidade_administrativa_id', $id);
+						$query->whereHas('ploa_gestora', function($query) use($id, $ploa_id, $acao_id) {
+							$query->whereHas('ploa', function($query) use($id, $ploa_id, $acao_id) {
+								$query->where('exercicio_id', $ploa_id);
+								$query->where('acao_tipo_id', $acao_id);
+							});
+						});
+					});
+				})
+				->get();
+
+				foreach($naturezas_despesas as $natureza_despesa) {
+					$options['id'] = $natureza_despesa->id;
+					$options['text'] = $natureza_despesa->nome_completo;
+				}
+				break;
+		}
+
+		return [$options];
+	}
+
 	public function favoritar($id)
 	{
 		$natureza_despesa = NaturezaDespesa::findOrFail($id);

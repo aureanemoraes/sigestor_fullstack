@@ -16,6 +16,28 @@ use Illuminate\Support\Facades\Validator;
 
 class DespesaController extends Controller
 {
+	public function getDespesas($unidade_administrativa_id, $ploa_id)
+	{
+		$options = [];
+
+		$despesas = Despesa::whereHas('ploa_administrativa', function($query) use($unidade_administrativa_id, $ploa_id) {
+			$query->where('unidade_administrativa_id', $unidade_administrativa_id);
+			$query->whereHas('ploa_gestora', function($query) use($ploa_id) {
+				$query->whereHas('ploa', function($query) use($ploa_id) {
+					$query->where('exercicio_id', $ploa_id);
+				});
+			});
+		})->get();
+
+		foreach($despesas as $despesa) {
+			$options[] = [$despesa->id, $despesa->descricao];
+		}
+
+
+		return $options;
+	}
+	
+
 	public function index(Request $request)
 	{
 		$ploa_administrativa = isset($request->ploa_administrativa) ? PloaAdministrativa::find($request->ploa_administrativa) : null;
@@ -64,7 +86,7 @@ class DespesaController extends Controller
 			DB::rollBack();
 		}
 
-		return redirect()->route('despesa.index');
+		return redirect()->route('ploa_gestora.distribuicao', [$despesa->ploa_administrativa->unidade_administrativa_id, $despesa->ploa_administrativa->ploa_gestora->ploa->exercicio_id]);
 	}
 
 	public function show($id)

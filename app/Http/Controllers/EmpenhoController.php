@@ -19,7 +19,7 @@ class EmpenhoController extends Controller
 		if(isset($request->ploa) && isset($request->unidade_gestora)) {
 			$exercicio = Exercicio::find($request->ploa);
 			$unidade_gestora_id= $request->unidade_gestora;
-			$unidade_selecionada = UnidadeGestora::find($request->ploa);
+			$unidade_selecionada = UnidadeGestora::find($request->unidade_gestora);
 			$unidades_gestoras = UnidadeGestora::all();
 			$certidoes_credito = CertidaoCredito::whereHas(
 				'credito_planejado', function ($query) use($unidade_gestora_id) {
@@ -40,8 +40,6 @@ class EmpenhoController extends Controller
 				'unidade_selecionada' => $unidade_selecionada
 			]);
 		}
-
-		
 	}
 
 	public function create(Request $request) {

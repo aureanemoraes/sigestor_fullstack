@@ -32,6 +32,7 @@ use App\Http\Controllers\LoaGestoraController;
 use App\Http\Controllers\CertidaoCreditoController;
 use App\Http\Controllers\EmpenhoController;
 use App\Http\Controllers\RemanejamentoController;
+use App\Http\Controllers\RemanejamentoDestinatarioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -118,7 +119,10 @@ Route::resource('credito_planejado', CreditoPlanejadoController::class);
 
 Route::resource('certidao_credito', CertidaoCreditoController::class);
 Route::resource('empenho', EmpenhoController::class);
+Route::get('remanejamento/historico/{despesa_id}/{tipo}', [RemanejamentoController::class, 'historico'])->name('remanejamento.historico');
 Route::resource('remanejamento', RemanejamentoController::class);
+Route::resource('remanejamento_destinatario', RemanejamentoDestinatarioController::class);
+
 
 
 

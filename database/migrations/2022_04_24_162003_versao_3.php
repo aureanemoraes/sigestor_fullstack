@@ -46,18 +46,7 @@ class Versao3 extends Migration
             $table->foreign('certidao_credito_id')->references('id')->on('certidoes_creditos');
             $table->timestamps();
         });
-        Schema::create('remanejamentos', function (Blueprint $table) {
-            $table->id();
-            $table->integer('qtd');
-            $table->float('valor');
-            $table->float('numero_oficio');
-            $table->date('data');
-            $table->unsignedBigInteger('despesa_remetente_id');
-            $table->foreign('despesa_remetente_id')->references('id')->on('despesas');
-            $table->unsignedBigInteger('despesa_destinatario_id');
-            $table->foreign('despesa_destinatario_id')->references('id')->on('despesas');
-            $table->timestamps();
-        });
+        
     }
 
     public function down()

@@ -12,6 +12,31 @@ use Illuminate\Support\Facades\Validator;
 
 class AcaoTipoController extends Controller
 {
+	public function getOptions($id, $tipo, $ploa_id) {
+		$options = [];
+
+		switch($tipo) {
+			case 'unidade_administrativa':
+				$acoes = AcaoTipo::whereHas('ploas', function($query) use($id, $ploa_id) {
+					$query->where('exercicio_id', $ploa_id);
+					$query->whereHas('ploas_gestoras', function($query) use($id) {
+						$query->whereHas('ploas_administrativas', function($query) use($id) {
+							$query->where('unidade_administrativa_id', $id);
+						});
+					});
+				})
+				->get();
+
+				foreach($acoes as $acao) {
+					$options['id'] = $acao->id;
+					$options['text'] = $acao->nome_completo;
+				}
+				break;
+		}
+
+		return [$options];
+	}
+
 	public function tipos($acao_tipo_id)
 	{
 		$acao_tipo = AcaoTipo::findOrFail($id);

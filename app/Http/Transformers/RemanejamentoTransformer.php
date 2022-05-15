@@ -15,10 +15,7 @@ class RemanejamentoTransformer
 
       foreach ($input as $key => $value) {
         switch ($key) {
-            case 'qtd':
-                $remanejamento->qtd = $value;
-                break;
-            case 'valor':
+            case 'valor_remanejamento':
                 $remanejamento->valor = $value;
                 break;
             case 'numero_oficio':
@@ -30,9 +27,12 @@ class RemanejamentoTransformer
             case 'despesa_remetente_id':
                 $remanejamento->despesa_remetente_id = $value;
                 break;
-            case 'despesa_destinatario_id':
-                $remanejamento->despesa_destinatario_id = $value;
-                break;
+            case 'unidade_gestora_id':
+              $remanejamento->unidade_gestora_id = $value;
+              break;
+            case 'instituicao_id':
+              $remanejamento->instituicao_id = $value;
+              break;
         }
       }
 

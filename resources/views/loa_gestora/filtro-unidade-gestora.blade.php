@@ -15,4 +15,9 @@
         </div>
         @enderror
     </div>
+    <div class="mb-3 ms-3">
+        @if(isset($unidades_administrativas))
+            @include('loa_gestora.filtro-unidade-administrativa')
+        @endif
+    </div>
 </div>

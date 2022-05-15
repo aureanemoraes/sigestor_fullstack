@@ -30,9 +30,13 @@ class UnidadeGestora extends Model
         'logs' => 'array'
     ];
 
-    protected $with = [
-        'instituicao:id,nome'
-    ];
+    protected $appends = ['nome_completo'];
+
+
+    public function getNomeCompletoAttribute()
+    {
+        return "$this->sigla - $this->nome";
+    }
 
     public function setNomeAttribute($value)
     {

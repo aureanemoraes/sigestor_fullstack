@@ -93,6 +93,7 @@
         if(unidade_gestora_id)
             window.location.href = `/credito_planejado?tipo=1&ploa=${exercicio_id}&unidade_gestora=${unidade_gestora_id}`;
     });
+    
     $(function() {
         $('#unidade_gestora_id').select2();
     })
