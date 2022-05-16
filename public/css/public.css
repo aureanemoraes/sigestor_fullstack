@@ -21,7 +21,6 @@
 }
 
 body {
-    position: relative;
     margin: var(--header-height) 0 0 0;
     font-family: var(--body-font);
     font-size: var(--normal-font-size);
@@ -30,6 +29,7 @@ body {
     background-repeat: no-repeat;
     background-position: -10px -10px;
     background-size: cover;
+    height: 100vh;
 }
 
 .header {

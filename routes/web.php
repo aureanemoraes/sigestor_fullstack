@@ -49,6 +49,10 @@ Route::get('/', function () {
     return view('public.home');
 });
 
+Route::get('/login', function () {
+    return view('public.login');
+});
+
 Route::get('/inicio', function () {
     return view('blank');
 });
