@@ -33,6 +33,7 @@ use App\Http\Controllers\CertidaoCreditoController;
 use App\Http\Controllers\EmpenhoController;
 use App\Http\Controllers\RemanejamentoController;
 use App\Http\Controllers\RemanejamentoDestinatarioController;
+use App\Http\Controllers\GraficoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +57,8 @@ Route::get('/login', function () {
 Route::get('/inicio', function () {
     return view('blank');
 });
+
+Route::get('grafico/populacao', [GraficoController::class, 'populacao']);
 
 Route::resource('instituicao', InstituicaoController::class);
 Route::resource('exercicio', ExercicioController::class);
