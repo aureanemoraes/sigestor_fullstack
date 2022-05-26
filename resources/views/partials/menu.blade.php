@@ -3,7 +3,17 @@
     <i class='bx bx-menu' id="header-toggle"></i>
   </div>
   <div class="header_user">
-    <button class="btn btn-black">Usuário</button>
+    <!-- Example single danger button -->
+    <div class="btn-group">
+      <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        @if(Auth::user() != null)
+        {{ Auth::user()->nome }}
+      @endif
+      </button>
+      <ul class="dropdown-menu dropdown-menu-right">
+        <li><a class="dropdown-item" href="{{ route('user.show', Auth::id()) }}">Perfil</a></li>
+      </ul>
+    </div>
   </div>
 </header>
 <div class="l-navbar" id="nav-bar">
@@ -56,7 +66,7 @@
             <a href="{{ route('despesa_modelo.index') }}" class="nav_link nav_link_tertiary">
               <span class="nav_name">Despesas Modelos</span>
             </a>
-            <a href="#" class="nav_link nav_link_tertiary">
+            <a href="{{ route('user.index') }}" class="nav_link nav_link_tertiary">
               <span class="nav_name">Usuários</span>
             </a>
           </div>
@@ -140,7 +150,7 @@
         </div>
       </div>
     </div>
-    <a href="#" class="nav_link">
+    <a href="{{ route('logout') }}" class="nav_link">
       <i class='bx bx-log-out nav_icon'></i>
       <span class="nav_name">Sair</span>
     </a>

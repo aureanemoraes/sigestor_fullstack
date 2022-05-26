@@ -9,18 +9,28 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="numero_matricula" name="numero_matricula" value="" placeholder="Nº matrícula...">
-                <label for="nome">Nº matrícula</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="senha" name="senha" value="" placeholder="Nº matrícula...">
-                <label for="nome">Senha</label>
-            </div>
-            <div class="d-flex justify-content-between">
-                <a class="btn btn-link btn-sm" href="/">Esqueci minha senha</a>
-                <a class="btn btn-primary btn-sm" href="/inicio">Entrar</a>
-            </div>
+            <form action="{{ route('authenticate') }}" method="POST">
+                @csrf
+                    @error('error')
+                        <div class="">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
+                <div class="form-floating mb-3">
+                   
+                    <input type="text" class="form-control" id="matricula" name="matricula" value="" placeholder="Nº matrícula...">
+                    <label for="nome">Nº matrícula</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="password" name="password" value="" placeholder="Nº matrícula...">
+                    <label for="nome">Senha</label>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <a class="btn btn-link btn-sm" href="/">Esqueci minha senha</a>
+                    <button class="btn btn-primary btn-sm" type="submit">Entrar</button>
+                </div>
+            </form>
         </div>
     </div>
 @endsection

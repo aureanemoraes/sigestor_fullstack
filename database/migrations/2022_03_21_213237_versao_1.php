@@ -74,18 +74,26 @@ class Versao1 extends Migration
             $table->id();
             $table->string('nome');
             $table->string('cpf');
+            $table->string('matricula');
+            $table->integer('titulacao');
             $table->string('password');
-            $table->string('perfil');
+            $table->string('perfil')->default('basico'); // institucional | gestor | administrativo
             $table->tinyInteger('ativo')->default(0);
+            $table->rememberToken();
+            $table->timestamps();
+            $table->softDeletes();
+        });
+        Schema::create('users_vinculos', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('instituicao_id')->nullable();
             $table->foreign('instituicao_id')->references('id')->on('instituicoes');
             $table->unsignedBigInteger('unidade_gestora_id')->nullable();
             $table->foreign('unidade_gestora_id')->references('id')->on('unidades_gestoras');
             $table->unsignedBigInteger('unidade_administrativa_id')->nullable();
             $table->foreign('unidade_administrativa_id')->references('id')->on('unidades_administrativas');
-            $table->rememberToken();
             $table->timestamps();
-            $table->softDeletes();
         });
         // Tabela de Passwords Resets
         Schema::create('password_resets', function (Blueprint $table) {

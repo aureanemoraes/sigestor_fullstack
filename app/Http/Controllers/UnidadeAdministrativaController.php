@@ -12,6 +12,23 @@ use Illuminate\Support\Facades\Validator;
 
 class UnidadeAdministrativaController extends Controller
 {
+	public function opcoes($unidade_gestora_id)
+	{
+		$options = [];
+		$ids = explode(",", $unidade_gestora_id);
+		
+		$unidades_administrativas = UnidadeAdministrativa::whereIn('unidade_gestora_id', $ids)->get();
+
+		if(count($unidades_administrativas) > 0) {
+			$index = 0;
+			foreach($unidades_administrativas as $unidade_administrativa) {
+				$options[] = ['id' => $unidade_administrativa->id, 'text' => $unidade_administrativa->nome_completo];
+			}
+		}
+
+		return $options;
+	}
+
 	public function index()
 	{
 		return view('unidade_administrativa.index')->with([

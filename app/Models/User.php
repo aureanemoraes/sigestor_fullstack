@@ -20,12 +20,11 @@ class User extends Authenticatable
     protected $fillable = [
         'nome',
         'cpf',
+        'matricula',
         'password',
         'perfil',
         'ativo',
-        'instituicao_id',
-        'unidade_gestora_id',
-        'unidade_administrativa_id',
+        'titulacao',
         'remember_token'
     ];
 
@@ -34,5 +33,20 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-   
+
+
+    public function getUnidadesGestorasAttribute()
+    {
+        return $this->vinculos()->pluck('unidade_gestora_id')->toArray();
+    }
+
+    public function getUnidadesAdministrativasAttribute()
+    {
+        return $this->vinculos()->pluck('unidade_administrativa_id')->toArray();
+    }
+
+    public function vinculos()
+    {
+        return $this->hasMany(UserVinculo::class);
+    }
 }

@@ -1,3 +1,9 @@
+<style>
+  .select2-container{
+    width: 100%!important;
+  }
+</style>
+
 <h3>Metas Estratégicas</h3>
 @php
     if(isset($meta)) {

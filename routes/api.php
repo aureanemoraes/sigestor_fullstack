@@ -10,6 +10,7 @@ use App\Http\Controllers\AcaoTipoController;
 use App\Http\Controllers\SubnaturezaDespesaController;
 use App\Http\Controllers\NaturezaDespesaController;
 use App\Http\Controllers\DespesaController;
+use App\Http\Controllers\UnidadeAdministrativaController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -37,7 +38,7 @@ Route::get('meta/{meta_id}', [MetaController::class, 'dados']);
 Route::get('acao/options/{id}/{tipo}/{ploa_id}', [AcaoTipoController::class, 'getOptions']);
 Route::get('acao/tipos', [AcaoTipoController::class, 'tipos']);
 Route::get('natureza_despesa/options/{id}/{acao_id}/{tipo}/{ploa_id}', [NaturezaDespesaController::class, 'getOptions']);
-
+Route::get('unidade_administrativa/opcoes/{unidade_gestora_id}', [UnidadeAdministrativaController::class, 'opcoes']);
 Route::get('despesa/{unidade_administrativa_id}/{ploa_id}', [DespesaController::class, 'getDespesas']);
 
 
