@@ -164,7 +164,7 @@ class PloaGestoraController extends Controller
                 'acoes' => AcaoTipo::where('fav', 1)->get(),
                 'instituicoes' => Instituicao::all(),
                 'unidade_selecionada' => UnidadeGestora::find($unidade_gestora_id),
-				'unidades_gestoras' => UnidadeGestora::all(),
+				'unidades_gestoras' => UnidadeGestora::getOptions(),
 				'exercicio_selecionado' => $exercicio_selecionado,
 				'tipo' => 'index',
 				'valor_distribuido' => $valor_distribuido,
@@ -175,7 +175,7 @@ class PloaGestoraController extends Controller
             ]);
         } else {
             return view('ploa_gestora.index')->with([
-							'unidades_gestoras' => UnidadeGestora::all(),
+							'unidades_gestoras' => UnidadeGestora::getOptions(),
 							'exercicios' => Exercicio::all()						
 						]);
         }

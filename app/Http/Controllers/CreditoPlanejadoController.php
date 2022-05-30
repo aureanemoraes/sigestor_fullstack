@@ -81,7 +81,7 @@ class CreditoPlanejadoController extends Controller
 			} else if ($tipo == 1) {
 				$unidade_selecionada = UnidadeGestora::find($request->unidade_gestora);
 				$unidade_gestora_id = $unidade_selecionada->id;
-				$unidades_gestoras = UnidadeGestora::all();
+				$unidades_gestoras = UnidadeGestora::getOptions();
 
 				$credito_planejados = CreditoPlanejado::whereHas(
 					'despesa', function ($query) use($exercicio_id, $unidade_gestora_id) {

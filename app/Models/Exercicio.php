@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Builder;
 
 class Exercicio extends Model
 {
@@ -28,6 +28,16 @@ class Exercicio extends Model
     protected $with = [
         'instituicao:id,nome'
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+     
+        // Order by name ASC
+        static::addGlobalScope('order', function (Builder $builder) {
+            $builder->orderBy('id', 'desc');
+        });
+    }
 
     public function getStatusAttribute()
     {

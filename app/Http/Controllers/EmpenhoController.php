@@ -20,7 +20,7 @@ class EmpenhoController extends Controller
 			$exercicio = Exercicio::find($request->ploa);
 			$unidade_gestora_id= $request->unidade_gestora;
 			$unidade_selecionada = UnidadeGestora::find($request->unidade_gestora);
-			$unidades_gestoras = UnidadeGestora::all();
+			$unidades_gestoras = UnidadeGestora::getOptions();
 			$certidoes_credito = CertidaoCredito::whereHas(
 				'credito_planejado', function ($query) use($unidade_gestora_id) {
 					$query->whereHas('despesa', function ($query) use($unidade_gestora_id) {

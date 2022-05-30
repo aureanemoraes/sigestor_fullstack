@@ -39,7 +39,7 @@ class UnidadeAdministrativaController extends Controller
 	public function create() {
 		return view('unidade_administrativa.create')->with([
 			'instituicoes' => Instituicao::all(),
-			'unidades_gestoras' => UnidadeGestora::all()
+			'unidades_gestoras' => UnidadeGestora::getOptions()
 		]);
 	}
 
@@ -71,7 +71,7 @@ class UnidadeAdministrativaController extends Controller
 		return view('unidade_administrativa.edit')->with([
 			'unidade_administrativa' => $unidade_administrativa,
 			'instituicoes' => Instituicao::all(),
-			'unidades_gestoras' => UnidadeGestora::all()
+			'unidades_gestoras' => UnidadeGestora::getOptions()
 		]);
 	}
 

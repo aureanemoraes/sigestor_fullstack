@@ -79,12 +79,12 @@ class PloaController extends Controller
                 'instituicoes' => Instituicao::all(),
                 'total_ploa' => $total_ploa,
                 'unidade_selecionada' => UnidadeGestora::find($unidade_gestora_id),
-				'unidades_gestoras' => UnidadeGestora::all(),
+				'unidades_gestoras' => UnidadeGestora::getOptions(),
 				'exercicio_selecionado' => $exercicio_selecionado
             ]);
         } else {
             return view('ploa.distribuicao')->with([
-				'unidades_gestoras' => UnidadeGestora::all(),
+				'unidades_gestoras' => UnidadeGestora::getOptions(),
 				'exercicios' => Exercicio::all()						
 			]);
         }

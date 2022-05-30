@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\UserVinculo;
 
 class UserSeeder extends Seeder
 {
@@ -23,6 +24,11 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'perfil' => 'institucional',
             'ativo' => 0
+        ]);
+
+        UserVinculo::create([
+            'user_id' => 1,
+            'instituicao_id' => 1
         ]);
     }
 }

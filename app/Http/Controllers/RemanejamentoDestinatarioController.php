@@ -24,7 +24,7 @@ class RemanejamentoDestinatarioController extends Controller
             $remanejamento = Remanejamento::find($request->remanejamento)->setAppends(['valor_disponivel']);
 			$unidade_gestora_id= $request->unidade_gestora;
 			$unidade_selecionada = UnidadeGestora::find($request->unidade_gestora);
-			$unidades_gestoras = UnidadeGestora::all();
+			$unidades_gestoras = UnidadeGestora::getOptions();
             $unidade_administrativa_selecionada = null;
             if(isset($request->unidade_administrativa))
                 $unidade_administrativa_selecionada = UnidadeAdministrativa::where('id', $request->unidade_administrativa)->where('unidade_gestora_id', $unidade_gestora_id)->first();

@@ -77,7 +77,7 @@ class MetaController extends Controller
 			$planos_acoes = PlanoAcao::where('plano_estrategico_id', $plano_estrategico_id)->get();
 
 			return view('meta.create')->with([
-				'unidades_gestoras' => UnidadeGestora::all(),
+				'unidades_gestoras' => UnidadeGestora::getOptions(),
 				'objetivo' => $objetivo,
 				'plano_estrategico' => $plano_estrategico,
 				'eixo_estrategico' => $eixo_estrategico,
@@ -133,7 +133,7 @@ class MetaController extends Controller
 
 			return view('meta.edit')->with([
 				'meta' => $meta,
-				'unidades_gestoras' => UnidadeGestora::all(),
+				'unidades_gestoras' => UnidadeGestora::getOptions(),
 				'objetivo' => $objetivo,
 				'plano_estrategico' => $plano_estrategico,
 				'eixo_estrategico' => $eixo_estrategico,

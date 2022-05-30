@@ -34,6 +34,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $appends = [
+        'unidades_gestoras',
+        'unidades_administrativas'
+    ];
+
 
     public function getUnidadesGestorasAttribute()
     {

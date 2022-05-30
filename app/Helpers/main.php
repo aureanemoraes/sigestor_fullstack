@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+
 function formatDate($data, $exercicio=false) 
 {
   $data = date_create($data);
@@ -61,6 +63,31 @@ function slug($string)
   $slug= str_replace(' ','-', $slug); // replace spaces by dashes
   $slug= strtolower($slug);  // make it lowercase
   return $slug;
+}
+
+function userType($tipo) {
+  switch($tipo) {
+    case 'institucional':
+      return User::whereHas('vinculos', function ($query) {
+        $query->whereNotNull('instituicao_id');
+      })->where('id', Auth::id())->exists();
+      break;
+    case 'gestor':
+      return User::whereHas('vinculos', function ($query) {
+        $query->whereNotNull('instituicao_id');
+        $query->orWhereNotNull('unidade_gestora_id');
+      })->where('id', Auth::id())->exists();
+      break;
+    case 'administrativo':
+      return User::whereHas('vinculos', function ($query) {
+        $query->whereNotNull('instituicao_id');
+        $query->orWhereNotNull('unidade_administrativa_id');
+      })->where('id', Auth::id())->exists();
+      break;
+    default:
+      return false;
+  }
+  
 }
 
 

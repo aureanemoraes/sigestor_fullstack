@@ -100,7 +100,7 @@ class LoaGestoraController extends Controller
                     'fontes' => FonteTipo::all(),
                     'acoes' => AcaoTipo::where('fav', 1)->get(),
                     'instituicoes' => Instituicao::all(),
-                    'unidades_gestoras' => UnidadeGestora::all(),
+                    'unidades_gestoras' => UnidadeGestora::getOptions(),
                     'unidade_selecionada' => $unidade_selecionada,
                     'exercicio' => $exercicio,
                     'total_ploa' => $limite_planejado,
@@ -113,7 +113,7 @@ class LoaGestoraController extends Controller
             $exercicio = Exercicio::find($request->ploa);
 
             return view('loa_gestora.index')->with([
-                'unidades_gestoras' => UnidadeGestora::all(),
+                'unidades_gestoras' => UnidadeGestora::getOptions(),
                 'exercicio' => $exercicio						
             ]);
         }

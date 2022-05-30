@@ -45,7 +45,7 @@ class UserController extends Controller
 
 	public function create() {
 		return view('user.create')->with([
-			'unidades_gestoras' => UnidadeGestora::all()
+			'unidades_gestoras' => UnidadeGestora::getOptions()
 		]);
 	}
 
@@ -116,7 +116,7 @@ class UserController extends Controller
 		$unidades_gestoras_ids = [];
 
 		if($user->perfil == 'gestor' || $user->perfil == 'administrativo') {
-			$unidades_gestoras = UnidadeGestora::all();
+			$unidades_gestoras = UnidadeGestora::getOptions();
 		}
 
 		if($user->perfil == 'administrativo') {
