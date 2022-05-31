@@ -65,7 +65,8 @@ class MetaOrcamentariaController extends Controller
 	public function create() {
 		return view('meta_orcamentaria.create')->with([
 			'naturezas_despesas' => NaturezaDespesa::where('fav', 1)->get(),
-			'acoes' => AcaoTipo::where('fav', 1)->get()
+			'acoes' => AcaoTipo::where('fav', 1)->get(),
+			'options' => []
 		]);
 	}
 
