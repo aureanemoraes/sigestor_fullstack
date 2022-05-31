@@ -36,6 +36,7 @@ use App\Http\Controllers\RemanejamentoDestinatarioController;
 use App\Http\Controllers\GraficoController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MetaOrcamentariaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,6 +81,7 @@ Route::patch('natureza_despesa/favoritar/{id}', [NaturezaDespesaController::clas
 Route::resource('natureza_despesa', NaturezaDespesaController::class);
 Route::resource('subnatureza_despesa', SubnaturezaDespesaController::class);
 Route::resource('centro_custo', CentroCustoController::class);
+Route::resource('meta_orcamentaria', MetaOrcamentariaController::class);
 
 Route::resource('plano_estrategico', PlanoEstrategicoController::class);
 Route::resource('plano_acao', PlanoAcaoController::class);

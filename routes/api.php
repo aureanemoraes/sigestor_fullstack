@@ -38,6 +38,7 @@ Route::get('meta/{meta_id}', [MetaController::class, 'dados']);
 Route::get('acao/options/{id}/{tipo}/{ploa_id}', [AcaoTipoController::class, 'getOptions']);
 Route::get('acao/tipos', [AcaoTipoController::class, 'tipos']);
 Route::get('natureza_despesa/options/{id}/{acao_id}/{tipo}/{ploa_id}', [NaturezaDespesaController::class, 'getOptions']);
+Route::get('natureza_despesa/fields/{natureza_despesa_id}', [NaturezaDespesaController::class, 'getFields']);
 Route::get('unidade_administrativa/opcoes/{unidade_gestora_id}', [UnidadeAdministrativaController::class, 'opcoes']);
 Route::get('despesa/{unidade_administrativa_id}/{ploa_id}', [DespesaController::class, 'getDespesas']);
 

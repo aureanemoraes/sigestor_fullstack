@@ -64,6 +64,9 @@
               <a href="{{ route('centro_custo.index') }}" class="nav_link nav_link_tertiary">
                 <span class="nav_name">Centros de Custo</span>
               </a>
+              <a href="{{ route('meta_orcamentaria.index') }}" class="nav_link nav_link_tertiary">
+                <span class="nav_name">Metas Orçamentárias</span>
+              </a>
               <a href="{{ route('despesa_modelo.index') }}" class="nav_link nav_link_tertiary">
                 <span class="nav_name">Despesas Modelos</span>
               </a>

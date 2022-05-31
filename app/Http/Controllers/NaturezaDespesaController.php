@@ -12,7 +12,25 @@ use Illuminate\Support\Facades\Validator;
 
 class NaturezaDespesaController extends Controller
 {
-	public function getOptions($id, $acao_id, $tipo, $ploa_id) {
+	public function getFields($natureza_despesa_id)
+	{	
+		$options[] = ['id' => '', 'text' => '--selecione--'];
+		$options[] = ['id' => 'valor', 'text' => 'Valor unitário'];
+		$options[] = ['id' => 'valor_total', 'text' => 'Valor total'];
+
+		$natureza_despesa = NaturezaDespesa::findOrFail($natureza_despesa_id);
+
+		if(isset($natureza_despesa->fields) && count($natureza_despesa->fields) > 0) {
+			foreach($natureza_despesa->fields as $field) {
+				$options[] = ['id' => $field['slug'], 'text' => $field['label']];
+			}
+		}
+
+		return $options;
+	}
+
+	public function getOptions($id, $acao_id, $tipo, $ploa_id) 
+	{
 		$options = [];
 
 		switch($tipo) {

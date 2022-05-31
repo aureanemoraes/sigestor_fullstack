@@ -24,23 +24,25 @@ class MetaOrcamentariaTransformer
           case 'qtd_alcancada':
             $meta_orcamentaria->qtd_alcancada = $value;
             break;
-          case 'acao_id':
-            $meta_orcamentaria->acao_id = $value;
+          case 'acao_tipo_id':
+            $meta_orcamentaria->acao_tipo_id = $value;
             break;
           case 'natureza_despesa_id':
             $meta_orcamentaria->natureza_despesa_id = $value;
             break;
-          case 'instituicao_id':
-            $meta_orcamentaria->instituicao_id = $value;
-            break;
-          case 'unidade_gestora_id':
-            $meta_orcamentaria->unidade_gestora_id = $value;
-            break;
-          case 'exercicio_id':
-            $meta_orcamentaria->exercicio_id = $value;
+          case 'fields':
+            $fields = [];
+            foreach($value as $key => $field) {
+              $fields[$key]['label'] = $field;
+              $fields[$key]['slug'] = slug($field);
+            }
+            $meta_orcamentaria->fields = $fields;
             break;
         }
       }
+
+      if(!isset($input['fields']))
+        $meta_orcamentaria->fields = null;
 
       return $meta_orcamentaria;
     }
