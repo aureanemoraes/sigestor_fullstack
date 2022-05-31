@@ -81,8 +81,9 @@ Route::patch('natureza_despesa/favoritar/{id}', [NaturezaDespesaController::clas
 Route::resource('natureza_despesa', NaturezaDespesaController::class);
 Route::resource('subnatureza_despesa', SubnaturezaDespesaController::class);
 Route::resource('centro_custo', CentroCustoController::class);
+Route::get('meta_orcamentaria/{meta_orcamentaria_id}/edit/gestora', [MetaOrcamentariaController::class, 'editGestora'])->name('meta_orcamentaria.edit.gestora');
+Route::put('meta_orcamentaria/{meta_orcamentaria_id}/update/gestora', [MetaOrcamentariaController::class, 'updateGestora'])->name('meta_orcamentaria.update.gestora');
 Route::resource('meta_orcamentaria', MetaOrcamentariaController::class);
-
 Route::resource('plano_estrategico', PlanoEstrategicoController::class);
 Route::resource('plano_acao', PlanoAcaoController::class);
 Route::resource('eixo_estrategico', EixoEstrategicoController::class);

@@ -29,11 +29,10 @@
     $('#tipo').on('change', () => {
       let tipo_selecionado = $('#tipo').val();
 
-      if(tipo_selecionado == 'sim_acao') {
+      if(tipo_selecionado == 'sim_natureza') {
         $('#sem-vinculo-container').hide();
         $('#qtd_estimada').attr('disabled', 'disabled');
         $('#qtd_alcancada').attr('disabled', 'disabled');
-        $('#acao_tipo_id').removeAttr('disabled');
         $('#natureza_despesa_id').removeAttr('disabled');
         $('#com-vinculo-container').show();
       } else {

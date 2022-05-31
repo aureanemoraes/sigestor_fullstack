@@ -74,6 +74,16 @@
                               {{ formatCurrency($valores_ploa_gestora['valor_a_planejar']) }}
                             </td>
                             <td>
+                              @if(isset($ploa_gestora->ploa->acao_tipo->metas_orcamentarias) && count($ploa_gestora->ploa->acao_tipo->metas_orcamentarias) > 0)
+                                @foreach($ploa_gestora->ploa->acao_tipo->metas_orcamentarias as $meta_orcamentaria)
+                                  @if(is_null($meta_orcamentaria->natureza_despesa_id) && (is_null($meta_orcamentaria->responsaveis) || $meta_orcamentaria->responsaveis()->where('unidade_gestora_id', $unidade_selecionada->id)->where('exercicio_id', $exercicio_selecionado->id)->first() == null))
+                                  <a href="{{ route('meta_orcamentaria.edit.gestora', $meta_orcamentaria->id) }}" type="button" class="btn btn-sm btn-primary">M.O.</a>
+                                  @endif
+                                @endforeach
+                                
+                              @endif
+
+                              
                               @if(!isset($tipo))
                                 <form action="{{ route('ploa_gestora.destroy', $ploa_gestora->id) }}" method="post" id="form-delete">
                                   @csrf

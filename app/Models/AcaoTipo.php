@@ -52,4 +52,9 @@ class AcaoTipo extends Model
     {
         return $this->hasMany(PloaAdministrativa::class);
     }
+
+    public function metas_orcamentarias()
+    {
+        return $this->hasMany(MetaOrcamentaria::class);
+    }
 }

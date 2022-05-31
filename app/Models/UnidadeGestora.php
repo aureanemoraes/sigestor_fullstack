@@ -37,7 +37,7 @@ class UnidadeGestora extends Model
         if(Auth::check()) {
             switch(Auth::user()->perfil) {
                 case 'institucional':
-                    return UnidadeGestora::getOptions();
+                    return UnidadeGestora::all();
                     break;
                 case 'gestor':
                     $ids = Auth::user()->vinculos()->pluck('unidade_gestora_id')->toArray();
@@ -46,7 +46,6 @@ class UnidadeGestora extends Model
             }
         }
     }
-
 
     public function getNomeCompletoAttribute()
     {

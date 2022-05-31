@@ -7,8 +7,11 @@ use App\Models\GrupoFonte;
 use App\Models\Especificacao;
 use App\Models\NaturezaDespesa;
 use App\Models\AcaoTipo;
+use App\Models\Exercicio;
+use App\Models\UnidadeGestora;
 use Illuminate\Http\Request;
 use App\Http\Transformers\MetaOrcamentariaTransformer;
+use App\Http\Transformers\MetaOrcamentariaResponsavelTransformer;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -111,6 +114,16 @@ class MetaOrcamentariaController extends Controller
 		]);
 	}
 
+	public function editGestora($id) {
+		$meta_orcamentaria = MetaOrcamentaria::findOrFail($id);
+		
+		return view('meta_orcamentaria.edit_gestora')->with([
+			'meta_orcamentaria' => $meta_orcamentaria,
+			'exercicios' => Exercicio::all(),
+			'unidades_gestoras' => UnidadeGestora::getOptions()
+		]);
+	}
+
 
 	public function update(Request $request, $id)
 	{
@@ -136,6 +149,34 @@ class MetaOrcamentariaController extends Controller
 
 	}
 
+	public function updateGestora(Request $request, $id)
+	{
+		$invalido = $this->validation($request);
+
+		if($invalido) return $invalido;
+
+		$meta_orcamentaria = MetaOrcamentaria::find($id);
+
+		if(isset($meta_orcamentaria)) {
+			try {
+				DB::beginTransaction();
+				$meta_orcamentaria = MetaOrcamentariaTransformer::toInstance($request->all(), $meta_orcamentaria);
+				$salvo = $meta_orcamentaria->save();
+				if($salvo) {
+					$responsavel = MetaOrcamentariaResponsavelTransformer::toInstance($request->all());
+					$responsavel->save();
+				}
+				DB::commit();
+
+			} catch (Exception $ex) {
+				DB::rollBack();
+			}
+		}
+
+		return redirect()->route('ploa_gestora.index', ['exercicio_id' => $request->exercicio_id, 'unidade_gestora_id' => $request->unidade_gestora_id]);
+
+	}
+
 	public function destroy($id)
 	{
 		$meta_orcamentaria = MetaOrcamentaria::find($id);
@@ -153,7 +194,7 @@ class MetaOrcamentariaController extends Controller
 	protected function validation($request) 
 	{
 		$validator = Validator::make($request->all(), [
-			'nome' => ['required'],
+			'nome' => ['nullable'],
 			'qtd_estimada' => ['nullable'],
 			'qtd_alcancada' => ['nullable'],
 			'field' => ['nullable'],

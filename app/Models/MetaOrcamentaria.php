@@ -44,6 +44,8 @@ class MetaOrcamentaria extends Model
 
     public function getQtdEstimadaAttribute($value)
     {
+        return $value;
+
         // if(!isset($value)) {
         //     if(isset($this->natureza_despesa_id)) {
         //         $qtd_estimada = Despesa::where('natureza_despesa_id', $this->natureza_despesa_id)->sum('valor_total');
@@ -56,6 +58,7 @@ class MetaOrcamentaria extends Model
 
     public function getQtdAlcancadaAttribute($value)
     {
+        return $value;
         // if(!isset($value)) {
         //     if(isset($this->natureza_despesa_id)) {
         //         $empenho = Empenho::whereHas(
@@ -86,4 +89,8 @@ class MetaOrcamentaria extends Model
         return $this->belongsTo(AcaoTipo::class);
     } 
 
+    public function responsaveis()
+    {
+        return $this->hasMany(MetaOrcamentariaResponsavel::class);
+    }
 }

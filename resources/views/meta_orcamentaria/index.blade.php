@@ -12,8 +12,6 @@
     <table class="table" id="metas_orcamentarias">
       <thead>
         <th>NOME</th>
-        <th>QTD. ESTIMADA</th>
-        <th>QTD. ALCANÇADA</th>
         <th>AÇÃO</th>
         <th>NATUREZA DE DESPESA</th>
         <th></th>
@@ -22,8 +20,6 @@
         @foreach($metas_orcamentarias as $meta_orcamentaria)
         <tr>
           <td>{{ $meta_orcamentaria->nome }}</td>
-          <td>{{ $meta_orcamentaria->qtd_estimada }}</td>
-          <td>{{ $meta_orcamentaria->qtd_alcancada }}</td>
           <td>{{ isset($meta_orcamentaria->acao_tipo) ?$meta_orcamentaria->acao_tipo->nome_completo  : '-'}}</td>
           <td>
             {{ isset($meta_orcamentaria->natureza_despesa) ? $meta_orcamentaria->natureza_despesa->nome_completo . ': ' .  $meta_orcamentaria->field['label'] : '-'}}
