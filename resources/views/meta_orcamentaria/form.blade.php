@@ -87,14 +87,14 @@
   <section class="com-vinculo-container" id="com-vinculo-container">
     <div class="mb-3">
       <label for="acao_tipo_id">Ação</label>
-      <select class="form-control form-select @error('acao_tipo_id') is-invalid @enderror" id="acao_tipo_id" aria-label="Selecione a instituição" {{ isset($meta_orcamentaria) && is_null($meta_orcamentaria->acao_tipo_id) ? 'disabled' : '' }}>
+      <select class="form-control form-select @error('acao_tipo_id') is-invalid @enderror" id="acao_tipo_id" name="acao_tipo_id" aria-label="Selecione a instituição" {{ isset($meta_orcamentaria) && is_null($meta_orcamentaria->acao_tipo_id) ? 'disabled' : '' }}>
         <option selected value="">-- selecione --</option>
         @if(isset($acoes))
           @foreach($acoes as $acao)
-            @if(isset($ploa) && $acao->id == $ploa->acao_tipo_id)
-              <option selected value="{{ $acao }}">{{ $acao->codigo . ' - ' . $acao->nome }}</option>
+            @if(isset($meta_orcamentaria) && $acao->id == $meta_orcamentaria->acao_tipo_id)
+              <option selected value="{{ $acao->id }}">{{ $acao->codigo . ' - ' . $acao->nome }}</option>
             @else
-              <option value="{{ $acao }}">{{ $acao->codigo . ' - ' . $acao->nome }}</option>
+              <option value="{{ $acao->id }}">{{ $acao->codigo . ' - ' . $acao->nome }}</option>
             @endif
           @endforeach
         @endif
@@ -112,7 +112,7 @@
         <option value="" selected>-- selecione --</option>
         @if(isset($naturezas_despesas))
           @foreach($naturezas_despesas as $natureza_despesa)
-            <option value="{{ $natureza_despesa->id }}" {{ isset($despesa) && $despesa->natureza_despesa_id == $natureza_despesa->id ? 'selected' : '' }}>{{ $natureza_despesa->nome }}</option>
+            <option value="{{ $natureza_despesa->id }}" {{ isset($meta_orcamentaria) && $meta_orcamentaria->natureza_despesa_id == $natureza_despesa->id ? 'selected' : '' }}>{{ $natureza_despesa->nome_completo }}</option>
           @endforeach
         @endif
       </select>
@@ -123,9 +123,19 @@
       @enderror
     </div>
 
+    @php
+     
+    @endphp
+
     <div class="mb-3">
       <label for="fields">Campos</label>
-      <select class="form-select @error('fields') is-invalid @enderror" id="fields" name="fields" aria-label="Selecione o grupo" {{ isset($meta_orcamentaria) && is_null($meta_orcamentaria->fields) ? 'disabled' : '' }}>
+      <select class="form-select @error('fields') is-invalid @enderror" id="field" name="field" aria-label="Selecione o grupo" {{ isset($meta_orcamentaria) && is_null($meta_orcamentaria->field) ? 'disabled' : '' }}>
+        @if(count($options) > 0)
+          <option value="" selected>-- selecione --</option>
+          @foreach($options as $option)
+            <option value="{{ $option['id'] }}" {{ isset($meta_orcamentaria) && $meta_orcamentaria->field['slug'] == $option['id'] ? 'selected' : '' }}>{{ $option['text']}}</option>
+          @endforeach
+        @endif
       </select>
       @error('fields')
         <div class="invalid-feedback">

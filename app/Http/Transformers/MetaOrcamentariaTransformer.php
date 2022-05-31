@@ -30,19 +30,14 @@ class MetaOrcamentariaTransformer
           case 'natureza_despesa_id':
             $meta_orcamentaria->natureza_despesa_id = $value;
             break;
-          case 'fields':
-            $fields = [];
-            foreach($value as $key => $field) {
-              $fields[$key]['label'] = $field;
-              $fields[$key]['slug'] = slug($field);
-            }
-            $meta_orcamentaria->fields = $fields;
+          case 'field':
+            $meta_orcamentaria->field = $value;
             break;
         }
       }
 
-      if(!isset($input['fields']))
-        $meta_orcamentaria->fields = null;
+      if(!isset($input['field']))
+        $meta_orcamentaria->field = null;
 
       return $meta_orcamentaria;
     }

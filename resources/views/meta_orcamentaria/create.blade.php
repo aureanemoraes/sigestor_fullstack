@@ -19,7 +19,7 @@
 
       if(contador > 0) contador++;
 
-      $('#fields-container').append(html);
+      $('#field-container').append(html);
     }
 
     function removerCampo(id) {
@@ -51,8 +51,8 @@
           method: "GET",
           url: `/api/natureza_despesa/fields/${natureza_despesa_id}`,
         }).done(function(response) {
-          $('#fields').empty().trigger("change");
-          $('#fields').select2({data: response});
+          $('#field').empty().trigger("change");
+          $('#field').select2({data: response});
 
         });
     });
@@ -60,7 +60,7 @@
     $(function() {
       $('#natureza_despesa_id').select2({});
       $('#acao_tipo_id').select2({});
-      $('#fields').select2({});
+      $('#field').select2({});
     })
   </script>
 @endsection

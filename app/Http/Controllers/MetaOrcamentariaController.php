@@ -69,6 +69,7 @@ class MetaOrcamentariaController extends Controller
 	public function store(Request $request)
 	{
 
+		// dd($request->all());
 		$invalido = $this->validation($request);
 
 		if($invalido) return $invalido;
@@ -91,8 +92,22 @@ class MetaOrcamentariaController extends Controller
 
 	public function edit($id) {
 		$meta_orcamentaria = MetaOrcamentaria::findOrFail($id);
+		$options[] = ['id' => 'valor', 'text' => 'Valor unitário'];
+		$options[] = ['id' => 'valor_total', 'text' => 'Valor total'];
+
+		if(isset($meta_orcamentaria) && isset($meta_orcamentaria->natureza_despesa_id)) {
+		  if(isset($meta_orcamentaria->natureza_despesa->fields) && count($meta_orcamentaria->natureza_despesa->fields) > 0) {
+			  foreach($meta_orcamentaria->natureza_despesa->fields as $field) {
+				$options[] = ['id' => $field['slug'], 'text' => $field['label']];
+			  }
+		  }
+		} 
+		
 		return view('meta_orcamentaria.edit')->with([
-			'meta_orcamentaria' => $meta_orcamentaria
+			'meta_orcamentaria' => $meta_orcamentaria,
+			'naturezas_despesas' => NaturezaDespesa::where('fav', 1)->get(),
+			'acoes' => AcaoTipo::where('fav', 1)->get(),
+			'options' => $options
 		]);
 	}
 
@@ -138,9 +153,12 @@ class MetaOrcamentariaController extends Controller
 	protected function validation($request) 
 	{
 		$validator = Validator::make($request->all(), [
-			'codigo' => ['required'],
 			'nome' => ['required'],
-			'tipo' => ['required']
+			'qtd_estimada' => ['nullable'],
+			'qtd_alcancada' => ['nullable'],
+			'field' => ['nullable'],
+			'natureza_despesa_id' => ['nullable', 'exists:naturezas_despesas,id'],
+			'acao_tipo_id' => ['nullable', 'exists:acoes_tipos,id'],
 		]);
 
 		if ($validator->fails()) {

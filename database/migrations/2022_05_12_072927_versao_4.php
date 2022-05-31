@@ -46,21 +46,18 @@ class Versao4 extends Migration
             $table->foreign('natureza_despesa_id')->references('id')->on('naturezas_despesas');
             $table->unsignedBigInteger('acao_tipo_id')->nullable();
             $table->foreign('acao_tipo_id')->references('id')->on('acoes_tipos');
-            $table->unsignedBigInteger('exercicio_id')->nullable();
-            $table->foreign('exercicio_id')->references('id')->on('exercicios');
-            $table->json('fields')->nullable();
+            $table->string('field')->nullable();
             $table->timestamps();
         });
 
         Schema::create('metas_orcamentarias_responsaveis', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('meta_orcamentaria_id')->nullable();
+            $table->unsignedBigInteger('meta_orcamentaria_id');
             $table->foreign('meta_orcamentaria_id')->references('id')->on('metas_orcamentarias');
-            $table->unsignedBigInteger('unidade_gestora_id')->nullable();
+            $table->unsignedBigInteger('unidade_gestora_id');
             $table->foreign('unidade_gestora_id')->references('id')->on('unidades_gestoras');
-            $table->unsignedBigInteger('exercicio_id')->nullable();
+            $table->unsignedBigInteger('exercicio_id');
             $table->foreign('exercicio_id')->references('id')->on('exercicios');
-            $table->json('fields')->nullable();
             $table->timestamps();
         });
     }
