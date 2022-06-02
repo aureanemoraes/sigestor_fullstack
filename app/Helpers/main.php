@@ -31,7 +31,7 @@ function cnpj($cnpj)
 
 function formatCurrency($valor) 
 {
-  $valor = 'R$ ' . number_format($valor, 2, ',');
+  $valor = 'R$ ' . number_format($valor, 2, ',', '.');
 
   return $valor;
 }

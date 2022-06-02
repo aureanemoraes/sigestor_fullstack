@@ -30,6 +30,7 @@ class DespesaSeeder extends Seeder
             'fields'  => null,
             'despesa_modelo_id' => null
         ]);
+        
         Despesa::create([
             'descricao' => 'DESPESA TESTE ' . Str::random(20),
             'valor' => 10,
@@ -52,7 +53,7 @@ class DespesaSeeder extends Seeder
             'tipo' => 'despesa_fixa',
             'ploa_administrativa_id' => 1,
             'centro_custo_id' => 1,
-            'natureza_despesa_id' => 111,
+            'natureza_despesa_id' => null,
             'subnatureza_despesa_id' => 34,
             'meta_id' => 1,
             'fields'  => null,

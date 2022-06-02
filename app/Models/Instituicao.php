@@ -24,6 +24,8 @@ class Instituicao extends Model
         'complemento'
     ];
 
+    protected $appends = ['nome_completo'];
+
     public static function getOpcoes() {
         $opcoes = Instituicao::select('id', 'nome')->get()->toArray();
 
@@ -31,6 +33,10 @@ class Instituicao extends Model
     }
 
     // Acessors
+    public function getNomeCompletoAttribute()
+    {
+        return "$this->sigla - $this->nome";
+    }
 
     // Mutators
 

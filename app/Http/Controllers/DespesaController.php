@@ -160,7 +160,7 @@ class DespesaController extends Controller
 			'tipo' => ['required'],
 			'ploa_administrativa_id' => ['required', 'exists:ploas_administrativas,id'],
 			'centro_custo_id' => ['required', 'exists:centros_custos,id'],
-            'natureza_despesa_id' => ['required', 'exists:naturezas_despesas,id'],
+            'natureza_despesa_id' => ['nullable', 'exists:naturezas_despesas,id'],
             'subnatureza_despesa_id' => ['nullable', 'exists:subnaturezas_despesas,id'],
             'meta_id' => ['required', 'exists:metas,id'],
             'despesa_modelo_id' => ['nullable', 'exists:despesas_modelos,id'],

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class UnidadeAdministrativa extends Model
 {
@@ -32,6 +33,26 @@ class UnidadeAdministrativa extends Model
     ];
 
     protected $appends = ['nome_completo'];
+
+    public static function getOptions() {
+        if(Auth::check()) {
+            switch(Auth::user()->perfil) {
+                case 'institucional':
+                    return UnidadeAdministrativa::all();
+                    break;
+                case 'gestor':
+                    $ids = Auth::user()->vinculos()->pluck('unidade_gestora_id')->toArray();
+                    return UnidadeAdministrativa::whereIn('unidade_gestora_id', $ids)->get();
+                    break;
+                case 'administrativo':
+                    $ids = Auth::user()->vinculos()->pluck('unidade_administrativa_id')->toArray();
+                    return UnidadeAdministrativa::whereIn('id', $ids)->get();
+                    break;
+                default:
+                    return [];
+            }
+        }
+    }
 
     public function setNomeAttribute($value)
     {

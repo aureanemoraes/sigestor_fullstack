@@ -26,10 +26,20 @@ class NaturezaDespesa extends Model
     ];
 
     protected $casts = [
-        'fields' => 'array'
+        'fields' => 'array',
+        'valores' => 'array'
     ];
 
     protected $appends = ['nome_completo'];
+
+    public function getValoresAttribute()
+    {
+        $valores['total_custo_fixo'] = $this->despesas()->where('tipo', 'despesa_fixa')->sum('valor_total');
+        $valores['total_custo_variavel'] = $this->despesas()->where('tipo', 'despesa_variavel')->sum('valor_total');
+        $valores['total'] = $valores['total_custo_fixo'] + $valores['total_custo_variavel']; 
+
+        return $valores;
+    }
 
     public static function valores($natureza_despesa, $acao_id, $exercicio_id, $unidade_administrativa_id) {
         $dados['valor_total'] = 0;
@@ -45,8 +55,6 @@ class NaturezaDespesa extends Model
                 });
             });
         })->get();
-
-        // dd($despesas->toArray());
 
         foreach($despesas as $despesa) {
             $dados['valor_total'] += $despesa->valor_total;

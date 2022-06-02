@@ -83,7 +83,7 @@ class Versao2 extends Migration
             $table->foreign('ploa_administrativa_id')->references('id')->on('ploas_administrativas');
             $table->unsignedBigInteger('centro_custo_id');
             $table->foreign('centro_custo_id')->references('id')->on('centros_custos');
-            $table->unsignedBigInteger('natureza_despesa_id');
+            $table->unsignedBigInteger('natureza_despesa_id')->nullable();
             $table->foreign('natureza_despesa_id')->references('id')->on('naturezas_despesas');
             $table->unsignedBigInteger('subnatureza_despesa_id')->nullable();
             $table->foreign('subnatureza_despesa_id')->references('id')->on('subnaturezas_despesas');

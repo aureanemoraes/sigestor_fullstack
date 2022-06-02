@@ -43,6 +43,8 @@ class UnidadeGestora extends Model
                     $ids = Auth::user()->vinculos()->pluck('unidade_gestora_id')->toArray();
                     return UnidadeGestora::whereIn('id', $ids)->get();
                     break;
+                default:
+                    return [];
             }
         }
     }

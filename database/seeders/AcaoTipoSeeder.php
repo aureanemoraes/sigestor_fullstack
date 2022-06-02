@@ -379,7 +379,7 @@ class AcaoTipoSeeder extends Seeder
         AcaoTipo::create([ 'codigo' => '20VZ', 'nome' => 'ARTICULACAO PARA A GESTAO E IMPLEMENTACAO DAS POLITICAS PUBLICAS AMBIENTAIS NACIONAIS' ]);
         AcaoTipo::create([ 'codigo' => '21AM', 'nome' => 'ARTICULACAO, COOPERACAO E ATUACAO INTEGRADA PARA O DESENVOLVIMENTO DO TURISMO' ]);
         AcaoTipo::create([ 'codigo' => '4002', 'nome' => 'ASSISTENCIA AO ESTUDANTE DE ENSINO SUPERIOR' ]);
-        AcaoTipo::create([ 'codigo' => '2994', 'nome' => 'ASSISTENCIA AOS ESTUDANTES DAS INSTITUICOES FEDERAIS DE EDUCACAO PROFISSIONAL E TECNOLOGICA', 'fav' => 1]);
+        AcaoTipo::create([ 'codigo' => '2994', 'nome' => 'ASSISTENCIA AOS ESTUDANTES DAS INSTITUICOES FEDERAIS DE EDUCACAO PROFISSIONAL E TECNOLOGICA', 'fav' => 1, 'custeio' => true]);
         AcaoTipo::create([ 'codigo' => '21C1', 'nome' => 'ASSISTENCIA EMERGENCIAL E ACOLHIMENTO HUMANITARIO DE PESSOAS ADVINDAS DA REPUBLICA BOLIVARIANA DA VENEZUELA' ]);
         AcaoTipo::create([ 'codigo' => '2004', 'nome' => 'ASSISTENCIA MEDICA E ODONTOLOGICA AOS SERVIDORES CIVIS, EMPREGADOS, MILITARES E SEUS DEPENDENTES' ]);
         AcaoTipo::create([ 'codigo' => '00FM', 'nome' => 'ASSISTENCIA MEDICA E ODONTOLOGICA AS POLICIAS CIVIL E MILITAR E AO CORPO DE BOMBEIROS DO DISTRITO FEDERAL' ]);
@@ -1308,7 +1308,7 @@ class AcaoTipoSeeder extends Seeder
         AcaoTipo::create([ 'codigo' => '20VF', 'nome' => 'FORTALECIMENTO INSTITUCIONAL' ]);
         AcaoTipo::create([ 'codigo' => '213Q', 'nome' => 'FORTALECIMENTO INSTITUCIONAL DOS ORGAOS ESTADUAIS E MUNICIPAIS PARA O ENFRENTAMENTO AO RACISMO E PROMOCAO DA IGUALDADE RACIAL' ]);
         AcaoTipo::create([ 'codigo' => '213J', 'nome' => 'FUNCIONAMENTO DA COMISSAO TECNICA NACIONAL DE BIOSSEGURANCA' ]);
-        AcaoTipo::create([ 'codigo' => '20RL', 'nome' => 'FUNCIONAMENTO DAS INSTITUICOES DA REDE FEDERAL DE EDUCACAO PROFISSIONAL, CIENTIFICA E TECNOLOGICA', 'fav' => 1]);
+        AcaoTipo::create([ 'codigo' => '20RL', 'nome' => 'FUNCIONAMENTO DAS INSTITUICOES DA REDE FEDERAL DE EDUCACAO PROFISSIONAL, CIENTIFICA E TECNOLOGICA', 'fav' => 1, 'custeio' => true, 'investimento' => true]);
         AcaoTipo::create([ 'codigo' => '20RI', 'nome' => 'FUNCIONAMENTO DAS INSTITUICOES FEDERAIS DE EDUCACAO BASICA' ]);
         AcaoTipo::create([ 'codigo' => '4815', 'nome' => 'FUNCIONAMENTO DAS UNIDADES DESCENTRALIZADAS' ]);
         AcaoTipo::create([ 'codigo' => '2593', 'nome' => 'FUNCIONAMENTO DAS UNIDADES DESCENTRALIZADAS DA PREVIDENCIA SOCIAL' ]);
@@ -2063,7 +2063,7 @@ class AcaoTipoSeeder extends Seeder
         AcaoTipo::create([ 'codigo' => '20W2', 'nome' => 'REDUCAO DA VULNERABILIDADE AOS EFEITOS DA DESERTIFICACAO' ]);
         AcaoTipo::create([ 'codigo' => '20ZU', 'nome' => 'REDUCAO DE RISCOS NA ATIVIDADE AGROPECUARIA' ]);
         AcaoTipo::create([ 'codigo' => '20G8', 'nome' => 'REESTRUTURACAO DOS SERVICOS AMBULATORIAIS E HOSPITALARES PRESTADOS PELOS HOSPITAIS UNIVERSITARIOS FEDERAIS (FINANCIAMENTO PARTILHADO - REHUF)' ]);
-        AcaoTipo::create([ 'codigo' => '20RG', 'nome' => 'REESTRUTURACAO E MODERNIZACAO DAS INSTITUICOES DA REDE FEDERAL DE EDUCACAO PROFISSIONAL, CIENTIFICA E TECNOLOGICA', 'fav' => 1 ]);
+        AcaoTipo::create([ 'codigo' => '20RG', 'nome' => 'REESTRUTURACAO E MODERNIZACAO DAS INSTITUICOES DA REDE FEDERAL DE EDUCACAO PROFISSIONAL, CIENTIFICA E TECNOLOGICA', 'fav' => 1, 'investimento' => true]);
         AcaoTipo::create([ 'codigo' => '8282', 'nome' => 'REESTRUTURACAO E MODERNIZACAO DAS INSTITUICOES FEDERAIS DE ENSINO SUPERIOR' ]);
         AcaoTipo::create([ 'codigo' => '20RX', 'nome' => 'REESTRUTURACAO E MODERNIZACAO DOS HOSPITAIS UNIVERSITARIOS FEDERAIS' ]);
         AcaoTipo::create([ 'codigo' => '0243', 'nome' => 'REFINANCIAMENTO DA DIVIDA PUBLICA MOBILIARIA FEDERAL EXTERNA' ]);
