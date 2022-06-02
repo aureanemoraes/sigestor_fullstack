@@ -10,5 +10,12 @@
 @endsection
 
 @section('content')
-    <h3>Relatório INDEX</h3>
+    <h3>Relatórios</h3>
+    <div class="list-group">
+      <a href="{{ route('relatorio.simplificado') }}" class="list-group-item list-group-item-action" target="_blank">
+        Relatório Simplificado
+      </a>
+      <a href="#" class="list-group-item list-group-item-action">Relatório Geral</a>
+      <a href="#" class="list-group-item list-group-item-action">Relatório de Metas</a>
+    </div>
 @endsection
