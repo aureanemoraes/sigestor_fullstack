@@ -123,15 +123,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($naturezas_despesas as $natureza_despesa)
-                                       @if ()
+                                    @foreach($acao->naturezas_despesas as $natureza_despesa)
+                                       {{-- @if () --}}
                                         <tr>
                                             <td>{{ $natureza_despesa->nome_completo }}</td>
                                             <td>R$ 00,00</td>
                                             <td>R$ 00,00</td>
                                             <td>R$ 00,00</td>
                                         </tr>
-                                       @endif
+                                       {{-- @endif --}}
                                     @endforeach
                                 </tbody>
                                 <tfoot>

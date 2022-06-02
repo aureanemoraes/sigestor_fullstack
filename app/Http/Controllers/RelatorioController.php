@@ -59,44 +59,91 @@ class RelatorioController extends Controller
         })
         ->get();
         
-
-
-        $naturezas_despesas = NaturezaDespesa::with('subnaturezas_despesas')->whereHas('despesas', function ($query) use($exercicio_id, $instituicao_id) {
-            $query->whereHas('ploa_administrativa', function ($query) use($exercicio_id, $instituicao_id) {
-                $query->whereHas('ploa_gestora', function ($query) use($exercicio_id, $instituicao_id) {
-                    $query->whereHas('ploa', function ($query) use($exercicio_id, $instituicao_id) {
-                        $query->where('exercicio_id', $exercicio_id);
-                        $query->where('instituicao_id', $instituicao_id);
-                    });
-                });
-            });
-        })
-        ->orWhereHas('subnaturezas_despesas',function ($query) use($exercicio_id, $instituicao_id){
-            $query->whereHas('despesas', function ($query) use($exercicio_id, $instituicao_id) {
-                $query->whereHas('ploa_administrativa', function ($query) use($exercicio_id, $instituicao_id) {
-                    $query->whereHas('ploa_gestora', function ($query) use($exercicio_id, $instituicao_id) {
-                        $query->whereHas('ploa', function ($query) use($exercicio_id, $instituicao_id) {
+        foreach($acoes as $acao) {
+            $acao_id = $acao->id;
+            $acao['naturezas_despesas'] = NaturezaDespesa::with('subnaturezas_despesas')->whereHas('despesas', function ($query) use($exercicio_id, $instituicao_id, $acao_id) {
+                $query->whereHas('ploa_administrativa', function ($query) use($exercicio_id, $instituicao_id, $acao_id) {
+                    $query->whereHas('ploa_gestora', function ($query) use($exercicio_id, $instituicao_id, $acao_id) {
+                        $query->whereHas('ploa', function ($query) use($exercicio_id, $instituicao_id, $acao_id) {
                             $query->where('exercicio_id', $exercicio_id);
                             $query->where('instituicao_id', $instituicao_id);
+                            $query->where('acao_tipo_id', $acao_id);
                         });
                     });
                 });
-            });
-        })
-        ->get();
+            })
+            ->orWhereHas('subnaturezas_despesas',function ($query) use($exercicio_id, $instituicao_id, $acao_id){
+                $query->whereHas('despesas', function ($query) use($exercicio_id, $instituicao_id, $acao_id) {
+                    $query->whereHas('ploa_administrativa', function ($query) use($exercicio_id, $instituicao_id, $acao_id) {
+                        $query->whereHas('ploa_gestora', function ($query) use($exercicio_id, $instituicao_id, $acao_id) {
+                            $query->whereHas('ploa', function ($query) use($exercicio_id, $instituicao_id, $acao_id) {
+                                $query->where('exercicio_id', $exercicio_id);
+                                $query->where('instituicao_id', $instituicao_id);
+                                $query->where('acao_tipo_id', $acao_id);
+                            });
+                        });
+                    });
+                });
+            })
+            ->get();
 
-        // definindo valores totais
-        foreach($naturezas_despesas as $natureza_despesa) {
-            $valores_totais['despesas_fixas']       += $natureza_despesa->despesas()->where('tipo', 'despesa_fixa')->sum('valor_total');
-            $valores_totais['despesas_variaveis']   += $natureza_despesa->despesas()->where('tipo', 'despesa_variavel')->sum('valor_total');
+            if(count($acao->naturezas_despesas) > 0) {
+               // // definindo valores totais
+                foreach($acao->naturezas_despesas as $natureza_despesa) {
+                    $natureza_despesa->setAppends(['valores']);
 
-            if(count($natureza_despesa->subnaturezas_despesas) > 0) {
-                foreach($natureza_despesa->subnaturezas_despesas as $subnatureza_despesa) {
-                    $valores_totais['despesas_fixas']       += $subnatureza_despesa->despesas()->where('tipo', 'despesa_fixa')->sum('valor_total');
-                    $valores_totais['despesas_variaveis']   += $subnatureza_despesa->despesas()->where('tipo', 'despesa_variavel')->sum('valor_total');
-                }
+                    $valores_totais['despesas_fixas']       += $natureza_despesa->despesas()->where('tipo', 'despesa_fixa')->sum('valor_total');
+                    $valores_totais['despesas_variaveis']   += $natureza_despesa->despesas()->where('tipo', 'despesa_variavel')->sum('valor_total');
+
+                    if(count($natureza_despesa->subnaturezas_despesas) > 0) {
+                        foreach($natureza_despesa->subnaturezas_despesas as $subnatureza_despesa) {
+                            $subnatureza_despesa->setAppends(['valores']);
+                            $valores_totais['despesas_fixas']       += $subnatureza_despesa->despesas()->where('tipo', 'despesa_fixa')->sum('valor_total');
+                            $valores_totais['despesas_variaveis']   += $subnatureza_despesa->despesas()->where('tipo', 'despesa_variavel')->sum('valor_total');
+                        }
+                    }
+                }  
             }
         }
+
+        // dd($acoes->toArray());
+
+        // $naturezas_despesas = NaturezaDespesa::with('subnaturezas_despesas')->whereHas('despesas', function ($query) use($exercicio_id, $instituicao_id) {
+        //     $query->whereHas('ploa_administrativa', function ($query) use($exercicio_id, $instituicao_id) {
+        //         $query->whereHas('ploa_gestora', function ($query) use($exercicio_id, $instituicao_id) {
+        //             $query->whereHas('ploa', function ($query) use($exercicio_id, $instituicao_id) {
+        //                 $query->where('exercicio_id', $exercicio_id);
+        //                 $query->where('instituicao_id', $instituicao_id);
+        //             });
+        //         });
+        //     });
+        // })
+        // ->orWhereHas('subnaturezas_despesas',function ($query) use($exercicio_id, $instituicao_id){
+        //     $query->whereHas('despesas', function ($query) use($exercicio_id, $instituicao_id) {
+        //         $query->whereHas('ploa_administrativa', function ($query) use($exercicio_id, $instituicao_id) {
+        //             $query->whereHas('ploa_gestora', function ($query) use($exercicio_id, $instituicao_id) {
+        //                 $query->whereHas('ploa', function ($query) use($exercicio_id, $instituicao_id) {
+        //                     $query->where('exercicio_id', $exercicio_id);
+        //                     $query->where('instituicao_id', $instituicao_id);
+        //                 });
+        //             });
+        //         });
+        //     });
+        // })
+        // ->get();
+
+        // // definindo valores totais
+        // foreach($naturezas_despesas as $natureza_despesa) {
+        //     $valores_totais['despesas_fixas']       += $natureza_despesa->despesas()->where('tipo', 'despesa_fixa')->sum('valor_total');
+        //     $valores_totais['despesas_variaveis']   += $natureza_despesa->despesas()->where('tipo', 'despesa_variavel')->sum('valor_total');
+
+        //     if(count($natureza_despesa->subnaturezas_despesas) > 0) {
+        //         foreach($natureza_despesa->subnaturezas_despesas as $subnatureza_despesa) {
+        //             $valores_totais['despesas_fixas']       += $subnatureza_despesa->despesas()->where('tipo', 'despesa_fixa')->sum('valor_total');
+        //             $valores_totais['despesas_variaveis']   += $subnatureza_despesa->despesas()->where('tipo', 'despesa_variavel')->sum('valor_total');
+        //         }
+        //     }
+        // }
 
    
         foreach($acoes as $acao) {
@@ -116,26 +163,13 @@ class RelatorioController extends Controller
                     $dados[$acao->id]['tipos'][$tipo] = [];
                 }
             }
-
-            foreach($naturezas_despesas as $natureza_despesa) {
-                foreach($natureza_despesa->despesas as $despesa) {
-                    if(
-                        $despesa->ploa_administrativa->ploa_gestora->ploa->acao_tipo_id == $acao->id
-                        &&
-                        !in_array($natureza_despesa->id, $natureza_despesas_controlador) 
-                    ) {
-                        $tipo_acao = $despesa->ploa_administrativa->ploa_gestora->ploa->tipo_acao;
-                        $dados[$acao->id]['tipos'][$tipo_acao] = $natureza_despesa->toArray();
-                    }
-                }
-            }
         }
 
         return view('relatorio.relatorio-simplificado')->with([
             'exercicios' => Exercicio::all(),
             'unidades_gestoras' => UnidadeGestora::getOptions(),
             'unidades_administrativas' => UnidadeAdministrativa::getOptions(),
-            'naturezas_despesas' => $naturezas_despesas,
+            // 'naturezas_despesas' => $naturezas_despesas,
             'tipo_relatorio' => $tipo_relatorio,
             'entidade' => $entidade,
             'acoes' => $acoes,
