@@ -30,7 +30,6 @@ class DatabaseSeeder extends Seeder
             // AcaoSeeder::class,
             // FonteAcaoSeeder::class,
             // MetaOrcamentariaSeeder::class,
-            // DespesaSeeder::class,
             // FonteProgramaSeeder::class,
             UserSeeder::class,
             PlanoEstrategicoSeeder::class,
@@ -38,6 +37,11 @@ class DatabaseSeeder extends Seeder
             EixoEstrategicoSeeder::class,
             DimensaoSeeder::class,
             ObjetivoSeeder::class,
+            PloaSeeder::class,
+            PloaGestoraSeeder::class,
+            PloaAdministrativaSeeder::class,
+            MetaSeeder::class,
+            DespesaSeeder::class,
         ]);
     }
 }

@@ -14,7 +14,7 @@ class NaturezaDespesaSeeder extends Seeder
      */
     public function run()
     {
-        NaturezaDespesa::create([ 'codigo' => '313041', 'nome' => 'Contribuições', 'tipo' => 'custeio' ]);
+        NaturezaDespesa::create([ 'codigo' => '313041', 'nome' => 'Contribuições', 'tipo' => 'custeio']);
 NaturezaDespesa::create([ 'codigo' => '318004', 'nome' => 'Contratação por Tempo Determinado', 'tipo' => 'custeio' ]);
 NaturezaDespesa::create([ 'codigo' => '318034', 'nome' => 'Outras Despesas de Pessoal Decorrentes de Contratos de Terceirização', 'tipo' => 'custeio' ]);
 NaturezaDespesa::create([ 'codigo' => '319001', 'nome' => 'Aposentadorias e Reformas', 'tipo' => 'custeio' ]);
@@ -116,15 +116,15 @@ NaturezaDespesa::create([ 'codigo' => '339006', 'nome' => 'Benefício Mensal ao 
 NaturezaDespesa::create([ 'codigo' => '339008', 'nome' => 'Outros Benefícios Assistenciais', 'tipo' => 'custeio' ]);
 NaturezaDespesa::create([ 'codigo' => '339009', 'nome' => 'Salário-Família', 'tipo' => 'custeio' ]);
 NaturezaDespesa::create([ 'codigo' => '339010', 'nome' => 'Outros Benefícios de Natureza Social', 'tipo' => 'custeio' ]);
-NaturezaDespesa::create([ 'codigo' => '339014', 'nome' => 'Diárias - Civil', 'tipo' => 'custeio' ]);
+NaturezaDespesa::create([ 'codigo' => '339014', 'nome' => 'Diárias - Civil', 'tipo' => 'custeio', 'fav' => 1]);
 NaturezaDespesa::create([ 'codigo' => '339015', 'nome' => 'Diárias - Militar', 'tipo' => 'custeio' ]);
-NaturezaDespesa::create([ 'codigo' => '339018', 'nome' => 'Auxílio Financeiro a Estudantes', 'tipo' => 'custeio']);
+NaturezaDespesa::create([ 'codigo' => '339018', 'nome' => 'Auxílio Financeiro a Estudantes', 'tipo' => 'custeio', 'fav' => 1]);
 NaturezaDespesa::create([ 'codigo' => '339019', 'nome' => 'Auxílio-Fardamento', 'tipo' => 'custeio' ]);
 NaturezaDespesa::create([ 'codigo' => '339020', 'nome' => 'Auxílio Financeiro a Pesquisadores', 'tipo' => 'custeio' ]);
 NaturezaDespesa::create([ 'codigo' => '339026', 'nome' => 'Obrigações Decorrentes de Política Monetária', 'tipo' => 'custeio' ]);
 NaturezaDespesa::create([ 'codigo' => '339027', 'nome' => 'Encargos pela Honra de Avais, Garantias, Seguros e Similares', 'tipo' => 'custeio' ]);
 NaturezaDespesa::create([ 'codigo' => '339028', 'nome' => 'Remuneração de Cotas de Fundos Autárquicos', 'tipo' => 'custeio' ]);
-NaturezaDespesa::create([ 'codigo' => '339030', 'nome' => 'Material de Consumo', 'tipo' => 'custeio' ]);
+NaturezaDespesa::create([ 'codigo' => '339030', 'nome' => 'Material de Consumo', 'tipo' => 'custeio', 'fav' => 1]);
 NaturezaDespesa::create([ 'codigo' => '339031', 'nome' => 'Premiações Culturais, Artísticas, Científicas, Desportivas e Outras', 'tipo' => 'custeio' ]);
 NaturezaDespesa::create([ 'codigo' => '339032', 'nome' => 'Material de Distribuição Gratuita', 'tipo' => 'custeio' ]);
 NaturezaDespesa::create([ 'codigo' => '339033', 'nome' => 'Passagens e Despesas com Locomoção', 'tipo' => 'custeio' ]);
@@ -132,7 +132,7 @@ NaturezaDespesa::create([ 'codigo' => '339035', 'nome' => 'Serviços de Consulto
 NaturezaDespesa::create([ 'codigo' => '339036', 'nome' => 'Outros Serviços de Terceiros - Pessoa Física', 'tipo' => 'custeio' ]);
 NaturezaDespesa::create([ 'codigo' => '339037', 'nome' => 'Locação de Mão-de-Obra', 'tipo' => 'custeio' ]);
 NaturezaDespesa::create([ 'codigo' => '339038', 'nome' => 'Arrendamento Mercantil', 'tipo' => 'custeio' ]);
-NaturezaDespesa::create([ 'codigo' => '339039', 'nome' => 'Outros Serviços de Terceiros - Pessoa Jurídica', 'tipo' => 'custeio' ]);
+NaturezaDespesa::create([ 'codigo' => '339039', 'nome' => 'Outros Serviços de Terceiros - Pessoa Jurídica', 'tipo' => 'custeio', 'fav' => 1]);
 NaturezaDespesa::create([ 'codigo' => '339041', 'nome' => 'Contribuições', 'tipo' => 'custeio' ]);
 NaturezaDespesa::create([ 'codigo' => '339045', 'nome' => 'Equalização de Preços e Taxas', 'tipo' => 'custeio' ]);
 NaturezaDespesa::create([ 'codigo' => '339046', 'nome' => 'Auxílio-Alimentação', 'tipo' => 'custeio' ]);
@@ -205,7 +205,7 @@ NaturezaDespesa::create([ 'codigo' => '449036', 'nome' => 'Outros Serviços de T
 NaturezaDespesa::create([ 'codigo' => '449037', 'nome' => 'Locação de Mão-de-Obra', 'tipo' => 'investimento' ]);
 NaturezaDespesa::create([ 'codigo' => '449039', 'nome' => 'Outros Serviços de Terceiros - Pessoa Jurídica', 'tipo' => 'investimento' ]);
 NaturezaDespesa::create([ 'codigo' => '449047', 'nome' => 'Obrigações Tributárias e Contributivas', 'tipo' => 'investimento' ]);
-NaturezaDespesa::create([ 'codigo' => '449051', 'nome' => 'Obras e Instalações', 'tipo' => 'investimento' ]);
+NaturezaDespesa::create([ 'codigo' => '449051', 'nome' => 'Obras e Instalações', 'tipo' => 'investimento', 'fav' => 1]);
 NaturezaDespesa::create([ 'codigo' => '449052', 'nome' => 'Equipamentos e Material Permanente', 'tipo' => 'investimento' ]);
 NaturezaDespesa::create([ 'codigo' => '449061', 'nome' => 'Aquisição de Imóveis', 'tipo' => 'investimento' ]);
 NaturezaDespesa::create([ 'codigo' => '449091', 'nome' => 'Sentenças Judiciais', 'tipo' => 'investimento' ]);

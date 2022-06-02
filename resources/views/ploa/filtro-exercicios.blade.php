@@ -4,7 +4,7 @@
       @php
         $exercico_selecionado_id = isset($exercicio_selecionado) ?  $exercicio_selecionado->id : null;
       @endphp
-      <a href="{{ route('relatorio.ploa', [1, $exercico_selecionado_id]) }}" class="btn btn-sm btn-primary">Relatório</a>
+      {{-- <a href="{{ route('relatorio.ploa', [1, $exercico_selecionado_id]) }}" class="btn btn-sm btn-primary">Relatório</a> --}}
     </div>
   </div>
   <div>

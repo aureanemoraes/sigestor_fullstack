@@ -6,7 +6,7 @@
         $exercico_selecionado_id = isset($exercicio_selecionado) ?  $exercicio_selecionado->id : null;
         $unidade_administrativa_id = isset($unidade_selecionada) ?  $unidade_selecionada->id : null;
       @endphp
-      <a href="{{ route('relatorio.ploa.planejamento', [$unidade_administrativa_id, $exercico_selecionado_id]) }}" class="btn btn-sm btn-primary">Relatório</a>
+      {{-- <a href="{{ route('relatorio.ploa.planejamento', [$unidade_administrativa_id, $exercico_selecionado_id]) }}" class="btn btn-sm btn-primary">Relatório</a> --}}
     </div>
   </div>
   <div class="d-flex justify-content-end">
