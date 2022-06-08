@@ -11,24 +11,28 @@
 @endsection
 
 @section('content')
-    @include('relatorio.filtros')
+    @include('relatorio.filtros', ['relatorio' => 'simplificado'])
+
     @php
         switch($tipo_relatorio) {
             case 'institucional':
                 $lugar = "INSTITUIÇÃO: $entidade->nome_completo";
+                break;
             case 'gestor':
                 $lugar = "UNIDADE GESTORA: $entidade->nome_completo";
+                break;
             case 'administrativo':
                 $lugar = "UNIDADE ADMINISTRATIVA: $entidade->nome_completo";
+                break;
         }
     @endphp
     <div class="d-flex align-items-end flex-column">
-        <p>PLANEJAMENTO ORÇAMENTÁRIO: EXERCÍCIO {2019} – PLOA</p>
+        <p>PLANEJAMENTO ORÇAMENTÁRIO: EXERCÍCIO {{ $exercicio->nome }} – PLOA</p>
         <p>{{ $lugar }}</p>
     </div>
     <div class="resumos row">
         <div class="col metas-orcamentarias">
-            <div class="table-responvise table-responvise-sm">
+            {{-- <div class="table-responvise table-responvise-sm">
                 <table class="table table-sm">
                     <tbody>
                         <tr>
@@ -37,7 +41,7 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
+            </div> --}}
         </div>
         <div class="col acoes">
             <div class="table-responsive table-responsive-sm">
@@ -109,6 +113,12 @@
                 </div>
                 @if(count($acao->tipos) > 0)
                     @foreach($acao->tipos as $tipo_acao)
+                        {{-- @php
+                            $total_custo_fixo_por_tipo_acao       = 0;
+                            $total_custo_variavel_por_tipo_acao   = 0;
+                            $total_por_tipo_acao                  = 0;
+                        @endphp --}}
+
                         <div class="row bg-secondary">
                             <span class="text-center">{{ Str::upper($tipo_acao) }}</span>
                         </div>
@@ -123,40 +133,44 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($acao->naturezas_despesas as $natureza_despesa)
-                                       {{-- @if () --}}
+                                    @foreach($acao[$tipo_acao]['naturezas_despesas'] as $natureza_despesa)
                                         <tr>
                                             <td>{{ $natureza_despesa->nome_completo }}</td>
-                                            <td>R$ 00,00</td>
-                                            <td>R$ 00,00</td>
-                                            <td>R$ 00,00</td>
+                                            <td>{{ formatCurrency($natureza_despesa['custo_fixo']) }}</td>
+                                            <td>{{ formatCurrency($natureza_despesa['custo_variavel']) }}</td>
+                                            <td>{{ formatCurrency($natureza_despesa['total']) }}</td>
                                         </tr>
-                                       {{-- @endif --}}
+
+                                        {{-- @php
+                                            $total_custo_fixo_por_tipo_acao       += $natureza_despesa['custo_fixo'];
+                                            $total_custo_variavel_por_tipo_acao   += $natureza_despesa['custo_variavel'];
+                                            $total_por_tipo_acao                  += $natureza_despesa['total'];
+                                        @endphp --}}
                                     @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th class="text-end">TOTAL TIPO DE DESPESA DA AÇÃO</th>
-                                        <td>R$ 00,00</td>
-                                        <td>R$ 00,00</td>
-                                        <td>R$ 00,00</td>
+                                        <th class="text-end">TOTAL {{ Str::upper($tipo_acao) }}</th>
+                                        <td>{{ formatCurrency($acao[$tipo_acao]['total_custo_fixo']) }}</td>
+                                        <td>{{ formatCurrency($acao[$tipo_acao]['total_custo_variavel']) }}</td>
+                                        <td>{{ formatCurrency($acao[$tipo_acao]['total']) }}</td>
                                     </tr>
                                 </tfoot>
                             </table>
                         </div>
-                        <div class="table-responsive table-responsive-sm">
-                            <table class="table table-sm acao-total">
-                                <tbody>
-                                    <tr>
-                                        <th class="text-end" width="70%">TOTAL GERAL</th>
-                                        <td width="10%">R$ 00,00</td>
-                                        <td width="10%">R$ 00,00</td>
-                                        <td width="10%">R$ 00,00</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
                     @endforeach
+                    <div class="table-responsive table-responsive-sm">
+                        <table class="table table-sm acao-total">
+                            <tbody>
+                                <tr>
+                                    <th class="text-end" width="70%">TOTAL GERAL</th>
+                                    <td>{{ formatCurrency($acao['total_custo_fixo']) }}</td>
+                                    <td>{{ formatCurrency($acao['total_custo_variavel']) }}</td>
+                                    <td>{{ formatCurrency($acao['total']) }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 @endif
             @endforeach
         </div>

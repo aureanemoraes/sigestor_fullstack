@@ -117,6 +117,7 @@ Route::resource('despesa_modelo', DespesaModeloController::class);
 Route::resource('despesa', DespesaController::class);
 
 Route::get('relatorio/relatorio_simplificado', [RelatorioController::class, 'relatorioSimplificado'])->name('relatorio.simplificado');
+Route::get('relatorio/relatorio_geral', [RelatorioController::class, 'relatorioGeral'])->name('relatorio.geral');
 Route::get('relatorio', [RelatorioController::class, 'index'])->name('relatorio.index');
 Route::get('loa/loas/{ploa_id}', [LoaController::class, 'loas'])->name('loa.loas');
 Route::get('loa/lista', [LoaController::class, 'lista'])->name('loa.lista');

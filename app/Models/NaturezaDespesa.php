@@ -21,10 +21,6 @@ class NaturezaDespesa extends Model
         'fields'
     ];
 
-    protected $with = [
-        'subnaturezas_despesas'
-    ];
-
     protected $casts = [
         'fields' => 'array',
         'valores' => 'array'

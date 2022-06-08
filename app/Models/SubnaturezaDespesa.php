@@ -25,6 +25,13 @@ class SubnaturezaDespesa extends Model
         'valores' => 'array'
     ];
 
+    protected $appends = ['nome_completo'];
+
+    public function getNomeCompletoAttribute()
+    {
+        return $this->attributes['codigo'] . ' - ' . $this->attributes['nome'];
+    }
+    
     public function getValoresAttribute()
     {
         $valores['total_custo_fixo'] = $this->despesas()->where('tipo', 'despesa_fixa')->sum('valor_total');

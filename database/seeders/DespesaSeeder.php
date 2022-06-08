@@ -19,6 +19,45 @@ class DespesaSeeder extends Seeder
         // 103	"Diárias - Civil"
         Despesa::create([
             'descricao' => 'DESPESA TESTE ' . Str::random(20),
+            'valor' => 50,
+            'valor_total' => 50,
+            'tipo' => 'despesa_fixa',
+            'ploa_administrativa_id' => 1,
+            'centro_custo_id' => 1,
+            'natureza_despesa_id' => 105,
+            'subnatureza_despesa_id' => null,
+            'meta_id' => 1,
+            'fields'  => null,
+            'despesa_modelo_id' => null
+        ]);
+        Despesa::create([
+            'descricao' => 'DESPESA TESTE ' . Str::random(20),
+            'valor' => 25,
+            'valor_total' => 25,
+            'tipo' => 'despesa_fixa',
+            'ploa_administrativa_id' => 2,
+            'centro_custo_id' => 1,
+            'natureza_despesa_id' => 105,
+            'subnatureza_despesa_id' => null,
+            'meta_id' => 1,
+            'fields'  => null,
+            'despesa_modelo_id' => null
+        ]);
+        Despesa::create([
+            'descricao' => 'DESPESA TESTE ' . Str::random(20),
+            'valor' => 30,
+            'valor_total' => 30,
+            'tipo' => 'despesa_fixa',
+            'ploa_administrativa_id' => 2,
+            'centro_custo_id' => 1,
+            'natureza_despesa_id' => 105,
+            'subnatureza_despesa_id' => null,
+            'meta_id' => 1,
+            'fields'  => null,
+            'despesa_modelo_id' => null
+        ]);
+        Despesa::create([
+            'descricao' => 'DESPESA TESTE ' . Str::random(20),
             'valor' => 20,
             'valor_total' => 20,
             'tipo' => 'despesa_variavel',
@@ -44,6 +83,19 @@ class DespesaSeeder extends Seeder
             'fields'  => null,
             'despesa_modelo_id' => null
         ]);
+        Despesa::create([
+            'descricao' => 'DESPESA TESTE ' . Str::random(20),
+            'valor' => 50,
+            'valor_total' => 50,
+            'tipo' => 'despesa_fixa',
+            'ploa_administrativa_id' => 2,
+            'centro_custo_id' => 1,
+            'natureza_despesa_id' => 103,
+            'subnatureza_despesa_id' => null,
+            'meta_id' => 1,
+            'fields'  => null,
+            'despesa_modelo_id' => null
+        ]);
 
         // 111	"Material de Consumo"
         Despesa::create([
@@ -52,6 +104,19 @@ class DespesaSeeder extends Seeder
             'valor_total' => 13,
             'tipo' => 'despesa_fixa',
             'ploa_administrativa_id' => 1,
+            'centro_custo_id' => 1,
+            'natureza_despesa_id' => null,
+            'subnatureza_despesa_id' => 34,
+            'meta_id' => 1,
+            'fields'  => null,
+            'despesa_modelo_id' => null
+        ]);
+        Despesa::create([
+            'descricao' => 'DESPESA TESTE ' . Str::random(20),
+            'valor' => 80,
+            'valor_total' => 80,
+            'tipo' => 'despesa_fixa',
+            'ploa_administrativa_id' => 2,
             'centro_custo_id' => 1,
             'natureza_despesa_id' => null,
             'subnatureza_despesa_id' => 34,
@@ -74,6 +139,19 @@ class DespesaSeeder extends Seeder
             'fields'  => null,
             'despesa_modelo_id' => null
         ]);
+        Despesa::create([
+            'descricao' => 'DESPESA TESTE ' . Str::random(20),
+            'valor' => 25,
+            'valor_total' => 25,
+            'tipo' => 'despesa_fixa',
+            'ploa_administrativa_id' => 4,
+            'centro_custo_id' => 1,
+            'natureza_despesa_id' => 192,
+            'subnatureza_despesa_id' => null,
+            'meta_id' => 1,
+            'fields'  => null,
+            'despesa_modelo_id' => null
+        ]);
 
         // 2994 - id: 365
         // 105	"Auxílio Financeiro a Estudantes" - Custeio
@@ -83,6 +161,20 @@ class DespesaSeeder extends Seeder
             'valor_total' => 50,
             'tipo' => 'despesa_fixa',
             'ploa_administrativa_id' => 5,
+            'centro_custo_id' => 1,
+            'natureza_despesa_id' => 105,
+            'subnatureza_despesa_id' => null,
+            'meta_id' => 1,
+            'fields'  => null,
+            'despesa_modelo_id' => null
+        ]);
+
+        Despesa::create([
+            'descricao' => 'DESPESA TESTE ' . Str::random(20),
+            'valor' => 10,
+            'valor_total' => 10,
+            'tipo' => 'despesa_fixa',
+            'ploa_administrativa_id' => 6,
             'centro_custo_id' => 1,
             'natureza_despesa_id' => 105,
             'subnatureza_despesa_id' => null,
