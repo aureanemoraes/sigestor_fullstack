@@ -2,11 +2,6 @@
 
 @section('css')
     <style>
-        @media print {
-            .filtros {
-                display: none;
-            }
-        }
     </style>
 @endsection
 
@@ -140,12 +135,17 @@
                                             <td>{{ formatCurrency($natureza_despesa['custo_variavel']) }}</td>
                                             <td>{{ formatCurrency($natureza_despesa['total']) }}</td>
                                         </tr>
-
-                                        {{-- @php
-                                            $total_custo_fixo_por_tipo_acao       += $natureza_despesa['custo_fixo'];
-                                            $total_custo_variavel_por_tipo_acao   += $natureza_despesa['custo_variavel'];
-                                            $total_por_tipo_acao                  += $natureza_despesa['total'];
-                                        @endphp --}}
+                                        
+                                        @foreach($natureza_despesa->subnaturezas_despesas as $subnatureza_despesa)
+                                            <tr>
+                                                <td>
+                                                    <span class="subnatureza">{{ $subnatureza_despesa->nome_completo }}</span>
+                                                </td>
+                                                <td>{{ formatCurrency($subnatureza_despesa['custo_fixo']) }}</td>
+                                                <td>{{ formatCurrency($subnatureza_despesa['custo_variavel']) }}</td>
+                                                <td>{{ formatCurrency($subnatureza_despesa['total']) }}</td>
+                                            </tr>
+                                        @endforeach
                                     @endforeach
                                 </tbody>
                                 <tfoot>

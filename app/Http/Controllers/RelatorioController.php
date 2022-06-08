@@ -64,6 +64,9 @@ class RelatorioController extends Controller
                     $query->where('unidade_gestora_id', $unidade_gestora_id);
                 }
                 $query->whereHas('ploas_administrativas', function ($query) use($exercicio_id, $instituicao_id, $unidade_gestora_id, $unidade_administrativa_id) {
+                    if(isset($unidade_administrativa_id)) {
+                        $query->where('unidade_administrativa_id', $unidade_administrativa_id);
+                    }
                     $query->whereHas('despesas');
                 });
             });
@@ -88,6 +91,9 @@ class RelatorioController extends Controller
                 foreach($acao->tipos as $tipo_acao) {
                     $callbackDespesa = function ($query) use($exercicio_id, $instituicao_id, $acao_id, $tipo_acao, $unidade_gestora_id, $unidade_administrativa_id) {
                         $query->whereHas('ploa_administrativa', function ($query) use($exercicio_id, $instituicao_id, $acao_id, $tipo_acao, $unidade_gestora_id, $unidade_administrativa_id) {
+                            if(isset($unidade_administrativa_id)) {
+                                $query->where('unidade_administrativa_id', $unidade_administrativa_id);
+                            }
                             $query->whereHas('ploa_gestora', function ($query) use($exercicio_id, $instituicao_id, $acao_id, $tipo_acao, $unidade_gestora_id, $unidade_administrativa_id) {
                                 if(isset($unidade_gestora_id)) {
                                     $query->where('unidade_gestora_id', $unidade_gestora_id);
@@ -105,6 +111,9 @@ class RelatorioController extends Controller
                     $callbackNaturezaDespesa = function ($query) use($exercicio_id, $instituicao_id, $acao_id, $tipo_acao, $unidade_gestora_id, $unidade_administrativa_id){
                         $query->whereHas('despesas', function ($query) use($exercicio_id, $instituicao_id, $acao_id, $tipo_acao, $unidade_gestora_id, $unidade_administrativa_id) {
                             $query->whereHas('ploa_administrativa', function ($query) use($exercicio_id, $instituicao_id, $acao_id, $tipo_acao, $unidade_gestora_id, $unidade_administrativa_id) {
+                                if(isset($unidade_administrativa_id)) {
+                                    $query->where('unidade_administrativa_id', $unidade_administrativa_id);
+                                }
                                 $query->whereHas('ploa_gestora', function ($query) use($exercicio_id, $instituicao_id, $acao_id, $tipo_acao, $unidade_gestora_id, $unidade_administrativa_id) {
                                     if(isset($unidade_gestora_id)) {
                                         $query->where('unidade_gestora_id', $unidade_gestora_id);
@@ -170,6 +179,10 @@ class RelatorioController extends Controller
                                         }
                                     }
                                     $subnatureza_despesa['total'] += $natureza_despesa['custo_fixo'] + $natureza_despesa['custo_variavel'] ;
+
+                                    $coringa_tipo_acao['total_custo_fixo']            += $subnatureza_despesa['custo_fixo'];
+                                    $coringa_tipo_acao['total_custo_variavel']        += $subnatureza_despesa['custo_variavel'];
+                                    $coringa_tipo_acao['total']                       += $subnatureza_despesa['total'];
                                 }
                             }
 

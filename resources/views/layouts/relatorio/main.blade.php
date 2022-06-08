@@ -10,6 +10,22 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
   @yield('css')
+  <style>
+        .container {
+            font-size: 0.83rem;
+        }
+
+        .subnatureza {
+            padding-left: 1rem;
+        }
+
+        @media print {
+            .filtros {
+                display: none;
+            }
+            
+        }
+  </style>
 </head>
 <body>
     <div class="container">

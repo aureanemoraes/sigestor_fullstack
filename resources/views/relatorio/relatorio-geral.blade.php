@@ -2,13 +2,6 @@
 
 @section('css')
     <style>
-        .container {
-            font-size: 0.83rem;
-        }
-
-        .subnatureza {
-            padding-left: 1rem;
-        }
     </style>
 @endsection
 
