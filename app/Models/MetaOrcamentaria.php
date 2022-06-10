@@ -14,8 +14,6 @@ class MetaOrcamentaria extends Model
 
     protected $fillable = [
         'nome',
-        'qtd_estimada',
-        'qtd_alcancada',
         'acao_tipo_id',
         'natureza_despesa_id',
         'field',
@@ -42,9 +40,9 @@ class MetaOrcamentaria extends Model
 
 
 
-    public function getQtdEstimadaAttribute($value)
-    {
-        return $value;
+    // public function getQtdEstimadaAttribute($value)
+    // {
+    //     return $value;
 
         // if(!isset($value)) {
         //     if(isset($this->natureza_despesa_id)) {
@@ -54,11 +52,11 @@ class MetaOrcamentaria extends Model
         // } else {
         //     return $value;
         // }
-    }
+    // }
 
-    public function getQtdAlcancadaAttribute($value)
-    {
-        return $value;
+    // public function getQtdAlcancadaAttribute($value)
+    // {
+    //     return $value;
         // if(!isset($value)) {
         //     if(isset($this->natureza_despesa_id)) {
         //         $empenho = Empenho::whereHas(
@@ -77,7 +75,7 @@ class MetaOrcamentaria extends Model
         // } else {
         //     return $value;
         // }
-    }
+    // }
 
     public function natureza_despesa()
     {
@@ -89,8 +87,8 @@ class MetaOrcamentaria extends Model
         return $this->belongsTo(AcaoTipo::class);
     } 
 
-    public function responsaveis()
+    public function responsavel()
     {
-        return $this->hasMany(MetaOrcamentariaResponsavel::class);
+        return $this->hasOne(MetaOrcamentariaResponsavel::class);
     }
 }

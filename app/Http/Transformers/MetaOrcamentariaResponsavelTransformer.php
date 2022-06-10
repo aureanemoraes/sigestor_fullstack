@@ -15,6 +15,12 @@ class MetaOrcamentariaResponsavelTransformer
 
       foreach ($input as $key => $value) {
         switch ($key) {
+          case 'qtd_estimada':
+            $meta_orcamentaria_responsavel->qtd_estimada = $value;
+            break;
+          case 'qtd_alcancada':
+            $meta_orcamentaria_responsavel->qtd_alcancada = $value;
+            break;
           case 'meta_orcamentaria_id':
             $meta_orcamentaria_responsavel->meta_orcamentaria_id = $value;
             break;

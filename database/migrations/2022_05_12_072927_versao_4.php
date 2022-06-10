@@ -40,8 +40,6 @@ class Versao4 extends Migration
         Schema::create('metas_orcamentarias', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->float('qtd_estimada')->nullable();
-            $table->float('qtd_alcancada')->nullable();
             $table->unsignedBigInteger('natureza_despesa_id')->nullable();
             $table->foreign('natureza_despesa_id')->references('id')->on('naturezas_despesas');
             $table->unsignedBigInteger('acao_tipo_id')->nullable();
@@ -58,6 +56,8 @@ class Versao4 extends Migration
             $table->foreign('unidade_gestora_id')->references('id')->on('unidades_gestoras');
             $table->unsignedBigInteger('exercicio_id');
             $table->foreign('exercicio_id')->references('id')->on('exercicios');
+            $table->float('qtd_estimada')->nullable();
+            $table->float('qtd_alcancada')->nullable();
             $table->timestamps();
         });
     }

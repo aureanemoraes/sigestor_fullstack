@@ -1,7 +1,7 @@
 <nav class="navbar bg-light filtros">
     <div class="container-fluid">
         <form class="row w-100" role="search">
-            @if(in_array($relatorio, ['simplificado', 'geral']))
+            @if(in_array($relatorio, ['simplificado', 'geral', 'metas']))
                 <div class="col me-2">
                     <select class="form-select form-select-sm" id="exercicio_id" name="exercicio_id" aria-label="EXERCÍCIO">
                         @foreach($exercicios as $exercicio)
@@ -19,7 +19,7 @@
                 </div>
             @endif
 
-            @if(in_array($relatorio, ['simplificado']))
+            @if(in_array($relatorio, ['simplificado', 'metas']))
                 <div class="col me-2">
                     <select class="form-select form-select-sm" id="unidade_gestora_id" name="unidade_gestora_id"aria-label="UNIDADE GESTORA">
                         <option value="" >Selecione...</option>
@@ -31,7 +31,9 @@
                     </select>
                     <label for="unidade_gestora_id" class="form-text">UNIDADE GESTORA</label>
                 </div>
+            @endif
 
+            @if(in_array($relatorio, ['simplificado']))
                 <div class="col me-2">
                     <select class="form-select form-select-sm" id="unidade_administrativa_id" name="unidade_administrativa_id" aria-label="UNIDADE ADMINISTRATIVA">
                     <option value="">Selecione...</option>

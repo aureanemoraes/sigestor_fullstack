@@ -8,6 +8,7 @@ use App\Models\UnidadeGestora;
 use App\Models\Instituicao;
 use App\Models\Exercicio;
 use App\Models\Despesa;
+use App\Models\MetaOrcamentaria;
 use App\Models\UnidadeAdministrativa;
 use App\Models\NaturezaDespesa;
 use Illuminate\Support\Facades\DB;
@@ -366,7 +367,64 @@ class RelatorioController extends Controller
             'acoes'             => $acoes,
             'valores_gerais'    => $valores_gerais,
             'exercicio'         => $exercicio,
-            'exercicios'                => Exercicio::all()
+            'exercicios'        => Exercicio::all()
+        ]);
+    }
+
+    public function relatorioMetas(Request $request)
+    {
+        $exercicio                  = isset($request->exercicio_id) ? Exercicio::find($request->exercicio_id) : Exercicio::first();
+        $exercicio_id               = $exercicio->id;
+        $instituicao_id             = 1;
+        $unidade_gestora_id         = isset($request->unidade_gestora_id) ? $request->unidade_gestora_id : 1;
+        $unidades_administrativas   = UnidadeAdministrativa::where('unidade_gestora_id', $unidade_gestora_id)->get();
+        $metas                      = MetaOrcamentaria::whereHas('responsavel', function($query) use($unidade_gestora_id, $exercicio_id){
+            $query->where('unidade_gestora_id', $unidade_gestora_id);
+            $query->where('exercicio_id', $exercicio_id);
+        })->orWhereNotNull('natureza_despesa_id')->get();
+
+        $dados = [
+            'unidades_administrativas' => []
+        ];
+
+        foreach($unidades_administrativas as $ua) {
+            $dados['unidades_administrativas'][$ua->id] = [
+                'uasg'  => $ua->uasg,
+                'nome'  => $ua->nome,
+                'metas' => []
+            ];
+
+
+            foreach($metas as $meta) {
+                if(isset($meta->natureza_despesa_id)) {
+                    $dados['unidades_administrativas'][$ua->id]['metas'][] = [
+                        'nome' => $meta->nome,
+                        'planejado' => Despesa::whereHas('ploa_administrativa', function ($query) {
+                            $query->whereHas('ploa_gestora', function ($query) {
+                                $query->whereHas('ploa', function ($query) {
+                                    $query->where('exercicio_id', $exercicio_id);
+                                    $query->where('acao_tipo_id', $acao_tipo_id);
+                                });
+                            });
+                        })->where('natureza_despesa_id', $meta->natureza_despesa_id)->sum('valor_total'),
+                        'alcancado' => 0
+                    ];
+                } else {
+                    $dados['unidades_administrativas'][$ua->id]['metas'][] = [
+                        'nome' => $meta->nome,
+                        'planejado' => $meta->responsavel->qtd_estimada,
+                        'alcancado' => $meta->responsavel->qtd_alcancada
+                    ];
+                }
+                
+            }
+        }
+
+        return view('relatorio.relatorio-metas')->with([
+            'exercicios'                => Exercicio::all(),
+            'unidades_gestoras'         => UnidadeGestora::getOptions(),
+            'unidades_administrativas'  => $unidades_administrativas,
+            'metas'                     => $metas
         ]);
     }
 }

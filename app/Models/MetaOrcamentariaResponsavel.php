@@ -12,6 +12,8 @@ class MetaOrcamentariaResponsavel extends Model
     protected $table = 'metas_orcamentarias_responsaveis';
 
     protected $fillable = [
+        'qtd_estimada',
+        'qtd_alcancada',
         'meta_orcamentaria_id',
         'unidade_gestora_id',
         'exercicio_id'

@@ -16,6 +16,6 @@
         Relatório Simplificado
       </a>
       <a href="{{ route('relatorio.geral') }}" class="list-group-item list-group-item-action" target="_blank">Relatório Geral</a>
-      <a href="#" class="list-group-item list-group-item-action">Relatório de Metas</a>
+      <a href="{{ route('relatorio.metas') }}" class="list-group-item list-group-item-action">Relatório de Metas</a>
     </div>
 @endsection

@@ -18,12 +18,6 @@ class MetaOrcamentariaTransformer
           case 'nome':
             $meta_orcamentaria->nome = $value;
             break;
-          case 'qtd_estimada':
-            $meta_orcamentaria->qtd_estimada = $value;
-            break;
-          case 'qtd_alcancada':
-            $meta_orcamentaria->qtd_alcancada = $value;
-            break;
           case 'acao_tipo_id':
             $meta_orcamentaria->acao_tipo_id = $value;
             break;
