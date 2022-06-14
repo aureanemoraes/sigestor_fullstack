@@ -179,7 +179,7 @@ class RelatorioController extends Controller
                                             $valores_totais['despesas_variaveis']       += $despesa->valor_total;
                                         }
                                     }
-                                    $subnatureza_despesa['total'] += $natureza_despesa['custo_fixo'] + $natureza_despesa['custo_variavel'] ;
+                                    $subnatureza_despesa['total'] += $subnatureza_despesa['custo_fixo'] + $subnatureza_despesa['custo_variavel'] ;
 
                                     $coringa_tipo_acao['total_custo_fixo']            += $subnatureza_despesa['custo_fixo'];
                                     $coringa_tipo_acao['total_custo_variavel']        += $subnatureza_despesa['custo_variavel'];

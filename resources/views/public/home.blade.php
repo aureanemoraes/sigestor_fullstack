@@ -13,7 +13,7 @@
   </div>
   <div class="card links-container">
     <div class="card-body d-grid gap-2">
-      <a href="#" class="btn btn-lg btn-secondary" type="button">Matriz Orçamentária</a>
+      <a href="{{ route('graph.matriz.orcamentaria') }}" class="btn btn-lg btn-secondary" type="button">Matriz Orçamentária</a>
       <a href="#" class="btn btn-lg btn-secondary" type="button">Metas Estratégicas</a>
     </div>
   </div>
