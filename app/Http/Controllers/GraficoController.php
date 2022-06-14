@@ -240,9 +240,22 @@ class GraficoController extends Controller
                     'data' => [$porcentagem_liberado]
                 ], 
             ];
-
-            // dd($datasets_acoes, $datasets_despesas, $datasets_recursos);
         }
+
+        $options = ['maintainAspectRatio' => false, 'scales' => [
+                'yAxes' => [
+                    'min' => 0,
+                    'max' => 100,
+                    'ticks' => [
+                        'stepSize' => 10,
+                    ],
+                    'grid' => [
+                        'display' => false
+                    ]
+                ],
+                
+            ],
+        ];
 
         if(!isset($datasets_acoes))
             $datasets_acoes[] = [
@@ -268,53 +281,26 @@ class GraficoController extends Controller
         $acoes = app()->chartjs
         ->name('barChartTest')
         ->type('bar')
-        ->size(['width' => 600, 'height' => 400])
+        ->size(['width' => 500, 'height' => 400])
         ->labels(['AÇÕES'])
         ->datasets($datasets_acoes)
-        ->options(['maintainAspectRatio' => false, 'scales' => [
-                'yAxes' => [
-                    'min' => 0,
-                    'max' => 100,
-                    'ticks' => [
-                        'stepSize' => 10,
-                    ],
-                ],
-            ],
-        ]);
+        ->options($options);
 
         $despesas = app()->chartjs
         ->name('barChartTestAA')
         ->type('bar')
-        ->size(['width' => 200, 'height' => 200])
+        ->size(['width' => 150, 'height' => 150])
         ->labels(['DESPESAS'])
         ->datasets($datasets_despesas)
-        ->options(['maintainAspectRatio' => false, 'scales' => [
-                'yAxes' => [
-                    'min' => 0,
-                    'max' => 100,
-                    'ticks' => [
-                        'stepSize' => 10,
-                    ],
-                ],
-            ],
-        ]);
+        ->options($options);
 
         $recursos = app()->chartjs
         ->name('aaa')
         ->type('bar')
-        ->size(['width' => 200, 'height' => 200])
+        ->size(['width' => 150, 'height' => 150])
         ->labels(['PLANEJADO E LIBERADO'])
         ->datasets($datasets_recursos)
-        ->options(['maintainAspectRatio' => false, 'scales' => [
-                'yAxes' => [
-                    'min' => 0,
-                    'max' => 100,
-                    'ticks' => [
-                        'stepSize' => 10,
-                    ],
-                ],
-            ],
-        ]);
+        ->options($options);
 
 
         return view('public.graficos.matriz_orcamentaria')->with([

@@ -1,12 +1,5 @@
 @extends('layouts.public')
 
-@section('header-items')
-  <div class="header_toggle"></div>
-  <div class="header_text">
-    <a type="button" href="/login" class="btn btn-primary">Login</a>
-  </div>
-@endsection
-
 @section('content')
   <div class="img">
     <img src="{{ asset('storage/img/logo-sigestor.png') }}" alt="" height="300px" class="logo">

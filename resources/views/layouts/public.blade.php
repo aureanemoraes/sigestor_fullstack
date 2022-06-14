@@ -11,9 +11,14 @@
   @yield('css')
 </head>
 <body>
-  <header class="header" id="header">
-      @yield('header-items')
-  </header>
+    <header class="header" id="header">
+      <a href="/" class="nav_logo">
+        <img src="{{ asset('/storage/img/logo_colorida.png') }}" alt="Logo" class="rounded logo" height="100px">
+      </a>
+      <div class="header_text">
+        <a type="button" href="/login" class="btn btn-primary">Login</a>
+      </div>
+    </header>
   <div class="container">
     <div class="main">
         @yield('content')
