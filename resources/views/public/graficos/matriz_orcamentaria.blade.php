@@ -4,7 +4,6 @@
       <style>
         .grafico-acoes {
             border: 1px solid gray;
-            padding: 1rem;
         }
 
         .card {
@@ -14,6 +13,10 @@
 
         .navbar {
             margin-top: 2rem;
+        }
+
+        .card {
+            max-height: 600px;
         }
       </style>
 @endsection

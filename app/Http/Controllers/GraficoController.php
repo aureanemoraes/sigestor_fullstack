@@ -281,7 +281,7 @@ class GraficoController extends Controller
         $acoes = app()->chartjs
         ->name('barChartTest')
         ->type('bar')
-        ->size(['width' => 500, 'height' => 400])
+        ->size(['width' => 150, 'height' => 300])
         ->labels(['AÇÕES'])
         ->datasets($datasets_acoes)
         ->options($options);
@@ -289,7 +289,7 @@ class GraficoController extends Controller
         $despesas = app()->chartjs
         ->name('barChartTestAA')
         ->type('bar')
-        ->size(['width' => 150, 'height' => 150])
+        ->size(['width' => 75, 'height' => 150])
         ->labels(['DESPESAS'])
         ->datasets($datasets_despesas)
         ->options($options);
@@ -297,7 +297,7 @@ class GraficoController extends Controller
         $recursos = app()->chartjs
         ->name('aaa')
         ->type('bar')
-        ->size(['width' => 150, 'height' => 150])
+        ->size(['width' => 75, 'height' => 150])
         ->labels(['PLANEJADO E LIBERADO'])
         ->datasets($datasets_recursos)
         ->options($options);
