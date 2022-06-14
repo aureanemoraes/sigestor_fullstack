@@ -169,9 +169,15 @@
         </div>
       </div>
     </div>
-    <a href="{{ route('logout') }}" class="nav_link">
-      <i class='bx bx-log-out nav_icon'></i>
-      <span class="nav_name">Sair</span>
-    </a>
+    <div class="">
+      <a href="{{ asset('storage/file/manual_sigestor.pdf') }}" download class="nav_link">
+        <i class="bi bi-info-circle-fill"></i>
+        <span class="nav_name">Manual</span>
+      </a>
+      <a href="{{ route('logout') }}" class="nav_link">
+        <i class='bx bx-log-out nav_icon'></i>
+        <span class="nav_name">Sair</span>
+      </a>
+    </div>
   </nav>
 </div>
