@@ -22,4 +22,9 @@ class PlanoEstrategico extends Model
         'data_inicio' => 'datetime:Y-m-d',
         'data_fim' => 'datetime:Y-m-d',
     ];
+
+    public function eixos_estrategicos()
+    {
+        return $this->hasMany(EixoEstrategico::class);
+    }
 }

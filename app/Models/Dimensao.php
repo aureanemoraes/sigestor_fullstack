@@ -20,4 +20,9 @@ class Dimensao extends Model
     {
         return $this->belongsTo(EixoEstrategico::class);
     } 
+
+    public function objetivos()
+    {
+        return $this->hasMany(Objetivo::class);
+    }
 }

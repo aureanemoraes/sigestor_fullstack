@@ -7,6 +7,11 @@ use App\Models\UnidadeAdministrativa;
 use App\Models\AcaoTipo;
 use App\Models\NaturezaDespesa;
 use App\Models\Instituicao;
+use App\Models\PlanoEstrategico;
+use App\Models\PlanoAcao;
+use App\Models\Objetivo;
+use App\Models\EixoEstrategico;
+use App\Models\Meta;
 use Illuminate\Http\Request;
 
 class GraficoController extends Controller
@@ -317,6 +322,165 @@ class GraficoController extends Controller
             'unidade_gestora_id'        => $unidade_gestora_id,
             'unidade_administrativa_id' => $unidade_administrativa_id,
             'exercicio_id'              => $exercicio_id,
+        ]);
+    }
+
+    public function matrizEstrategica(Request $request) 
+    {
+        $planos_estrategicos                = PlanoEstrategico::all();
+        $planos_acoes                       = PlanoAcao::all();
+        $eixos_estrategicos                 = EixoEstrategico::all();
+        $objetivos                          = Objetivo::all();
+        $plano_estrategico                  = isset($request->plano_estrategico_id) ? PlanoEstrategico::find($request->plano_estrategico_id) : PlanoEstrategico::first();
+        $plano_estrategico_id               = $plano_estrategico->id;
+        $plano_acao                         = isset($request->plano_acao_id) ? PlanoAcao::find($request->plano_acao_id) : null;
+        $plano_acao_id                      = isset($request->plano_acao_id) ? $request->plano_acao_id : $plano_estrategico->eixos_estrategicos()->first()->id;
+        $eixo_estrategico                   = isset($request->eixo_estrategico_id) ? EixoEstrategico::find($request->eixo_estrategico_id) : null;
+        $eixo_estrategico_id                = isset($request->eixo_estrategico_id) ? $request->eixo_estrategico_id : null;
+        $objetivo_id                        = isset($request->objetivo_id) ? $request->objetivo_id : null;
+        $instituicao_id                     = 1;
+        $data_objetivos                     = [];
+        $data_eixos_estrategicos            = [];
+        $objetivos_controlador              = [];
+        $eixos_estrategicos_controlador     = [];
+        $porcentagem_geral_metas            = 0;
+
+        $metas_estrategicas = Meta::where('plano_acao_id', $plano_acao_id);
+        if(isset($eixo_estrategico_id))
+            $metas_estrategicas = $metas_estrategicas->whereHas('objetivo', function ($query) use ($eixo_estrategico_id, $plano_estrategico_id) {
+                $query->whereHas('dimensao', function ($query) use ($eixo_estrategico_id, $plano_estrategico_id) {
+                    $query->whereHas('eixo_estrategico', function ($query) use ($eixo_estrategico_id, $plano_estrategico_id) {
+                        if(isset($eixo_estrategico_id))
+                            $query->where('id', $eixo_estrategico_id);
+                        $query->where('plano_estrategico_id', $plano_estrategico_id);
+                    });
+                });
+            });
+
+        if(isset($objetivo_id))
+            $metas_estrategicas = $metas_estrategicas->where('objetivo_id', $objetivo_id);
+
+        $metas_estrategicas = $metas_estrategicas->get();
+
+        foreach($metas_estrategicas as $meta_estrategica) {
+            $r = rand(0, 255);
+            $g = rand(0, 255);
+            $b = rand(0, 255);
+
+            $dataset_metas[] = [
+                "label" => $meta_estrategica->nome,
+                'backgroundColor' => ["rgba($r,$g,$b)"],
+                'data' => [$meta_estrategica->porcentagem_atual]
+            ];
+
+            if(!in_array($meta_estrategica->objetivo_id, $objetivos_controlador)) {
+                $data_objetivos[] = $meta_estrategica->objetivo;
+                $objetivos_controlador[] = $meta_estrategica->objetivo_id;
+
+                if(!in_array($meta_estrategica->objetivo->dimensao->eixo_estrategico_id, $eixos_estrategicos_controlador)) {
+                    $data_eixos_estrategicos[] = $meta_estrategica->objetivo->dimensao->eixo_estrategico;
+                    $eixos_estrategicos_controlador[] = $meta_estrategica->objetivo->dimensao->eixo_estrategico_id;
+                }
+            }
+        }
+
+        foreach($data_objetivos as $objetivo) {
+            $r = rand(0, 255);
+            $g = rand(0, 255);
+            $b = rand(0, 255);
+
+            $dataset_objetivos[] = [
+                "label" => $objetivo->nome,
+                'backgroundColor' => ["rgba($r,$g,$b)"],
+                'data' => [$objetivo->porcentagem_atual]
+            ];
+        }
+
+        foreach($data_eixos_estrategicos as $ee) {
+            $r = rand(0, 255);
+            $g = rand(0, 255);
+            $b = rand(0, 255);
+
+            $porcentagem_geral_metas += $ee->porcentagem_atual;
+
+            $dataset_eixo_estrategicos[] = [
+                "label" => $ee->nome,
+                'backgroundColor' => ["rgba($r,$g,$b)"],
+                'data' => [$ee->porcentagem_atual]
+            ];
+        }
+
+        $options = ['maintainAspectRatio' => false, 'scales' => [
+                'yAxes' => [
+                    'min' => 0,
+                    'max' => 100,
+                    'ticks' => [
+                        'stepSize' => 10,
+                    ],
+                    'grid' => [
+                        'display' => false
+                    ]
+                ],
+                
+            ],
+        ];
+
+        if(!isset($dataset_metas))
+            $dataset_metas[] = [
+                "label" => '',
+                'backgroundColor' => ["rgba(0, 0,0)"],
+                'data' => [0]
+            ];
+
+        if(!isset($dataset_objetivos))
+            $dataset_objetivos[] = [
+                "label" => '',
+                'backgroundColor' => ["rgba(0, 0,0)"],
+                'data' => [0]
+            ];
+
+        if(!isset($dataset_eixo_estrategicos))
+            $dataset_eixo_estrategicos[] = [
+                "label" => '',
+                'backgroundColor' => ["rgba(0, 0,0)"],
+                'data' => [0]
+            ];
+
+        if (!isset($eixo_estrategico_id)) {
+            $grafico = app()->chartjs
+            ->name('bb')
+            ->type('bar')
+            ->size(['width' => 300, 'height' => 300])
+            ->labels(['EIXOS ESTRATÉGICOS'])
+            ->datasets($dataset_eixo_estrategicos)
+            ->options($options);
+        } else {
+            $grafico = app()->chartjs
+            ->name('bb')
+            ->type('bar')
+            ->size(['width' => 300, 'height' => 300])
+            ->labels(['OBJETIVOS ESTRATÉGICOS'])
+            ->datasets($dataset_objetivos)
+            ->options($options);    
+        }
+        
+        return view('public.graficos.matriz_estrategica')->with([
+            'grafico'                         => isset($grafico) ? $grafico : null, 
+            'planos_estrategicos'                   => $planos_estrategicos,
+            'planos_acoes'                          => $planos_acoes,
+            'eixos_estrategicos'                    => $eixos_estrategicos,
+            'objetivos'                             => $objetivos,
+            'plano_estrategico'                     => $plano_estrategico,
+            'plano_acao'                            => $plano_acao,
+            'plano_acao_id'                         => $plano_acao_id,
+            'eixo_estrategico'                      => $eixo_estrategico,
+            'eixo_estrategico_id'                   => $eixo_estrategico_id,
+            'plano_estrategico_id'                  => $plano_estrategico_id,
+            'objetivo_id'                           => $objetivo_id,
+            'data_eixos_estrategicos'               => $data_eixos_estrategicos,
+            'data_objetivos'                        => $data_objetivos,
+            'metas_estrategicas'                    => $metas_estrategicas,
+            'porcentagem_geral_metas'               => $porcentagem_geral_metas
         ]);
     }
 }

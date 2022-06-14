@@ -65,6 +65,7 @@ Route::get('/inicio', function () {
 })->name('home');
 
 Route::get('grafico/matriz_orcamentaria', [GraficoController::class, 'matrizOrcamentaria'])->name('graph.matriz.orcamentaria');
+Route::get('grafico/matriz_estrategica', [GraficoController::class, 'matrizEstrategica'])->name('graph.matriz.estrategica');
 Route::put('user/update_perfil/{user_id}', [UserController::class, 'updatePerfil'])->name('user.update.perfil');
 Route::resource('user', UserController::class);
 Route::resource('instituicao', InstituicaoController::class);
