@@ -333,8 +333,8 @@ class GraficoController extends Controller
         $objetivos                          = Objetivo::all();
         $plano_estrategico                  = isset($request->plano_estrategico_id) ? PlanoEstrategico::find($request->plano_estrategico_id) : PlanoEstrategico::first();
         $plano_estrategico_id               = $plano_estrategico->id;
-        $plano_acao                         = isset($request->plano_acao_id) ? PlanoAcao::find($request->plano_acao_id) : null;
-        $plano_acao_id                      = isset($request->plano_acao_id) ? $request->plano_acao_id : $plano_estrategico->eixos_estrategicos()->first()->id;
+        $plano_acao                         = isset($request->plano_acao_id) ? PlanoAcao::find($request->plano_acao_id) : $plano_estrategico->eixos_estrategicos()->first();
+        $plano_acao_id                      = $plano_acao->id;
         $eixo_estrategico                   = isset($request->eixo_estrategico_id) ? EixoEstrategico::find($request->eixo_estrategico_id) : null;
         $eixo_estrategico_id                = isset($request->eixo_estrategico_id) ? $request->eixo_estrategico_id : null;
         $objetivo_id                        = isset($request->objetivo_id) ? $request->objetivo_id : null;
