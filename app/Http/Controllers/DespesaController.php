@@ -147,7 +147,7 @@ class DespesaController extends Controller
 		try {
 			if(isset($despesa)) {
 				if(count($despesa->creditos_planejados) > 0) {
-					session(['error_delete_despesa' => 'Existem créditos planejados vínculados a esta despesa.']);
+					session(['error_delete_despesa' => 'Existem certidões de crédito vínculados a esta despesa.']);
 					return redirect()->route('ploa_administrativa.index', [$unidade_administrativa_id, $exercicio_id]);
 				} else {
 					$despesa->delete();
