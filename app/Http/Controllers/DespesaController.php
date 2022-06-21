@@ -86,7 +86,7 @@ class DespesaController extends Controller
 			DB::rollBack();
 		}
 
-		return redirect()->route('ploa_gestora.distribuicao', [$despesa->ploa_administrativa->unidade_administrativa_id, $despesa->ploa_administrativa->ploa_gestora->ploa->exercicio_id]);
+		return redirect()->route('ploa_administrativa.index', [$despesa->ploa_administrativa->unidade_administrativa_id, $despesa->ploa_administrativa->ploa_gestora->ploa->exercicio_id]);
 	}
 
 	public function show($id)
@@ -136,20 +136,27 @@ class DespesaController extends Controller
 			}
 		}
 
-		return redirect()->route('despesa.index');
+		return redirect()->route('ploa_administrativa.index', [$despesa->ploa_administrativa->unidade_administrativa_id, $despesa->ploa_administrativa->ploa_gestora->ploa->exercicio_id]);
 	}
 
 	public function destroy($id)
 	{
-		$despesa = Despesa::find($id);
+		$despesa 					= Despesa::find($id);
+		$unidade_administrativa_id 	= $despesa->ploa_administrativa->unidade_administrativa_id;
+		$exercicio_id 				= $despesa->ploa_administrativa->ploa_gestora->ploa->exercicio_id;
 		try {
 			if(isset($despesa)) {
-				$despesa->delete();
+				if(count($despesa->creditos_planejados) > 0) {
+					session(['error_delete_despesa' => 'Existem créditos planejados vínculados a esta despesa.']);
+					return redirect()->route('ploa_administrativa.index', [$unidade_administrativa_id, $exercicio_id]);
+				} else {
+					$despesa->delete();
+				}
 			} 
 		} catch(Exception $ex) {
 		}
 
-		return redirect()->route('despesa.index');
+		return redirect()->route('ploa_administrativa.index', [$unidade_administrativa_id, $exercicio_id]);
 	}
 
 	protected function validation($request) 

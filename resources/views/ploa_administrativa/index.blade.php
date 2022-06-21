@@ -43,6 +43,20 @@
 
     @include('ploa_administrativa.filtro-unidade-administrativa')
 
+    <section class="row">
+      @if(session('error_delete_despesa') != null)
+        <section class="alert-container">
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong><i class="bi bi-x-circle-fill"></i> </strong>{{ session('error_delete_despesa') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        </section>
+        @php
+          session()->forget(['error_delete_despesa'])
+        @endphp
+      @endif
+    </section>
+
     <section class="distribuicao-resumo">
       <div class="table-responsive table-responsive-sm">
         <table class="table table-sm">
